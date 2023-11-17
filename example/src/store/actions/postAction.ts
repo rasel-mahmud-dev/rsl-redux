@@ -19,6 +19,7 @@ export const deletePostAsync = createAsyncAction(
 
     })
 
+
 export const fetchPostsAsync = createAsyncAction(
     "fetch-posts-request",
     async function (_, thunkAPI) {

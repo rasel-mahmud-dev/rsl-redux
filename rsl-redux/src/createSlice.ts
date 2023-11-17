@@ -1,6 +1,47 @@
 import store from "./store"
 
-function createSlice(payload) {
+type ActionCreator = {
+    type: string;
+};
+
+type ReducerAction = {
+    (state: any, action: any): void; // Define the signature of your reducer action function
+};
+
+type ReducersMap = {
+    [key: string]: () => void; // Define the structure of your reducers
+};
+
+type ExtraReducersArg = {
+    addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
+};
+
+type ExtraReducersFunc = (builder: {
+    addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
+}) => void;
+
+type CreateSlicePayload = {
+    name: string;
+    initialState: any;
+    extraReducers: (builder: {
+        addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
+    }) => void
+    reducers: ReducersMap;
+};
+
+
+type CreateSliceReturn = {
+    name: string,
+    reducer: {
+        [key in string]: () => void
+    },
+    actions: {
+        [key in string]: () => void
+    }
+}
+
+
+function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
 
     const reducerName = payload.name
     const extraReducers = payload.extraReducers
@@ -32,7 +73,7 @@ function createSlice(payload) {
                     ...store["reducerAction"],
                     [actionCreator.type]: {
                         reducerName: reducerName,
-                        reducerActionFn: (latestState, result)=>reducerAction(latestState, result)
+                        reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
                     }
                 }
             }

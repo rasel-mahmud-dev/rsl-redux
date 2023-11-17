@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import store from "./store";
 
-function useSelector(cb) {
+type SelectorPayload = (args: any)=> any
+
+function useSelector(cb: SelectorPayload) {
     let ini;
     const selectedState = cb(store.state);
     if(Array.isArray(selectedState)){

@@ -6,18 +6,18 @@ const postSlice = createSlice({
     initialState: {
         posts: []
     },
-    reducers: {},
+    reducers: {
+
+    },
 
     extraReducers: (builder) => {
-
         builder.addCase(deletePostAsync.fulfilled, (state, action) => {
             state.posts = state.posts.filter(post=>post.id !== action.payload)
         })
 
-
         builder.addCase(deletePostAsync.rejected, (state, action) => {
             console.log("rejected rejected rejected")
-            // handle error case::
+            // handle an error case::
         })
 
 

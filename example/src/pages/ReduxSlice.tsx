@@ -1,13 +1,14 @@
-
 import {useEffect} from "react";
 import {logOut, setAuth} from "../store/slices/authSlice";
 import {deletePostAsync, fetchPostsAsync} from "../store/actions/postAction";
 import {useDispatch, useSelector} from "rsl-redux";
+import {RootStateType} from "../store/store.ts";
+
 
 function ReduxSlice() {
 
-    const postState = useSelector(state => state.postState)
-    const authState = useSelector(state => state.authState)
+    const postState = useSelector((state: RootStateType) => state.postState)
+    const authState = useSelector((state: RootStateType) => state.authState)
 
     const dispatch = useDispatch()
 
@@ -15,7 +16,7 @@ function ReduxSlice() {
         dispatch(fetchPostsAsync())
     }, [])
 
-    function handleDeletePost(postId) {
+    function handleDeletePost(postId: string) {
        dispatch(deletePostAsync(postId))
     }
 
