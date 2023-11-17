@@ -7,7 +7,10 @@ import postcss from "rollup-plugin-postcss";
 import terser from "@rollup/plugin-terser";
 
 export default {
-    input: ["src/index.ts"],
+    input: [
+        "src/index.ts",
+
+    ],
     output: [
         {
             dir: "build",
@@ -34,7 +37,7 @@ export default {
             extensions: ['.css', '.scss'],
             inject: false
         }),
-        terser(),
+        // terser(),
         // copy({
         //     targets: [
         //         {

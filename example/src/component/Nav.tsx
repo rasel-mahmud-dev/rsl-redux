@@ -3,10 +3,7 @@ import {NavLink} from "react-router-dom";
 import useSelector from "rsl-redux/src/useSelector";
 
 const Nav = () => {
-
-    // const {auth} = useSelector(state => state?.authState)
-
-
+    const {auth} = useSelector(state => state?.authState)
     return (
         <div className="mx-auto max-w-5xl">
             <div className="py-8">
@@ -24,11 +21,11 @@ const Nav = () => {
                         </li>
                     </div>
 
-                    {/*{auth && (*/}
-                    {/*    <div>*/}
-                    {/*        <li className="text-sm font-medium list-none">{auth.email}</li>*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
+                    {auth && (
+                        <div>
+                            <li className="text-sm font-medium list-none">{auth.email}</li>
+                        </div>
+                    )}
 
                 </div>
             </div>
