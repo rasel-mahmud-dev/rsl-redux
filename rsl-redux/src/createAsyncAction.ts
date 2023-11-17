@@ -3,23 +3,19 @@ const createAsyncThunkWrapper = (() => {
         typePrefix,
         payloadCreator
     ) {
-        const fulfilled = {
-            type: typePrefix + '/fulfilled',
-            payloadCreator
-        }
-
         function actionCreator(arg) {
             return (dispatch, getState, extra) => {
-                const promise = payloadCreator(arg, {dispatch, getState, extra});
-                return Object.assign(promise, {
-                    type: typePrefix + '/fulfilled',
+                const result = payloadCreator(arg, {dispatch, getState, extra});
+                return Object.assign(result, {
+                    type: typePrefix,
                     arg
-                });
+                })
             };
         }
 
         return Object.assign(actionCreator, {
-            fulfilled,
+            fulfilled: {type: typePrefix + "/fulfilled", payloadCreator},
+            rejected: {type: typePrefix + "/rejected", payloadCreator},
             typePrefix,
         });
     }

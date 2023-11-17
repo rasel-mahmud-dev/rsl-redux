@@ -1,4 +1,4 @@
-import {createSlice} from "rsl-redux/src/index.js";
+import {createSlice} from "rsl-redux";
 import {deletePostAsync, fetchPostsAsync} from "../actions/postAction";
 
 const postSlice = createSlice({
@@ -11,11 +11,15 @@ const postSlice = createSlice({
     extraReducers: (builder) => {
 
         builder.addCase(deletePostAsync.fulfilled, (state, action) => {
-            return {
-                ...state,
-                posts: state.posts.filter(post=>post.id !== action.payload)
-            }
+            state.posts = state.posts.filter(post=>post.id !== action.payload)
         })
+
+
+        builder.addCase(deletePostAsync.rejected, (state, action) => {
+            console.log("rejected rejected rejected")
+            // handle error case::
+        })
+
 
         builder.addCase(fetchPostsAsync.fulfilled, (state, action) => {
             // this function need to invoked after call dispatch

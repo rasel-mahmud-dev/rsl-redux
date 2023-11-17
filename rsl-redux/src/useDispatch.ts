@@ -4,20 +4,33 @@ function useDispatch() {
 
     return function (actionObj) {
         let actionCall;
+
         if (typeof actionObj === "function") {
 
             // handle asynchronous createAsyncThunk action.
             actionCall = actionObj(useDispatch, store.getState, {})
-
+            let action: { type: string; payload?: any; };
+            
             if (actionCall instanceof Promise) {
                 actionCall.then(payloadResponse => {
-                    const reducerActionInfo = store.reducerAction[actionCall.type]
-                    const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], {
-                        payload: payloadResponse, action: actionCall.type
-                    })
-                    store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
+                    action = {
+                        payload: payloadResponse,
+                        type:  actionCall.type + "/fulfilled"
+                    }
                 }).catch(ex => {
+                    let type = actionCall.type
+                    const lastPart = type.replace(/\/[^/]*$/, '');
+                    action = {
+                        payload: ex,
+                        type: lastPart + "/rejected"
+                    }
+                }).finally(()=>{
+                    const reducerActionInfo = store.reducerAction[action.type]
+                    const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
+                    store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
                 })
+
+
             }
         } else {
             const {
@@ -25,6 +38,7 @@ function useDispatch() {
                 reducerName,
                 payload
             } = actionObj
+
 
             let sliceState = store["state"][reducerName]
             actionFn(sliceState, {payload})

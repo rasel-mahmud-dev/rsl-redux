@@ -1,4 +1,4 @@
-import {createApi} from "rsl-redux/src/index";
+import {createApi} from "rsl-redux";
 
 const postApi = createApi({
     baseURL: "https://jsonplaceholder.typicode.com",

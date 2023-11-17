@@ -1,6 +1,6 @@
 import postSlice from "./slices/postSlice";
 import authSlice from "./slices/authSlice";
-import {configureStore} from "rsl-redux/src/index.js";
+import {configureStore} from "rsl-redux";
 
 const store = configureStore({
     reducer: {

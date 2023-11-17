@@ -9,16 +9,21 @@ import terser from "@rollup/plugin-terser";
 export default {
     input: [
         "src/index.ts",
-
+        "src/configureStore.ts",
+        "src/createSlice.ts",
+        "src/useSelector.ts",
+        "src/createAsyncAction.ts",
+        "src/useDispatch.ts",
+        "src/createApi.ts"
     ],
     output: [
         {
-            dir: "build",
+            dir: "dist",
             format: "cjs",
             sourcemap: true
         },
         {
-            dir: "build/esm",
+            dir: "dist/esm",
             format: "esm",
             sourcemap: true
         },

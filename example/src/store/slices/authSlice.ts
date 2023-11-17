@@ -1,4 +1,4 @@
-import {createSlice} from "rsl-redux/src/index";
+import {createSlice} from "rsl-redux";
 
 const authSlice = createSlice({
     name: 'authState',

@@ -2,7 +2,7 @@
 import {useEffect} from "react";
 import {logOut, setAuth} from "../store/slices/authSlice";
 import {deletePostAsync, fetchPostsAsync} from "../store/actions/postAction";
-import {useDispatch, useSelector} from "rsl-redux/src/index";
+import {useDispatch, useSelector} from "rsl-redux";
 
 function ReduxSlice() {
 
