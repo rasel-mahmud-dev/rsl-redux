@@ -1,4 +1,15 @@
 # Rsl-Redux
+# My Own Redux Toolkit
+In this project, I create redux-toolkit from scratch.
+
+### Features
+- Async action
+- Sync action
+- Store
+- Dispatch
+- useSelector
+- RTK query
+
 
 A simple lightweight redux-toolkit clone.
 
@@ -18,9 +29,42 @@ npm install rsl-redux
 
 ## Usage
 
-Very easy to use.
 
-```jsx
+```javascript
+// store.ts
+export const store = {
+    state: {},
+    listens: [],
+    fireAsyncAction: [],
+    reducerAction: [],
+    dispatch: function (value) {
+        this.state = {
+            ...this.state,
+            ...value
+        }
+        this.notify()
+    },
+
+    reducerDispatch: function (reducerName, state) {
+        this.state[reducerName] = {
+            ...this.state[reducerName],
+            ...state
+        }
+        this.notify()
+    },
+    subscribe: function (fn) {
+        let index = this.listens.findIndex(lis => lis === fn)
+        if (index === -1) {
+            this.listens.push(fn)
+        }
+    },
+    notify: function () {
+        this.listens.forEach(lis => lis(this.state))
+    },
+    removeListener: function (lis) {
+        this.listens = this.listens.filter(list => list !== lis)
+    }
+}
 
 ```
 
