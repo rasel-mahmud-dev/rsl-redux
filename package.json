@@ -31,5 +31,8 @@
   ],
   "author": "Rasel mahmud (https://github.com/rasel-mahmud-dev)",
   "homepage": "https://github.com/rasel-mahmud-dev/rsl-redux",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "rsl-redux": "^0.0.0"
+  }
 }

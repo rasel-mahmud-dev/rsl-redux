@@ -1,22 +1,5 @@
-# My Own Redux Toolkit 
+import {useEffect, useState} from "react";
 
-
-In this project I create redux-toolkit from scratch.
-
-
-### Features
-- Async action
-- Sync action
-- Store
-- Dispatch
-- useSelector
-- RTK query
-
-
-
-
-```javascript
-// store.ts
 export const store = {
     state: {},
     listens: [],
@@ -29,7 +12,6 @@ export const store = {
         }
         this.notify()
     },
-
     reducerDispatch: function (reducerName, state) {
         this.state[reducerName] = {
             ...this.state[reducerName],
@@ -48,7 +30,10 @@ export const store = {
     },
     removeListener: function (lis) {
         this.listens = this.listens.filter(list => list !== lis)
+    },
+    getState(){
+        return store.state
     }
 }
 
-```
+
