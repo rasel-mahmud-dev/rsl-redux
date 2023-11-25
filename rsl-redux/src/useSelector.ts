@@ -4,14 +4,13 @@ import store from "./store";
 type SelectorPayload = (args: any)=> any
 
 function useSelector(cb: SelectorPayload) {
-    let ini;
+    let ini = {};
     const selectedState = cb(store.state);
-    if(Array.isArray(selectedState)){
+
+    if(selectedState && Array.isArray(selectedState)){
         ini = [...selectedState]
     }else if(typeof selectedState === "object") {
         ini = {...selectedState}
-    } else {
-        ini = undefined
     }
 
     const [state, setState] = useState(ini); // Initialize state with the specific part

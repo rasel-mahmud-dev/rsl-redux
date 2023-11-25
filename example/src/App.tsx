@@ -4,6 +4,7 @@ import Nav from "./component/Nav";
 import Login from "./pages/Login.tsx";
 import ReduxRTK from "./pages/ReduxRTK.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
+import Products from "./pages/Products.tsx";
 
 
 function App(){
@@ -13,9 +14,9 @@ function App(){
 
                <Nav />
 
-                <div className="p-4">
+                <div className="container">
                     <Routes>
-                        <Route path="/" element={<ReduxSlice />} />
+                        <Route path="/" element={<Products />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/rtk" element={<ReduxRTK /> } />
                         <Route path="/about" element={<AboutPage /> } />

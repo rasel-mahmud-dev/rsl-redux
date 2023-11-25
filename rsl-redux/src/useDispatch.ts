@@ -10,12 +10,13 @@ function useDispatch() {
             // handle asynchronous createAsyncThunk action.
             actionCall = actionObj(useDispatch, store.getState, {})
             let action: { type: string; payload?: any; };
-            
+
+
             if (actionCall instanceof Promise) {
                 actionCall.then(payloadResponse => {
                     action = {
                         payload: payloadResponse,
-                        type:  actionCall.type + "/fulfilled"
+                        type: actionCall.type + "/fulfilled"
                     }
                 }).catch(ex => {
                     let type = actionCall.type
@@ -24,20 +25,22 @@ function useDispatch() {
                         payload: ex,
                         type: lastPart + "/rejected"
                     }
-                }).finally(()=>{
+                }).finally(() => {
                     const reducerActionInfo = store.reducerAction[action.type]
                     const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
                     store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
                 })
-
-
+            } else {
+                action = {
+                    payload: actionCall,
+                    type: actionCall.type + "/fulfilled"
+                }
+                const reducerActionInfo = store.reducerAction[action.type]
+                const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
+                store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
             }
         } else {
-            const {
-                actionFn,
-                reducerName,
-                payload
-            } = actionObj
+            const {actionFn, reducerName, payload} = actionObj
 
 
             let sliceState = store["state"][reducerName]

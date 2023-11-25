@@ -11,9 +11,10 @@ const Nav = () => {
     }
 
     return (
+        <div className="bg-[#be5d9c] ">
         <div className="mx-auto max-w-5xl">
-            <div className="py-8">
-                <div className="w-full flex justify-between gap-x-6 bg-[#be5d9c] rounded-3xl py-2 px-10">
+            <div className="py-3">
+                <div className="w-full flex justify-between gap-x-6  rounded-3xl py-2 px-10">
 
                     <div className="flex items-center gap-x-6">
                         <li className="text-sm font-medium list-none">
@@ -39,6 +40,7 @@ const Nav = () => {
 
                 </div>
             </div>
+        </div>
         </div>
     );
 };

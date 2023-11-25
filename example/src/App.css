@@ -3,12 +3,32 @@
 }
 
 
-button{
-  background: #be5d9c !important;
-  font-size: 12px;
-  border-radius: 4px;
+button {
+    background: #be5d9c !important;
+    font-size: 12px;
+    border-radius: 4px;
 }
 
-input{
-  padding: 5px 10px;
+input {
+    padding: 5px 10px;
+}
+
+.container {
+    max-width: 1240px;
+    margin: auto
+}
+
+.slider-root{
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.slider-item{
+    max-height: 324px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+.slick-slide:focus{
+    border: none !important;
+    outline: none !important;
 }
