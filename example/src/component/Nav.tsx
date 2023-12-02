@@ -5,6 +5,10 @@ import {useDispatch} from "rsl-redux";
 
 const Nav = () => {
     const {auth} = useSelector(state => state?.authState)
+
+    const {carts} = useSelector(state => state?.cartState)
+    console.log(carts)
+
     const dispatch = useDispatch()
     function handleLogout() {
         dispatch(logOut())
