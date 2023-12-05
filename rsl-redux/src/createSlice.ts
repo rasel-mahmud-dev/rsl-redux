@@ -46,7 +46,7 @@ function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
     const reducerName = payload.name
     const extraReducers = payload.extraReducers
 
-    let actions = {}
+    let actions: {[key: string]: (...arg: any)=>void} = {}
 
     for (let actionName in payload.reducers) {
         let actionFn = payload.reducers[actionName]
