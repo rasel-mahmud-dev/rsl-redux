@@ -12,17 +12,6 @@ export const loginAction = createAsyncAction(
         }
 
     })
-export const loginAction2 = createAsyncAction(
-    "auth-login",
-    async function (payload) {
-        try {
-            const {data} = await api.post("/users/login", payload)
-            return data
-        } catch (e) {
-            throw e
-        }
-
-    })
 
 export const createAccountAction = createAsyncAction(
     "create_account",
