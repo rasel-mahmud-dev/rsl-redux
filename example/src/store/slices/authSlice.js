@@ -1,5 +1,5 @@
 import {createSlice} from "rsl-redux";
-import {authVerifyAction, createAccountAction, loginAction} from "../actions/authAction.js";
+import {authVerifyAction, createAccountAction, loginAction, loginAction2} from "../actions/authAction.js";
 
 const initialState = {
     auth: null,
@@ -16,6 +16,7 @@ const authSlice = createSlice({
             }
         },
         logOut(state){
+            localStorage.removeItem("token")
             state.auth = null
         }
     },
@@ -29,6 +30,10 @@ const authSlice = createSlice({
 
 
         builder.addCase(loginAction.rejected, (state, action)=>{
+            console.log(state, action)
+        })
+
+        builder.addCase(loginAction2.rejected, (state, action)=>{
             console.log(state, action)
         })
 

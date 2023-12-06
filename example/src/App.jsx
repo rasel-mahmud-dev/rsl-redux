@@ -8,6 +8,7 @@ import Registration from "./pages/auth/Registration.jsx";
 import {useEffect} from "react";
 import {authVerifyAction} from "./store/actions/authAction.js";
 import {useDispatch} from "rsl-redux";
+import SearchProduct from "./pages/SearchProduct.jsx";
 
 function App(){
 
@@ -28,6 +29,7 @@ function App(){
                     <Routes>
                         <Route path="/" element={<Products />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/search" element={<SearchProduct />} />
                         <Route path="/register" element={<Registration />} />
                         <Route path="/rtk" element={<ReduxRTK /> } />
                         <Route path="/about" element={<AboutPage /> } />

@@ -27,10 +27,11 @@ function useDispatch() {
                     }
                 }).finally(() => {
                     const reducerActionInfo = store.reducerAction[action.type]
-                    console.log(store.reducerAction, action.type)
 
-                    const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
-                    store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
+                    if (reducerActionInfo) {
+                        const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
+                        store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
+                    }
                 })
             } else {
                 action = {
@@ -38,8 +39,10 @@ function useDispatch() {
                     type: actionCall.type + "/fulfilled"
                 }
                 const reducerActionInfo = store.reducerAction[action.type]
-                const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
-                store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
+                if (reducerActionInfo) {
+                    const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
+                    store.reducerDispatch(reducerActionInfo.reducerName, updatedState)
+                }
             }
         } else {
             const {actionFn, reducerName, payload} = actionObj

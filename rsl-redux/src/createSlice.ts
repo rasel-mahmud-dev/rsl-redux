@@ -65,9 +65,9 @@ function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
     if (extraReducers) {
         extraReducers({
             addCase: function (actionCreator, reducerAction) {
-
-                // const result = actionCreator("")
-                // reducerAction(store.state, result)
+                if(Object.keys((store["reducerAction"])).includes(actionCreator.type)){
+                    console.warn("Duplicate action type:: "+ actionCreator.type)
+                }
 
                 store["reducerAction"] = {
                     ...store["reducerAction"],
@@ -76,13 +76,6 @@ function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
                         reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
                     }
                 }
-
-                console.log(store, actionCreator.type)
-
-
-
-
-
             }
         })
     }

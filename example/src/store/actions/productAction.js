@@ -13,3 +13,15 @@ export const fetchProducts = createAsyncAction(
         }
 
     })
+export const searchProductAction = createAsyncAction(
+    "search-products",
+    async function (text) {
+        try {
+            const res = await api.get("/products/search?text=" + text)
+            return res.data
+
+        } catch (e) {
+            throw e
+        }
+
+    })
