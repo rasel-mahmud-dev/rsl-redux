@@ -9,6 +9,7 @@ import {useEffect} from "react";
 import {authVerifyAction} from "./store/actions/authAction.js";
 import {useDispatch} from "rsl-redux";
 import SearchProduct from "./pages/SearchProduct.jsx";
+import {fetchCategories} from "./store/actions/categoryAction.js";
 
 function App(){
 
@@ -17,6 +18,7 @@ function App(){
     useEffect(()=>{
 
         dispatch( authVerifyAction())
+        dispatch( fetchCategories())
 
     }, [])
     return (
@@ -30,6 +32,7 @@ function App(){
                         <Route path="/" element={<Products />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/search" element={<SearchProduct />} />
+                        <Route path="/p/:categoryName" element={<SearchProduct />} />
                         <Route path="/register" element={<Registration />} />
                         <Route path="/rtk" element={<ReduxRTK /> } />
                         <Route path="/about" element={<AboutPage /> } />

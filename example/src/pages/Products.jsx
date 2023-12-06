@@ -5,7 +5,7 @@ import {fetchProducts} from "../store/actions/productAction.js";
 import HeroBanner from "../component/HeroBanner.jsx";
 
 const Products = () => {
-    const {products} = useSelector((state) => state.productState)
+    const {products, categories} = useSelector((state) => state.productState)
 
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ const Products = () => {
 
     return (
         <div>
-            <HeroBanner />
+            <HeroBanner categories={categories}  />
             <div className="grid grid-cols-5 gap-6 mt-4">
                 {products.map(product => (
                     <Product key={product.id} {...product} />

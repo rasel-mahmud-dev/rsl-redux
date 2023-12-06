@@ -2,8 +2,9 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {Link} from "react-router-dom";
 
-const HeroBanner = () => {
+const HeroBanner = ({categories}) => {
 
     const items = [
         {image: "/ecfcb747-0e8c-4c16-a6a2-88b810351aeb.jpg_1200x1200.jpg"},
@@ -38,11 +39,13 @@ const HeroBanner = () => {
         <div className="grid-cols-12 grid gap-x-5 mt-4">
             <div className="col-span-3 bg-white rounded-2xl py-2 px-4">
 
-                {cat.map(item => (
-                    <div className="flex items-center gap-x-2 text-sm py-1 text-gray-800 font-medium  ">
-                        <span>{item.icon}</span>
-                        <span>{item.name}</span>
-                    </div>
+                {categories.map(item => (
+                    <Link to={`/p/${item.slug}`}>
+                        <div className="flex items-center gap-x-2 text-sm py-1 text-gray-800 font-medium  ">
+                            <span>{item.icon}</span>
+                            <span>{item.name}</span>
+                        </div>
+                    </Link>
                 ))}
 
 
