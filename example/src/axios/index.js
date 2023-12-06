@@ -2,20 +2,19 @@ import axios from "axios";
 
 export const api = axios.create({
     // baseURL: "http://localhost:1000/api/v1/rs-redux",
-    baseURL: "http://192.168.169.203:1000/api/v1/rs-redux",
-    headers: {
-
-    }
+    baseURL: "http://192.168.169.203:1000/api/v1/rs-redux"
 })
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-    config.headers["authorization"] = localStorage.getItem("token")
+    config.headers.Authorization =  localStorage.getItem("token");
+    console.log(config)
     return config;
 }, function (error) {
     // Do something with request error
     return Promise.reject(error);
 });
+
 
 // // Add a response interceptor
 // axios.interceptors.response.use(function (response) {

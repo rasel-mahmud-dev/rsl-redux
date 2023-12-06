@@ -1,5 +1,6 @@
 import {useDispatch} from "rsl-redux";
-import {loginAction} from "../store/actions/authAction.js";
+import {loginAction} from "../..//store/actions/authAction.js";
+import {Link} from "react-router-dom";
 
 function Login() {
 
@@ -29,6 +30,11 @@ function Login() {
                             <input type="password" id="password" name="password" placeholder="Enter your password"
                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
                         </div>
+
+                       <div className="my-3">
+                           <Link to="/register">Create an account</Link>
+                       </div>
+
                         <button type="submit"
                                 className="w-full bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">Login
                         </button>
@@ -36,7 +42,8 @@ function Login() {
                 </div>
             </div>
         </div>
-)
+    )
 }
 
 export default Login
+

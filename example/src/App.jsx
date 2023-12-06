@@ -1,11 +1,23 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Nav from "./component/Nav.jsx";
-import Login from "./pages/Login.jsx";
+import Login from "./pages/auth/Login.jsx";
 import ReduxRTK from "./pages/ReduxRTK.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import Products from "./pages/Products.jsx";
+import Registration from "./pages/auth/Registration.jsx";
+import {useEffect} from "react";
+import {authVerifyAction} from "./store/actions/authAction.js";
+import {useDispatch} from "rsl-redux";
 
 function App(){
+
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+
+        dispatch( authVerifyAction())
+
+    }, [])
     return (
         <div>
             <BrowserRouter>
@@ -16,6 +28,7 @@ function App(){
                     <Routes>
                         <Route path="/" element={<Products />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Registration />} />
                         <Route path="/rtk" element={<ReduxRTK /> } />
                         <Route path="/about" element={<AboutPage /> } />
                         {/*<Route path="/p" element={<ProductList /> } />*/}

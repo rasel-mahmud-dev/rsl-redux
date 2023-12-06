@@ -76,6 +76,13 @@ function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
                         reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
                     }
                 }
+
+                console.log(store, actionCreator.type)
+
+
+
+
+
             }
         })
     }
