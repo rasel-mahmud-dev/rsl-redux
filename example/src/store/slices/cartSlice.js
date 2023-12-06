@@ -1,18 +1,7 @@
 import {createSlice} from "rsl-redux";
 
-export type CartType = {
-    title: string,
-    image?: string,
-    id: string,
-    price: number
-    quantity: number; // Adding the quantity field
-}
 
-type StateType = {
-    carts: Array<CartType>
-}
-
-const initialState: StateType = {
+const initialState = {
     carts: []
 }
 

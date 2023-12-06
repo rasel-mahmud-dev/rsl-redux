@@ -1,9 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Nav from "./component/Nav";
-import Login from "./pages/Login.tsx";
-import ReduxRTK from "./pages/ReduxRTK.tsx";
-import AboutPage from "./pages/AboutPage.tsx";
-import Products from "./pages/Products.tsx";
+import Nav from "./component/Nav.jsx";
+import Login from "./pages/Login.jsx";
+import ReduxRTK from "./pages/ReduxRTK.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import Products from "./pages/Products.jsx";
 
 function App(){
     return (

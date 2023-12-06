@@ -1,5 +1,5 @@
 import {createAsyncAction} from "rsl-redux";
-import {api} from "../../axios";
+import {api} from "../../axios/index.js";
 
 export const fetchProducts = createAsyncAction(
     "fetch-products",

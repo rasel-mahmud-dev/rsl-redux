@@ -1,17 +1,7 @@
 import {createSlice} from "rsl-redux";
-import {fetchProducts} from "../actions/productAction.ts";
+import {fetchProducts} from "../actions/productAction.js";
 
-export type ProductType = {
-    title: string,
-    id: string,
-    price: number
-}
-
-type StateType = {
-    products: Array<ProductType>
-}
-
-const initialState: StateType = {
+const initialState = {
     products: []
 }
 

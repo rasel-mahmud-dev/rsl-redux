@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import Product from "../component/Product.tsx";
-import {fetchProducts} from "../store/actions/productAction.ts";
-import HeroBanner from "../component/HeroBanner.tsx";
+import Product from "../component/Product.jsx";
+import {fetchProducts} from "../store/actions/productAction.js";
+import HeroBanner from "../component/HeroBanner.jsx";
 
 const Products = () => {
     const {products} = useSelector((state) => state.productState)

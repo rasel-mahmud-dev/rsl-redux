@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import {logOut, setAuth} from "../store/slices/authSlice";
-import {deletePostAsync, fetchPostsAsync} from "../store/actions/postAction";
+import {deletePostAsync, fetchPostsAsync} from "../store/actions/postAction.js";
 import {useDispatch, useSelector} from "rsl-redux";
-import {RootStateType} from "../store/store.ts";
+import {RootStateType} from "../store/store.js";
 
 
 function ReduxSlice() {

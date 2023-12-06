@@ -1,5 +1,5 @@
 import {createSlice} from "rsl-redux";
-import {deletePostAsync, fetchPostsAsync} from "../actions/postAction";
+import {deletePostAsync, fetchPostsAsync} from "../actions/postAction.js";
 
 const postSlice = createSlice({
     name: 'postState',

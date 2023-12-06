@@ -1,8 +1,8 @@
 import {configureStore} from "rsl-redux";
-import postSlice from "./slices/postSlice";
-import authSlice from "./slices/authSlice";
-import productSlice from "./slices/productSlice.ts";
-import cartSlice from "./slices/cartSlice.ts";
+import postSlice from "./slices/postSlice.js";
+import authSlice from "./slices/authSlice.js";
+import productSlice from "./slices/productSlice.js";
+import cartSlice from "./slices/cartSlice.js";
 
 const store = configureStore({
     reducer: {
@@ -13,6 +13,5 @@ const store = configureStore({
     }
 })
 
-export type RootStateType =  ReturnType<typeof store.state>
 
 export default store

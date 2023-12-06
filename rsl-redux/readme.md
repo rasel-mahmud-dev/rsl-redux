@@ -31,7 +31,7 @@ npm install rsl-redux
 
 
 ```javascript
-// store.ts
+// store.js
 export const store = {
     state: {},
     listens: [],

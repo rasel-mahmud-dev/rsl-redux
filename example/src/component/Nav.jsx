@@ -1,6 +1,6 @@
 import {NavLink} from "react-router-dom";
 import {useSelector} from "rsl-redux";
-import {logOut} from "../store/slices/authSlice.ts";
+import {logOut} from "../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux";
 
 const Nav = () => {

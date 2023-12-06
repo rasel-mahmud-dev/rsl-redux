@@ -1,11 +1,6 @@
 import {createSlice} from "rsl-redux";
 
-interface AuthState {
-    auth: {email: string, username?: string} | null,
-    testAuth: {}
-}
-
-const initialState: AuthState = {
+const initialState = {
     auth: null,
     testAuth: {}
 }

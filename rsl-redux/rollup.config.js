@@ -8,7 +8,7 @@ import terser from "@rollup/plugin-terser";
 
 export default {
     input: [
-        "src/index.ts",
+        "src/index.js",
         "src/configureStore.ts",
         "src/createSlice.ts",
         "src/useSelector.ts",
