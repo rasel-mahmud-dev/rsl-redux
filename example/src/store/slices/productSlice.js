@@ -4,13 +4,27 @@ import {fetchCategories} from "../actions/categoryAction.js";
 
 const initialState = {
     products: [],
-    categories: []
+    categories: [],
+    filter: {
+        search: "",
+        categoryIds: [],
+        brandIds: [],
+        pageNumber: 1
+    }
 }
 
 const productSlice = createSlice({
     name: 'productState',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+
+        setFilter(state, action) {
+            for (let payloadKey in action.payload) {
+                state.filter[payloadKey] = action.payload[payloadKey]
+            }
+        }
+
+    },
 
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
@@ -24,5 +38,5 @@ const productSlice = createSlice({
 })
 
 
-// export const {} = productSlice.actions
+export const {setFilter} = productSlice.actions
 export default productSlice

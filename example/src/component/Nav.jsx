@@ -1,4 +1,4 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "rsl-redux";
 import {logOut} from "../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux";
@@ -11,6 +11,7 @@ const Nav = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
     function handleLogout() {
         dispatch(logOut())
@@ -19,7 +20,11 @@ const Nav = () => {
 
     function handleSearchProduct(e) {
         const val = e.target.value
-        navigate("/search?text=" + val)
+        if (location.pathname.startsWith("/p/")) {
+            navigate(location.pathname + `?search=` + val)
+            return
+        }
+        navigate("/p/?search=" + val)
     }
 
 

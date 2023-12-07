@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const api = axios.create({
-    // baseURL: "http://localhost:1000/api/v1/rs-redux",
-    baseURL: "http://192.168.169.203:1000/api/v1/rs-redux"
+    baseURL: "http://localhost:1100/api/v1/rs-redux",
+    // baseURL: "http://192.168.169.203:1000/api/v1/rs-redux"
 })
 
 api.interceptors.request.use(function (config){
