@@ -13,6 +13,9 @@ import AdminLayout from "./layout/AdminLayout.jsx";
 import AddProduct from "./pages/admin/AddProduct.jsx";
 import AddCategory from "./pages/admin/AddCategory.jsx";
 import ProductList from "./pages/admin/ProductList.jsx";
+import BrandList from "./pages/admin/BrandList.jsx";
+import CategoryList from "./pages/admin/CategoryList.jsx";
+import AddBrand from "./pages/admin/AddBrand.jsx";
 
 
 const routes = createBrowserRouter([
@@ -36,8 +39,14 @@ const routes = createBrowserRouter([
         children: [
             {path: "", element: <DashboardHome/>},
             {path: "add-product", element: <AddProduct/>},
+            {path: "edit-product/:productId", element: <AddProduct/>},
+            {path: "edit-category/:categoryId", element: <AddCategory/>},
             {path: "add-category", element: <AddCategory/>},
             {path: "products", element: <ProductList/>},
+            {path: "brands", element: <BrandList/>},
+            {path: "edit-brand/:brandId", element: <AddBrand/>},
+            {path: "add-brand", element: <AddBrand/>},
+            {path: "categories", element: <CategoryList/>},
 
         ]
     }

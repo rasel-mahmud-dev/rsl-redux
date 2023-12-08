@@ -1,69 +1,68 @@
-// CategoryForm.jsx
+// BrandForm.jsx
 
 import React, {useEffect, useState} from 'react';
 import {api} from "../../axios/index.js";
 import {useParams} from "react-router-dom";
 import Toast from "../../utils/toast.js";
-import {fetchBrands, fetchCategories} from "../../store/actions/categoryAction.js";
+import {fetchBrands} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
 
-const CategoryForm = () => {
+const BrandForm = () => {
 
 
-    const {categoryId} = useParams()
-
+    const {brandId} = useParams()
     const dispatch = useDispatch()
 
-    const [category, setCategory] = useState({
+    const [brand, setBrand] = useState({
         name: "",
         image: "",
         slug: ""
     });
 
     useEffect(() => {
-        if (categoryId) {
-            api.get("/categories/single?_id=" + categoryId).then(r => {
+        if (brandId) {
+            api.get("/brands/single?_id=" + brandId).then(r => {
                 if (r.data) {
                     let updatedState = {}
                     for (let dataKey in r.data) {
-                        if (Object.keys(category).includes(dataKey)) {
+                        if (Object.keys(brand).includes(dataKey)) {
                             updatedState[dataKey] = r.data[dataKey]
                         }
                     }
-                    setCategory(updatedState)
+                    setBrand(updatedState)
                 }
             })
         }
-    }, [categoryId]);
+    }, [brandId]);
 
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setCategory(prev => ({...prev, [name]: value}));
+        setBrand(prev => ({...prev, [name]: value}));
     };
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            if (categoryId) {
-                let r = await api.patch("/categories/" + categoryId, category)
-                if (r.status === 200) return Toast.openSuccess("Category has been updated")
+            if (brandId) {
+                let r = await api.patch("/brands/" + brandId, brand)
+                if (r.status === 200) return Toast.openSuccess("Brand has been updated")
             }
 
-            let r = await api.post("/categories", [category])
-            if (r.status === 201) return Toast.openSuccess("Category has been added")
+            let r = await api.post("/brands", [brand])
+            if (r.status === 201) return Toast.openSuccess("Brand has been added")
 
         } catch (ex) {
             Toast.openError(ex?.message)
-        }  finally {
-            dispatch(fetchCategories())
+        } finally {
+            dispatch(fetchBrands())
         }
 
     };
 
     return (
         <div className="py-10 ">
-            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{categoryId ? "Update " : "Add "} Category</h2>
+            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{brandId ? "Update " : "Add "} Brand</h2>
 
 
             <form onSubmit={handleSubmit} className="max-w-xl">
@@ -72,19 +71,19 @@ const CategoryForm = () => {
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Name:</label>
-                        <input className="rs-input" type="text" name="name" value={category.name}
+                        <input className="rs-input" type="text" name="name" value={brand.name}
                                onChange={handleChange}/>
                     </div>
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Slug:</label>
-                        <input className="rs-input" type="text" name="slug" value={category.slug}
+                        <input className="rs-input" type="text" name="slug" value={brand.slug}
                                onChange={handleChange}/>
                     </div>
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Image:</label>
-                        <input className="rs-input" type="text" name="image" value={category.image}
+                        <input className="rs-input" type="text" name="image" value={brand.image}
                                onChange={handleChange}/>
                     </div>
 
@@ -93,11 +92,11 @@ const CategoryForm = () => {
                 <button
                     type="submit"
                     className="primary-btn"
-                >{categoryId ? "Update " : "Add "} Category
+                >{brandId ? "Update " : "Add "} Brand
                 </button>
             </form>
         </div>
     );
 };
 
-export default CategoryForm;
+export default BrandForm;

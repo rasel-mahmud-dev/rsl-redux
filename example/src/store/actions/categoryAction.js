@@ -15,3 +15,17 @@ export const fetchCategories = createAsyncAction(
         }
 
     })
+
+export const fetchBrands = createAsyncAction(
+    "fetch-brands",
+    async function () {
+        try {
+            const res = await api.get("/brands")
+            console.log(res.data)
+            return res.data
+
+        } catch (e) {
+            throw e
+        }
+
+    })

@@ -122,6 +122,7 @@
 
 .rs-input {
   padding: 4px 10px;
+  min-height: 38px;
   border: 1px solid pink;
   border-radius: 16px;
   background: rgba(255, 224, 230, 0.17);
@@ -153,4 +154,9 @@
   .content {
     margin-left: var(--sidebar-width);
   }
+}
+
+.swal2-title {
+  font-size: 16px;
+  font-weight: 600;
 }

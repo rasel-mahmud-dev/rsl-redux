@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "rsl-redux";
 import {attributes, categoryMap} from "../SearchProduct.jsx";
+import {useParams} from "react-router-dom";
+import {api} from "../../axios/index.js";
+import Toast from "../../utils/toast.js";
 
 
 const AddProduct = () => {
 
     const {categories} = useSelector(state => state.productState)
+
+    const {productId} = useParams()
 
     const [product, setProduct] = useState({
         attributesArray: [],
@@ -23,6 +28,23 @@ const AddProduct = () => {
 
 
     useEffect(() => {
+        if (productId) {
+            api.get("/products/single?_id=" + productId).then(r => {
+                if (r.data) {
+                    let updatedState = {}
+                    for (let dataKey in r.data) {
+                        if (Object.keys(product).includes(dataKey)) {
+                            updatedState[dataKey] = r.data[dataKey]
+                        }
+                    }
+                    setProduct(updatedState)
+                }
+            })
+        }
+    }, [productId]);
+
+
+    useEffect(() => {
         if (product.category_id) {
             let a = categoryMap[product.category_id]
             handleChange({target: {name: "attributesArray", value: a}})
@@ -37,9 +59,16 @@ const AddProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle submission of the product data (e.g., send to backend or perform actions)
-        console.log('Product data submitted:', product);
+        if (productId) {
+            api.patch("/products/" + productId, product).then(r => {
+                if (r.status === 200) return Toast.openSuccess("Product has been updated")
+            })
+            return;
+        }
 
+        api.post("/products", [product]).then(r => {
+            if (r.status === 201) return Toast.openSuccess("Product has been added")
+        })
 
     };
 
@@ -56,7 +85,7 @@ const AddProduct = () => {
 
     return (
         <div className="py-10 ">
-            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">Add Product</h2>
+            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{productId ? "Update " : "Add "} Product</h2>
             <form onSubmit={handleSubmit}>
 
                 <div className="grid grid-cols-2 gap-x-10">
@@ -111,16 +140,17 @@ const AddProduct = () => {
                     </div>
                     <div className="">
                         <h4 className="font-semibold text-slate-900">Attributes</h4>
-                        {!product?.attributesArray.length && (
+                        {!product?.attributesArray?.length && (
                             <div>
                                 Please select a category
                             </div>
                         )}
                         <div>
-                            {product?.attributesArray.map(attrName => (
+                            {product?.attributesArray?.map(attrName => (
                                 <div className="flex flex-col mb-3">
                                     <label htmlFor="">{attributes?.[attrName]?.label}</label>
-                                    <select className="rs-input" name={attrName} onChange={handleChangeAttribute}>
+                                    <select className="rs-input" value={product.attributes[attrName]} name={attrName}
+                                            onChange={handleChangeAttribute}>
                                         <option value="">Select {attributes?.[attrName]?.label}</option>
                                         {attributes?.[attrName]?.options?.map(opt => (
                                             <option value={opt.value}>{opt.name}</option>
@@ -134,7 +164,7 @@ const AddProduct = () => {
 
 
                 {/* Other input fields for price, stock, discount, cover_image, description, attributes, category_id, brand_id */}
-                <button type="submit">Add Product</button>
+                <button type="submit" className="primary-btn">{productId ? "Update " : "Add "} Product</button>
             </form>
         </div>
     );

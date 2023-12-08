@@ -1,9 +1,8 @@
-import {BrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
-
 import {useEffect} from "react";
+import {RouterProvider} from "react-router-dom";
 import {authVerifyAction} from "./store/actions/authAction.js";
 import {useDispatch, useSelector} from "rsl-redux";
-import {fetchCategories} from "./store/actions/categoryAction.js";
+import {fetchBrands, fetchCategories} from "./store/actions/categoryAction.js";
 import {fetchCarts} from "./store/actions/cartAction.js";
 import routes from "./routes.jsx";
 
@@ -14,6 +13,7 @@ function App() {
     useEffect(() => {
         dispatch(authVerifyAction())
         dispatch(fetchCategories())
+        dispatch(fetchBrands())
     }, [])
 
 

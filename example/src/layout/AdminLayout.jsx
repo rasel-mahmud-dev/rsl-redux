@@ -9,7 +9,7 @@ const AdminLayout = () => {
         <div>
             {/* You can place common layout elements here */}
             <Nav/>
-            <div className="container">
+            <div className="containers">
                 {/* This will render the children components */}
 
                 <div className="admin-layout">
@@ -17,12 +17,18 @@ const AdminLayout = () => {
                         <div>
                             <li><Link to="/admin">Admin Dashboard</Link></li>
                             <li><Link to={`/admin/products`}>Products</Link></li>
+                            <li><Link to={`/admin/brands`}>Brands</Link></li>
+                            <li><Link to={`/admin/categories`}>Categories</Link></li>
                             <li><Link to={`/admin/add-product`}>Add Product</Link></li>
+                            <li><Link to={`/admin/add-brand`}>Add Brand</Link></li>
+                            <li><Link to={`/admin/add-category`}>Add Category</Link></li>
                         </div>
                     </Sidebar>
 
                     <div className="content ">
-                        <Outlet/>
+                        <div className="container">
+                            <Outlet/>
+                        </div>
                     </div>
                 </div>
 

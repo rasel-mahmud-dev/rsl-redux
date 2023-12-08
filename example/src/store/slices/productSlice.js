@@ -1,10 +1,11 @@
 import {createSlice} from "rsl-redux";
 import {fetchProducts} from "../actions/productAction.js";
-import {fetchCategories} from "../actions/categoryAction.js";
+import {fetchBrands, fetchCategories} from "../actions/categoryAction.js";
 import {fetchAdminProducts} from "../actions/adminAction.js";
 
 const initialState = {
     products: [],
+    brands: [],
     adminProducts: [],
     categories: [],
     filter: {
@@ -39,6 +40,10 @@ const productSlice = createSlice({
 
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
             state.categories = action.payload
+        })
+
+        builder.addCase(fetchBrands.fulfilled, (state, action) => {
+            state.brands = action.payload
         })
     }
 })
