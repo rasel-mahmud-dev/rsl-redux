@@ -33,7 +33,9 @@
   "homepage": "https://github.com/rasel-mahmud-dev/rsl-redux",
   "license": "MIT",
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react-icons": "^4.12.0",
-    "rsl-redux": "^0.0.0"
+    "rsl-redux": "^0.0.0",
+    "sass": "^1.69.5"
   }
 }

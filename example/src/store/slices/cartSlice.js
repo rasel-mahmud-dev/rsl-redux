@@ -1,4 +1,5 @@
 import {createSlice} from "rsl-redux";
+import {fetchCarts} from "../actions/cartAction.js";
 
 
 const initialState = {
@@ -9,7 +10,7 @@ const cartSlice= createSlice({
     name: 'cartState',
     initialState: initialState,
     reducers: {
-        addToCart: (state, action)=>{
+        addToCart: (state, action) => {
             const existingItemIndex = state.carts.findIndex(item => item.id === action.payload.id);
 
             if (existingItemIndex !== -1) {
@@ -27,15 +28,48 @@ const cartSlice= createSlice({
                     carts: [...state.carts, action.payload],
                 };
             }
-        }
+        },
+        incrementQuantity: (state, action) => {
+            const existingItemIndex = state.carts.findIndex(item => item.id === action.payload.id);
+            if (existingItemIndex !== -1) {
+                const updatedCart = [...state.carts];
+                updatedCart[existingItemIndex].quantity += 1;
+                return {
+                    ...state,
+                    carts: updatedCart,
+                };
+            } else {
+              return state;
+            }
+        },
+        decrementQuantity: (state, action) => {
+            const existingItemIndex = state.carts.findIndex(item => item.id === action.payload.id);
+
+            if (existingItemIndex !== -1) {
+                // If the item exists, increment its quantity by the payload amount
+                const updatedCart = [...state.carts];
+                if(updatedCart[existingItemIndex].quantity > 1) {
+                    updatedCart[existingItemIndex].quantity -= 1;
+                }
+
+                return {
+                    ...state,
+                    carts: updatedCart,
+                };
+            } else {
+                return state;
+            }
+        },
     },
 
-    extraReducers: () => {
-
+    extraReducers: (builder) => {
+        builder.addCase(fetchCarts.fulfilled, (state, action)=>{
+            state.carts = action.payload
+        })
     }
 })
 
 
 
-export const {addToCart} = cartSlice.actions
+export const {addToCart, incrementQuantity, decrementQuantity} = cartSlice.actions
 export default cartSlice
