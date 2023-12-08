@@ -10,7 +10,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "rsl-redux": "rsl-redux/src"
+      "rsl-redux": "rsl-redux/src",
+      "rsl": "example/src",
+      "@": "./src",
+      "src": "./src"
     }
   }
 })

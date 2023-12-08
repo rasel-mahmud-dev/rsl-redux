@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({className, children}) => {
     return (
-        <div>
-
+        <div className={`${className}`}>
+            {children}
         </div>
     );
 };

@@ -1,12 +1,11 @@
-import {BrowserRouter} from "react-router-dom";
-import Nav from "./component/Nav.jsx";
+import {BrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
+
 import {useEffect} from "react";
 import {authVerifyAction} from "./store/actions/authAction.js";
 import {useDispatch, useSelector} from "rsl-redux";
 import {fetchCategories} from "./store/actions/categoryAction.js";
 import {fetchCarts} from "./store/actions/cartAction.js";
-import MainLayout from "./layout/MainLayout.jsx";
-import AdminLayout from "./layout/AdminLayout.jsx";
+import routes from "./routes.jsx";
 
 function App() {
     const {auth} = useSelector(state => state.authState)
@@ -19,7 +18,6 @@ function App() {
 
 
     useEffect(() => {
-        console.log(auth)
         if (auth?._id) {
             dispatch(fetchCarts())
         }
@@ -27,13 +25,7 @@ function App() {
 
     return (
         <div>
-            <BrowserRouter>
-                <Nav/>
-                <div className="container">
-                    <MainLayout/>
-                    <AdminLayout/>
-                </div>
-            </BrowserRouter>
+            <RouterProvider router={routes}/>
         </div>
     )
 }

@@ -41,7 +41,7 @@ const Nav = () => {
     }
 
     return (
-        <div className="bg-[#be5d9c] ">
+        <div className="bg-[#be5d9c] fixed w-full left-0 top-0 z-[1000]">
             <div className="mx-auto max-w-5xl">
                 <div className="py-3">
                     <div className="w-full flex justify-between gap-x-6  rounded-3xl py-2 px-4">
