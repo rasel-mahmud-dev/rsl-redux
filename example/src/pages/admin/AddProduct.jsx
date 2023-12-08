@@ -8,13 +8,14 @@ import Toast from "../../utils/toast.js";
 
 const AddProduct = () => {
 
-    const {categories} = useSelector(state => state.productState)
+    const {categories, brands} = useSelector(state => state.productState)
 
     const {productId} = useParams()
 
     const [product, setProduct] = useState({
         attributesArray: [],
         title: '',
+        slug: '',
         price: 0,
         stock: 0,
         discount: 0,
@@ -57,18 +58,20 @@ const AddProduct = () => {
         setProduct({...product, [name]: value});
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (productId) {
-            api.patch("/products/" + productId, product).then(r => {
-                if (r.status === 200) return Toast.openSuccess("Product has been updated")
-            })
-            return;
-        }
+    const handleSubmit = async (e) => {
 
-        api.post("/products", [product]).then(r => {
+        try {
+            e.preventDefault();
+            if (productId) {
+                await api.patch("/products/" + productId, product)
+                return Toast.openSuccess("Product has been updated")
+            }
+
+            const r = await api.post("/products", [product])
             if (r.status === 201) return Toast.openSuccess("Product has been added")
-        })
+        } catch (ex) {
+            Toast.openError(ex?.message)
+        }
 
     };
 
@@ -96,6 +99,11 @@ const AddProduct = () => {
                             <input className="rs-input" type="text" name="title" value={product.title}
                                    onChange={handleChange}/>
                         </div>
+                        {productId && <div className="flex flex-col mb-3">
+                            <label htmlFor="">Slug:</label>
+                            <input className="rs-input" type="text" name="slug" value={product.slug}
+                                   onChange={handleChange}/>
+                        </div> }
 
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Price:</label>
@@ -127,18 +135,34 @@ const AddProduct = () => {
                                       onChange={handleChange}></textarea>
                         </div>
 
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Category:</label>
-                            <select className="rs-input" name="category_id" id="" value={product.category_id}
-                                    onChange={handleChange}>
-                                <option value="">Select Category</option>
-                                {categories.map(cat => (
-                                    <option value={cat._id}>{cat.name}</option>
-                                ))}
-                            </select>
-                        </div>
                     </div>
                     <div className="">
+
+                        <div>
+                            <div className="flex flex-col mb-3">
+                                <label htmlFor="">Brand:</label>
+                                <select className="rs-input" name="brand_id" id="" value={product.brand_id}
+                                        onChange={handleChange}>
+                                    <option value="">Select Brand</option>
+                                    {brands.map(cat => (
+                                        <option value={cat._id}>{cat.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="flex flex-col mb-3">
+                                <label htmlFor="">Category:</label>
+                                <select className="rs-input" name="category_id" id="" value={product.category_id}
+                                        onChange={handleChange}>
+                                    <option value="">Select Category</option>
+                                    {categories.map(cat => (
+                                        <option value={cat._id}>{cat.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+
                         <h4 className="font-semibold text-slate-900">Attributes</h4>
                         {!product?.attributesArray?.length && (
                             <div>

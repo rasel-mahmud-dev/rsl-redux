@@ -14,14 +14,14 @@ const AdminLayout = () => {
 
                 <div className="admin-layout">
                     <Sidebar className="sidebar">
-                        <div>
-                            <li><Link to="/admin">Admin Dashboard</Link></li>
-                            <li><Link to={`/admin/products`}>Products</Link></li>
-                            <li><Link to={`/admin/brands`}>Brands</Link></li>
-                            <li><Link to={`/admin/categories`}>Categories</Link></li>
-                            <li><Link to={`/admin/add-product`}>Add Product</Link></li>
-                            <li><Link to={`/admin/add-brand`}>Add Brand</Link></li>
-                            <li><Link to={`/admin/add-category`}>Add Category</Link></li>
+                        <div className="font-semibold text-sm text-neutral-800">
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to="/admin">Admin Dashboard</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/products`}>Products</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/brands`}>Brands</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/categories`}>Categories</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/add-product`}>Add Product</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/add-brand`}>Add Brand</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover:bg-pink-200 cursor-pointer  my-1 px-2 rounded-lg"><Link className="text-neutral-800 font-semibold" to={`/admin/add-category`}>Add Category</Link></li>
                         </div>
                     </Sidebar>
 
