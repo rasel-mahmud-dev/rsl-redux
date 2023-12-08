@@ -7,7 +7,7 @@ import Breadcrumb from "../component/Breadcrumb.jsx";
 import {setFilter} from "../store/slices/productSlice.js";
 import {FaAngleRight} from "react-icons/fa";
 
-const attributes = {
+export const attributes = {
     battery: {
         label: "Battery",
         options: [
@@ -169,7 +169,7 @@ const attributes = {
     }
 }
 
-const categoryMap = {
+export const categoryMap = {
     "6570c5ae26c947e3c99321f7": ["battery", "screen", "resulation", "ram", "laptop_storage"]
 }
 

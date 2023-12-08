@@ -62,36 +62,42 @@ const Nav = () => {
                         </div>
 
                         {auth ? (
-                            <div className="text-sm text-white font-medium list-none flex items-center gap-x-2">
+                            <div className="text-sm text-white font-medium list-none flex items-center gap-x-6">
 
-                               <div>
-                                   <div  className="text-white  list-none flex items-center gap-x-2">
+                                <div>
+                                    <div className="text-white  list-none flex items-center gap-x-4">
 
-                                       <div onClick={()=>setOpenMenu("carts")}
-                                            className="text-white  list-none flex items-center gap-x-2">
-                                           <span>Your Cart</span>
-                                           <CiShoppingCart className="text-xl"/>
-                                           {carts.length}
-                                       </div>
+                                        <div onClick={() => setOpenMenu("carts")}
+                                             className="text-white  list-none flex items-center gap-x-1 relative">
+                                            <span>Your Cart</span>
+                                            <CiShoppingCart className="text-xl"/>
+                                            <span
+                                                className="absolute -top-3 -right-3 bg-white/20 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
+                                        </div>
 
-                                       <Popup onClose={()=>setOpenMenu("")} isOpen={openMenu === "carts"} className="top-16 w-[240px]">
-                                           <div className={`select-none cursor-auto `}>
+                                        <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
+                                               className="top-16 w-[240px]">
+                                            <div className={`select-none cursor-auto `}>
 
-                                               <div className="flex justify-between items-center mb-2">
-                                                   <h4 className="text-slate-900 font-bold text-sm  uppercase">Your Carts</h4>
-                                                   <Link to="/carts" className="text-slate-900  list-none flex items-center gap-x-2">
-                                                       Show Detail
-                                                   </Link>
-                                               </div>
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <h4 className="text-slate-900 font-bold text-sm  uppercase">Your
+                                                        Carts</h4>
+                                                    <Link to="/carts"
+                                                          className="text-slate-900  list-none flex items-center gap-x-2">
+                                                        Show Detail
+                                                    </Link>
+                                                </div>
 
-                                               <div className=" max-h-[300px] overflow-y-auto">
-                                                   {!carts || Array.isArray(carts) && carts.length === 0 && (
-                                                       <h4 className="text-white text-sm font-medium text-center mt-14">No items in carts</h4>
-                                                   )}
+                                                <div className=" max-h-[300px] overflow-y-auto">
+                                                    {!carts || Array.isArray(carts) && carts.length === 0 && (
+                                                        <h4 className="text-white text-sm font-medium text-center mt-14">No
+                                                            items in carts</h4>
+                                                    )}
 
-                                                   {carts?.map(cart => (
-                                                       <div key={cart.id} className="text-slate-900 py-2 border-b border-b-primaryBorder last:border-none">
-                                                           <li className="flex items-center w-full">
+                                                    {carts?.map(cart => (
+                                                        <div key={cart.id}
+                                                             className="text-slate-900 py-2 border-b border-b-primaryBorder last:border-none">
+                                                            <li className="flex items-center w-full">
                                                                <span className="max-w-md w-full flex items-center ">
                                                                 <div className="w-10">
                                                                     <img src={cart.product.cover_image} alt=""/>
@@ -100,24 +106,41 @@ const Nav = () => {
                                                                        {cart.product.title}
                                                                    </span>
                                                                </span>
-                                                               <span className="max-w-sm w-full inline-block ml-2">{cart.product.price}</span>
-                                                               <span className="max-w-sm w-full inline-block">{cart.quantity}</span>
-                                                           </li>
-                                                       </div>
-                                                   ))}
-                                               </div>
+                                                                <span
+                                                                    className="max-w-sm w-full inline-block ml-2">{cart.product.price}</span>
+                                                                <span
+                                                                    className="max-w-sm w-full inline-block">{cart.quantity}</span>
+                                                            </li>
+                                                        </div>
+                                                    ))}
+                                                </div>
 
 
-                                           </div>
+                                            </div>
 
 
+                                        </Popup>
 
-                                       </Popup>
+                                    </div>
+                                </div>
 
-                                   </div>
-                               </div>
+                                <div className="text-white relative list-none flex items-center gap-x-4">
 
-                                <li onClick={handleLogout} className="text-sm  list-none">{auth?.email}</li>
+                                    <li onClick={() => setOpenMenu("auth")}
+                                        className="text-sm  list-none">{auth?.email}</li>
+                                    <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "auth"}
+                                           className="top-9 w-[200px] right-0">
+                                        <div className={`select-none cursor-auto text-slate-900 `}>
+                                            <div className="">
+                                                <li>{auth.username}</li>
+                                                <Link to="/add-product">
+                                                    <li>Add Product</li>
+                                                </Link>
+                                                <li onClick={handleLogout}>logout</li>
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                </div>
                             </div>
                         ) : (
                             <li className="text-sm font-medium list-none">

@@ -120,3 +120,14 @@
   background: #d1d1d1; /* Change the color as desired */
   border-radius: 5px;
 }
+
+.rs-input{
+  padding: 4px 10px;
+  border: 1px solid pink;
+  border-radius: 16px;
+  background: rgba(255, 224, 230, 0.17);
+  outline: none;
+  &:focus{
+    border: 1px solid #ff8ea4;
+  }
+}

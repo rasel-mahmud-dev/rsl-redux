@@ -12,7 +12,7 @@ const CategoryForm = () => {
         e.preventDefault();
 
         try {
-            const {data, status} = await api("/categories", [{name, slug, image}]);
+            await api.post("/categories", [{name, slug, image}]);
         } catch (error) {
             alert('An error occurred. Please try again.');
         }
