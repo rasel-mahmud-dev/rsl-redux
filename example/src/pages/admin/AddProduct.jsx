@@ -4,7 +4,7 @@ import {attributes, categoryMap} from "../SearchProduct.jsx";
 import {useParams} from "react-router-dom";
 import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
-
+import getAssetPath from "../../utils/getAssetPath.js";
 
 const AddProduct = () => {
 
@@ -46,11 +46,11 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        if (product.category_id) {
+        if (product?.category_id) {
             let a = categoryMap[product.category_id]
             handleChange({target: {name: "attributesArray", value: a}})
         }
-    }, [product.category_id]);
+    }, [product?.category_id]);
 
 
     const handleChange = (e) => {
@@ -123,11 +123,7 @@ const AddProduct = () => {
                                    onChange={handleChange}/>
                         </div>
 
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Cover Image:</label>
-                            <input className="rs-input" type="text" name="cover_image" value={product.cover_image}
-                                   onChange={handleChange}/>
-                        </div>
+
 
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Description:</label>
@@ -136,9 +132,22 @@ const AddProduct = () => {
                         </div>
 
                     </div>
-                    <div className="">
+                    <div className="mt-5">
 
                         <div>
+
+                            <div className="flex flex-col mb-3">
+                                <label htmlFor="">Cover Image:</label>
+                                <input className="rs-input" type="text" name="cover_image" value={product?.cover_image}
+                                       onChange={handleChange}/>
+                            </div>
+
+                            {product?.cover_image && <div className="w-20">
+                                <img src={getAssetPath(product?.cover_image)} alt=""/>
+                            </div> }
+
+
+
                             <div className="flex flex-col mb-3">
                                 <label htmlFor="">Brand:</label>
                                 <select className="rs-input" name="brand_id" id="" value={product.brand_id}

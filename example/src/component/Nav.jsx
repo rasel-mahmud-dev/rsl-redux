@@ -101,14 +101,14 @@ const Nav = () => {
                                                                 <li className="flex items-center w-full">
                                                                <span className="max-w-md w-full flex items-center ">
                                                                 <div className="w-10">
-                                                                    <img src={cart.product.cover_image} alt=""/>
+                                                                    <img src={cart?.product?.cover_image} alt=""/>
                                                                 </div>
                                                                    <span>
-                                                                       {cart.product.title}
+                                                                       {cart?.product?.title}
                                                                    </span>
                                                                </span>
                                                                     <span
-                                                                        className="max-w-sm w-full inline-block ml-2">{cart.product.price}</span>
+                                                                        className="max-w-sm w-full inline-block ml-2">{cart?.product?.price}</span>
                                                                     <span
                                                                         className="max-w-sm w-full inline-block">{cart.quantity}</span>
                                                                 </li>
@@ -134,8 +134,8 @@ const Nav = () => {
                                             <div className={`select-none cursor-auto text-slate-900 `}>
                                                 <div className="">
                                                     <li>{auth.username}</li>
-                                                    <Link to="/add-product">
-                                                        <li>Add Product</li>
+                                                    <Link to="/admin">
+                                                        <li>Admin Dashboard</li>
                                                     </Link>
                                                     <li onClick={handleLogout}>logout</li>
                                                 </div>

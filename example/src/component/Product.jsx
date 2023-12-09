@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import {useDispatch} from "rsl-redux";
 import {addToCart} from "../store/slices/cartSlice.js";
+import getAssetPath from "../utils/getAssetPath.js";
 
 
 const Product = (props) => {
-    const {title, id, price, cover_image} = props
+    const {title, id, price, cover_image = ""} = props
 
     const dispatch = useDispatch()
 
@@ -18,8 +19,8 @@ const Product = (props) => {
     }
     return (
         <div className="bg-white rounded-xl overflow-hidden">
-            <div className="max-w-[200px] max-h-[200px] mx-auto pt-3">
-                <img src={cover_image} alt={title} />
+            <div className=" pt-3">
+                <img className="object-contain max-w-[150px] max-h-[150px] mx-auto  " src={getAssetPath(cover_image)} alt={title} />
             </div>
             <div className="p-3">
                 <h4 className="text-md font-medium">{title}</h4>

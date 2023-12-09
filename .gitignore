@@ -2,8 +2,6 @@ node_modules
 .idea
 
 .cache
-packages/remixapp/build
-packages/remixapp/public/build
 .env
 
 **/node_modules
