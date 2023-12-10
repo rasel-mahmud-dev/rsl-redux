@@ -1,4 +1,23 @@
 
+@mixin getDown($size){
+  @media screen and (max-width: #{$size}) {
+    @content
+  }
+}
+
+
+.container {
+  max-width: 1240px;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  @include getDown(500px){
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+
 .common-table.employee-list-table {
   width: 100%;
 }

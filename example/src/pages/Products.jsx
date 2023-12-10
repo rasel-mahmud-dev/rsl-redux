@@ -18,7 +18,7 @@ const Products = () => {
     return (
         <div>
             <HeroBanner categories={categories}  />
-            <div className="grid grid-cols-5 gap-6 mt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 ld:grid-cols-5 gap-2 md:gap-3 lg:gap-6 mt-4">
                 {products.map(product => (
                     <Product key={product.id} {...product} />
                 ))}
