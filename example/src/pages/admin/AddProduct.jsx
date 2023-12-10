@@ -47,10 +47,13 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (product?.category_id) {
-            let a = categoryMap[product.category_id]
-            handleChange({target: {name: "attributesArray", value: a}})
+            let cat = categories.find(cat=>cat._id === product.category_id)
+            if(cat){
+                let a = categoryMap[cat.slug]
+                handleChange({target: {name: "attributesArray", value: a}})
+            }
         }
-    }, [product?.category_id]);
+    }, [product?.category_id, categories]);
 
 
     const handleChange = (e) => {

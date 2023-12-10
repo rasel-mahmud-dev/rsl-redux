@@ -1,4 +1,3 @@
-
 import {createAsyncAction} from "rsl-redux";
 import {api} from "../../axios/index.js";
 
@@ -28,4 +27,13 @@ export const fetchBrands = createAsyncAction(
             throw e
         }
 
+    })
+
+
+export const deleteCategory = createAsyncAction(
+    "deleteCategory",
+    async function (categoryId) {
+        const res = await api.delete("/categories/" + categoryId)
+        if (res.status === 200) return categoryId
+        throw Error("Category Delete fail")
     })

@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import Toast from "../../utils/toast.js";
 import {fetchBrands, fetchCategories} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
+import getAssetPath from "../../utils/getAssetPath.js";
 
 const CategoryForm = () => {
 
@@ -76,17 +77,23 @@ const CategoryForm = () => {
                                onChange={handleChange}/>
                     </div>
 
-                    <div className="flex flex-col mb-3">
-                        <label htmlFor="">Slug:</label>
-                        <input className="rs-input" type="text" name="slug" value={category.slug}
-                               onChange={handleChange}/>
-                    </div>
+                    {categoryId && (
+                        <div className="flex flex-col mb-3">
+                            <label htmlFor="">Slug:</label>
+                            <input className="rs-input" type="text" name="slug" value={category.slug}
+                                   onChange={handleChange}/>
+                        </div>
+                    )}
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Image:</label>
                         <input className="rs-input" type="text" name="image" value={category.image}
                                onChange={handleChange}/>
                     </div>
+                    {category?.image && <div className="w-20">
+                        <img src={getAssetPath(category?.image)} alt=""/>
+                    </div> }
+
 
                 </div>
 

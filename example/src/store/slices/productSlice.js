@@ -1,7 +1,7 @@
 import {createSlice} from "rsl-redux";
-import {fetchProducts} from "../actions/productAction.js";
-import {fetchBrands, fetchCategories} from "../actions/categoryAction.js";
-import {fetchAdminProducts} from "../actions/adminAction.js";
+import {deleteBrand, fetchProducts} from "../actions/productAction.js";
+import {deleteCategory, fetchBrands, fetchCategories} from "../actions/categoryAction.js";
+import {deleteAdminProduct, fetchAdminProducts} from "../actions/adminAction.js";
 
 const initialState = {
     products: [],
@@ -42,9 +42,24 @@ const productSlice = createSlice({
             state.categories = action.payload
         })
 
+        builder.addCase(deleteAdminProduct.fulfilled, (state, action) => {
+            state.adminProducts = state.adminProducts.filter(p => p._id !== action.payload)
+            state.products = state.products.filter(p => p._id !== action.payload)
+        })
+
         builder.addCase(fetchBrands.fulfilled, (state, action) => {
             state.brands = action.payload
         })
+
+        builder.addCase(deleteBrand.fulfilled, (state, action) => {
+            state.brands = state.brands.filter(p => p._id !== action.payload)
+        })
+
+        builder.addCase(deleteCategory.fulfilled, (state, action) => {
+            state.categories = state.categories.filter(p => p._id !== action.payload)
+        })
+
+
     }
 })
 

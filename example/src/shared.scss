@@ -13,7 +13,7 @@
 }
 
 .common-table.employee-list-table tbody tr td {
-  padding: 10px 0px;
+  padding: 10px 10px;
   word-break: break-all;
   text-align: center;
 }
@@ -144,6 +144,7 @@
     top: var(--header-height);
     left: 0;
     padding: 5px;
+
     & > div {
       height: calc(100vh - 72px);
       overflow-y: auto;
@@ -159,4 +160,37 @@
 .swal2-title {
   font-size: 16px;
   font-weight: 600;
+}
+
+.bread-fixed {
+  position: fixed;
+  width: 100%;
+  top: 75px;
+  left: 0;
+  background: #ffffff;
+  padding: 8px;
+}
+
+.product-attr-sidebar {
+  border-radius: 10px;
+  background: white;
+  position: fixed;
+  width: 300px;
+  top: 120px;
+  & > div{
+    border-radius: 10px;
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+  }
+}
+
+.product-content {
+  margin-left: 310px;
+}
+
+.product-image {
+  img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+  }
 }

@@ -16,12 +16,15 @@ export const fetchProducts = createAsyncAction(
 export const searchProductAction = createAsyncAction(
     "search-products",
     async function (text) {
-        try {
-            const res = await api.get("/products/search?text=" + text)
-            return res.data
+        const res = await api.get("/products/search?text=" + text)
+        return res?.data
+    })
 
-        } catch (e) {
-            throw e
-        }
 
+export const deleteBrand = createAsyncAction(
+    "deleteBrand",
+    async function (brandId) {
+        const res = await api.delete("/brands/" + brandId)
+        if (res.status === 200) return brandId
+        throw Error("Brand Delete fail")
     })

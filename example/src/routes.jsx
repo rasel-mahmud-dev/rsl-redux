@@ -27,6 +27,7 @@ const routes = createBrowserRouter([
             {path: "login", element: <Login/>},
             {path: "search", element: <SearchProduct/>},
             {path: "p/:categoryName", element: <SearchProduct/>},
+            {path: "p/", element: <SearchProduct/>},
             {path: "carts", element: <Carts/>},
             {path: "register", element: <Registration/>},
             {path: "rtk", element: <ReduxRTK/>},

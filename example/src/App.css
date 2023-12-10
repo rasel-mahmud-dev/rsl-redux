@@ -3,17 +3,17 @@
 }
 
 
-button {
-    /*background: #be5d9c !important;*/
-    /*font-size: 12px;*/
-    /*border-radius: 4px;*/
-    outline: none !important;
-}
 
 
 .primary-btn {
     border: 1px solid pink;
     border-radius: 20px;
+}
+button {
+    background: transparent;
+    /*font-size: 12px;*/
+    /*border-radius: 4px;*/
+    outline: none !important;
 }
 
 input {

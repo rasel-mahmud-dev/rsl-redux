@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import Toast from "../../utils/toast.js";
 import {fetchBrands} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
+import getAssetPath from "../../utils/getAssetPath.js";
 
 const BrandForm = () => {
 
@@ -75,17 +76,22 @@ const BrandForm = () => {
                                onChange={handleChange}/>
                     </div>
 
-                    <div className="flex flex-col mb-3">
-                        <label htmlFor="">Slug:</label>
-                        <input className="rs-input" type="text" name="slug" value={brand.slug}
-                               onChange={handleChange}/>
-                    </div>
+                    {brandId && (
+                        <div className="flex flex-col mb-3">
+                            <label htmlFor="">Slug:</label>
+                            <input className="rs-input" type="text" name="slug" value={brand.slug}
+                                   onChange={handleChange}/>
+                        </div>
+                    )}
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Image:</label>
                         <input className="rs-input" type="text" name="image" value={brand.image}
                                onChange={handleChange}/>
                     </div>
+                    {brand?.image && <div className="w-20">
+                        <img src={getAssetPath(brand?.image)} alt=""/>
+                    </div> }
 
                 </div>
 

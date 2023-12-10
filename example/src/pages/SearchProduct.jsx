@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useParams, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "rsl-redux";
 import Product from "../component/Product.jsx";
@@ -166,18 +166,136 @@ export const attributes = {
             {name: "1440x2800", value: "1440x2800"}
 
         ]
+    },
+    gender: {
+        label: "Gender",
+        options: [
+            {name: "Male", value: "600x1000"},
+            {name: "Female", value: "720x1366"},
+            {name: "1080x1920", value: "1080x1920"},
+            {name: "1440x2800", value: "1440x2800"}
+
+        ]
+    },
+    t_shart_size: {
+        label: "Size",
+        options: [
+            {name: "3XS", value: "3XS"},
+            {name: "2XS", value: "2XS"},
+            {name: "XS", value: "XS"},
+            {name: "S", value: "S"},
+            {name: "M", value: "M"},
+            {name: "L", value: "L"},
+            {name: "XL", value: "XL"},
+            {name: "2XL", value: "2XL"},
+            {name: "3XL", value: "3XL"},
+            {name: "4XL", value: "4XL"},
+            {name: "5XL", value: "5XL"},
+            {name: "6XL", value: "6XL"},
+            {name: "7XL", value: "7XL"},
+            {name: "8XL", value: "8XL"},
+            {name: "Free", value: "Free"},
+        ]
+    },
+    fabric: {
+        label: "Fabric",
+        options: [
+            {name: "Cotton Blend", value: "Cotton Blend"},
+            {name: "Elastane", value: "Elastane"},
+            {name: "Linen Blend", value: "Linen Blend"},
+            {name: "Modal", value: "Modal"},
+            {name: "Nylon", value: "Nylon"},
+            {name: "Organic Cotton", value: "Organic Cotton"},
+            {name: "Poly Cotton", value: "Poly Cotton"},
+            {name: "Polyester", value: "Polyester"},
+            {name: "Pure Cotton", value: "Pure Cotton"},
+            {name: "Viscose Rayon", value: "Viscose Rayon"},
+            {name: "Wool Blend", value: "Wool Blend"},
+        ]
+    },
+    t_shart_pattern: {
+        label: "Pattern",
+        options: [
+            {name: "Abstract", value: "Abstract"},
+            {name: "Animal Print", value: "Animal Print"},
+            {name: "Cartoon", value: "Cartoon"},
+            {name: "Checkered", value: "Checkered"},
+            {name: "Chevron/Zig Zag", value: "Chevron/Zig Zag"},
+            {name: "Colorblock", value: "Colorblock"},
+            {name: "Conversational", value: "Conversational"},
+            {name: "Embroidered", value: "Embroidered"},
+            {name: "Floral Print", value: "Floral Print"},
+            {name: "Geometric Print", value: "Geometric Print"},
+            {name: "Graphic Print", value: "Graphic Print"},
+            {name: "Military Camouflage", value: "Military Camouflage"},
+            {name: "Polka Print", value: "Polka Print"},
+            {name: "Printed", value: "Printed"},
+            {name: "Self Design", value: "Self Design"},
+            {name: "Solid", value: "Solid"},
+            {name: "Sporty", value: "Sporty"},
+            {name: "Striped", value: "Striped"},
+            {name: "Superhero", value: "Superhero"},
+            {name: "Tie & Dye", value: "Tie & Dye"},
+            {name: "Tribal Print", value: "Tribal Print"},
+            {name: "Typography", value: "Typography"},
+            {name: "Washed/Ombre", value: "Washed/Ombre"},
+        ]
+    },
+    occasion: {
+        label: "Occasion",
+        options: [
+            {name: "Beach Wear", value: "Beach Wear"},
+            {name: "Casual", value: "Casual"},
+            {name: "Formal", value: "Formal"},
+            {name: "Lounge Wear", value: "Lounge Wear"},
+            {name: "Party", value: "Party"},
+            {name: "Sports", value: "Sports"},
+        ]
+    },
+    t_shart_color: {
+        label: "Color",
+        options: [
+            {name: "Beige", value: "Beige"},
+            {name: "Black", value: "Black"},
+            {name: "Blue", value: "Blue"},
+            {name: "Brown", value: "Brown"},
+            {name: "Dark Blue", value: "Dark Blue"},
+            {name: "Dark Green", value: "Dark Green"},
+            {name: "Gold", value: "Gold"},
+            {name: "Green", value: "Green"},
+            {name: "Grey", value: "Grey"},
+            {name: "Light Blue", value: "Light Blue"},
+            {name: "Light Green", value: "Light Green"},
+            {name: "Maroon", value: "Maroon"},
+            {name: "Multicolor", value: "Multicolor"},
+            {name: "Navy Blue", value: "Navy Blue"},
+            {name: "Orange", value: "Orange"},
+            {name: "Pink", value: "Pink"},
+            {name: "Purple", value: "Purple"},
+            {name: "Red", value: "Red"},
+            {name: "Silver", value: "Silver"},
+            {name: "White", value: "White"},
+            {name: "Yellow", value: "Yellow"},
+        ]
     }
 }
 
 export const categoryMap = {
-    "6570c5ae26c947e3c99321f7": ["battery", "screen", "resulation", "ram", "laptop_storage"]
+    "laptop": ["battery", "screen", "resulation", "ram", "laptop_storage"],
+    "watches": ["battery", "screen", "resulation", "ram", "laptop_storage"],
+    "mobile": ["battery", "screen", "resulation", "ram", "laptop_storage"],
+    "t-shart": ["gender", "fabric", "t_shart_size", "t_shart_pattern", "occasion", "t_shart_color"],
+    "jeans": ["gender", "t_shart_size", "occasion", "t_shart_color"],
 }
 
 
 const SearchProduct = () => {
     const [getQuery] = useSearchParams()
     const {categoryName} = useParams()
-    const {categories, filter} = useSelector(state => state.productState)
+    const filterObj = useRef({})
+    const {categories, filter, brands} = useSelector(state => state.productState)
+
+    const [expandAttributes, setExpandAttributes] = useState([])
 
     let selectedCategory = categories.find(cat => cat.slug === categoryName)
 
@@ -189,16 +307,26 @@ const SearchProduct = () => {
 
     useEffect(() => {
         let filter = {}
-        if (selectedCategory) {
-            filter["categoryIds"] = [selectedCategory._id]
+        if (categoryName) {
+            if (categories?.length) {
+                selectedCategory = categories.find(cat => cat.slug === categoryName)
+                if (selectedCategory) {
+                    filter["categoryIds"] = [selectedCategory._id]
+                }
+            }
         }
+        
         filter["search"] = text
-        dispatch(setFilter(filter))
-    }, [selectedCategory]);
+        filterObj.current = filter
+
+    }, [text, categoryName, categories]);
+
 
     useEffect(() => {
-        filterProduct(filter)
-    }, [filter.search, filter.categoryIds]);
+        if (Object.keys(filterObj.current).length > 1) {
+            filterProduct(filterObj.current)
+        }
+    }, [filterObj.current]);
 
 
     function filterProduct(filter) {
@@ -209,41 +337,65 @@ const SearchProduct = () => {
         })
     }
 
-    let cats = categoryMap?.[selectedCategory?._id]
+    let cats = categoryMap?.[selectedCategory?.slug]
 
     function renderOptions(attr) {
         return (
             <div>
                 {attr?.options?.map(option => (
                     <div className="flex items-center gap-x-2 px-2">
-                        <input type="checkbox"/>
-                        <span> {option.name}</span>
+                        <input id={option.value} type="checkbox"/>
+                        <label htmlFor={option.value}
+                               className="text-sm text-neutral-600 cursor-pointer"> {option.name}</label>
                     </div>
                 ))}
             </div>
         )
     }
 
-
     return (
         <div>
-            <div>
-                <Breadcrumb selectedCategory={selectedCategory}/>
+            <div className="bread-fixed">
+                <div className="container">
+                    <Breadcrumb selectedCategory={selectedCategory}/>
+                </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-6 mt-4">
-                <div className="col-span-3 bg-white p-2 sidebar">
-                    {cats?.map((attributeKey) => (
-                        <div key={attributeKey}>
+            <div className="gap-6 mt-4">
+                <div className="bg-white p-2 sidebar product-attr-sidebar    ">
+                    <div className="">
+                        <div>
                             <div className="flex justify-between items-center py-2 px-2">
-                                <span>{attributes[attributeKey].label}</span>
+                                <span>Brands</span>
                                 <span><FaAngleRight className="text-xs"/></span>
                             </div>
-                            {renderOptions(attributes[attributeKey])}
+
+
+                            {brands.map(brand => (
+                                <div className="flex items-center gap-x-2  px-2">
+                                    <input type="checkbox" id={brand.slug}/>
+                                    <label className="text-sm text-neutral-600"
+                                           htmlFor={brand.slug}>{brand.name}</label>
+                                </div>
+                            ))}
+
+
                         </div>
-                    ))}
+
+
+                        {cats?.map((attributeKey) => (
+                            <div key={attributeKey}>
+                                <div className="flex justify-between items-center py-2 px-2">
+                                    <span>{attributes[attributeKey].label}</span>
+                                    <span><FaAngleRight className="text-xs"/></span>
+                                </div>
+                                {expandAttributes.includes(attributeKey) && renderOptions(attributes[attributeKey])}
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className="grid grid-cols-5 gap-6 mt-4 col-span-9">
+
+                <div className="grid grid-cols-4 gap-6 mt-12 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product.id} {...product} />
                     ))}

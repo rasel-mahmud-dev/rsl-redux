@@ -14,3 +14,12 @@ export const fetchAdminProducts = createAsyncAction(
         }
 
     })
+
+export const deleteAdminProduct = createAsyncAction(
+    "deleteAdminProduct",
+    async function (productId) {
+        const res = await api.delete("/products/" + productId)
+        if (res.status === 200) return productId
+        throw Error("Product Delete fail")
+    }
+)

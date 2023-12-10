@@ -14,3 +14,16 @@ export const fetchCarts = createAsyncAction(
         }
 
     })
+
+export const addToCartAction = createAsyncAction(
+    "addToCartAction",
+    async function (cart) {
+        try {
+            const res = await api.post("/carts", cart)
+            return cart
+
+        } catch (e) {
+            throw e
+        }
+
+    })
