@@ -295,7 +295,7 @@ const SearchProduct = () => {
     const filterObj = useRef({})
     const {categories, filter, brands} = useSelector(state => state.productState)
 
-    const [expandAttributes, setExpandAttributes] = useState([])
+    const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
 
     let selectedCategory = categories.find(cat => cat.slug === categoryName)
 
@@ -353,6 +353,14 @@ const SearchProduct = () => {
         )
     }
 
+    function handleToggleExpand(attributeKey) {
+        if(expandAttributes.includes(attributeKey)){
+            setExpandAttributes(prev=> prev.filter(p=>p !== attributeKey))
+        } else {
+            setExpandAttributes(prev=> ([...prev, attributeKey]))
+        }
+    }
+
     return (
         <div>
             <div className="bread-fixed">
@@ -365,33 +373,34 @@ const SearchProduct = () => {
                 <div className="bg-white p-2 sidebar product-attr-sidebar    ">
                     <div className="">
                         <div>
-                            <div className="flex justify-between items-center py-2 px-2">
+                            <div className="flex justify-between items-center py-2 px-2 cursor-pointer" onClick={()=>handleToggleExpand("brand_id")}>
                                 <span>Brands</span>
                                 <span><FaAngleRight className="text-xs"/></span>
                             </div>
 
 
-                            {brands.map(brand => (
-                                <div className="flex items-center gap-x-2  px-2">
+                            {expandAttributes.includes("brand_id") && brands.map(brand => (
+                                <div className="flex items-center gap-x-2  px-2 ">
                                     <input type="checkbox" id={brand.slug}/>
                                     <label className="text-sm text-neutral-600"
                                            htmlFor={brand.slug}>{brand.name}</label>
                                 </div>
                             ))}
-
-
                         </div>
 
 
-                        {cats?.map((attributeKey) => (
-                            <div key={attributeKey}>
-                                <div className="flex justify-between items-center py-2 px-2">
-                                    <span>{attributes[attributeKey].label}</span>
-                                    <span><FaAngleRight className="text-xs"/></span>
+                        <div className="mt-4">
+                            {cats?.map((attributeKey) => (
+                                <div key={attributeKey} className="">
+                                    <div className="flex justify-between items-center py-2 px-2 cursor-pointer" onClick={()=>handleToggleExpand(attributeKey)}>
+                                        <span>{attributes[attributeKey].label}</span>
+                                        <span><FaAngleRight className="text-xs"/></span>
+                                    </div>
+                                    {expandAttributes.includes(attributeKey) && renderOptions(attributes[attributeKey])}
                                 </div>
-                                {expandAttributes.includes(attributeKey) && renderOptions(attributes[attributeKey])}
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+
                     </div>
                 </div>
 
