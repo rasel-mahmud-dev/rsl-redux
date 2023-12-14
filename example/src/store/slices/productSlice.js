@@ -4,6 +4,7 @@ import {deleteCategory, fetchBrands, fetchCategories} from "../actions/categoryA
 import {deleteAdminProduct, fetchAdminProducts} from "../actions/adminAction.js";
 
 const initialState = {
+    homeProducts: {},
     products: [],
     brands: [],
     adminProducts: [],
@@ -31,7 +32,10 @@ const productSlice = createSlice({
 
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
-            state.products = action.payload
+            const {pageNumber, data} = action.payload
+            // state.products[pageNumber] = data
+            state.homeProducts[pageNumber] = data
+
         })
 
         builder.addCase(fetchAdminProducts.fulfilled, (state, action) => {

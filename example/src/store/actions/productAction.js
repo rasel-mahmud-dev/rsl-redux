@@ -3,10 +3,10 @@ import {api} from "../../axios/index.js";
 
 export const fetchProducts = createAsyncAction(
     "fetch-products",
-    async function () {
+    async function (pageNumber) {
         try {
-            const res = await api.get("/products")
-            return res.data
+            const res = await api.get("/products?page_number=" + pageNumber)
+            return {data: res?.data ?? [], pageNumber}
 
         } catch (e) {
             throw e

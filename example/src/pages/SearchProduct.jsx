@@ -6,6 +6,7 @@ import {api} from "../axios/index.js";
 import Breadcrumb from "../component/Breadcrumb.jsx";
 import {setFilter} from "../store/slices/productSlice.js";
 import {FaAngleRight} from "react-icons/fa";
+import Loader from "../component/Loader.jsx";
 
 export const attributes = {
     battery: {
@@ -307,6 +308,7 @@ const SearchProduct = () => {
     const [searchProuduct, setSearchProduct] = useState([])
 
     const text = getQuery.get("search")
+    const [isSearching, setSearching] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -335,10 +337,13 @@ const SearchProduct = () => {
 
 
     function filterProduct(filter) {
+        setSearching(true)
         api.post("/products/filter?page=" + pagination.page, {
             ...filter
         }).then(r => {
             setSearchProduct(r.data)
+        }).finally(() => {
+            setSearching(false)
         })
     }
 
@@ -399,6 +404,8 @@ const SearchProduct = () => {
                 </div>
             </div>
 
+            {isSearching && <Loader/>}
+
             <div className="gap-6 mt-4">
                 <div className="bg-white p-2 sidebar product-attr-sidebar    ">
                     <div className="">
@@ -409,7 +416,6 @@ const SearchProduct = () => {
                                 <span><FaAngleRight className="text-xs"/></span>
                             </div>
 
-
                             {expandAttributes.includes("brand_id") && brands.map(brand => (
                                 <div className="flex items-center gap-x-2  px-2" key={brand._id}>
                                     <input type="checkbox" id={brand.slug}/>
@@ -418,7 +424,6 @@ const SearchProduct = () => {
                                 </div>
                             ))}
                         </div>
-
 
                         <div className="mt-4">
                             {cats?.map((attributeKey) => (
@@ -436,7 +441,8 @@ const SearchProduct = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
+                <div
+                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product._id} {...product} />
                     ))}
