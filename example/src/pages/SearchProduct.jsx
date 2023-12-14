@@ -292,7 +292,7 @@ export const categoryMap = {
 const SearchProduct = () => {
     const [getQuery] = useSearchParams()
     const {categoryName} = useParams()
-    const filterObj = useRef({})
+    const filterObj = useRef({attributes: {}})
     const {categories, filter, brands} = useSelector(state => state.productState)
 
     const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
@@ -315,7 +315,7 @@ const SearchProduct = () => {
                 }
             }
         }
-        
+
         filter["search"] = text
         filterObj.current = filter
 
@@ -339,12 +339,14 @@ const SearchProduct = () => {
 
     let cats = categoryMap?.[selectedCategory?.slug]
 
-    function renderOptions(attr) {
+    function renderOptions(attr, attributeName) {
         return (
             <div>
                 {attr?.options?.map(option => (
-                    <div className="flex items-center gap-x-2 px-2">
-                        <input id={option.value} type="checkbox"/>
+                    <div key={option.name + option.value} className="flex items-center gap-x-2 px-2">
+                        <input checked={filterObj.current?.attributes?.[attributeName]?.includes(option.value)}
+                               id={option.value} type="checkbox"
+                               onChange={() => handleChooseAttributeValue(attributeName, option.value)}/>
                         <label htmlFor={option.value}
                                className="text-sm text-neutral-600 cursor-pointer"> {option.name}</label>
                     </div>
@@ -354,11 +356,35 @@ const SearchProduct = () => {
     }
 
     function handleToggleExpand(attributeKey) {
-        if(expandAttributes.includes(attributeKey)){
-            setExpandAttributes(prev=> prev.filter(p=>p !== attributeKey))
+        console.log(expandAttributes)
+        if (expandAttributes.includes(attributeKey)) {
+            setExpandAttributes(prev => prev.filter(p => p !== attributeKey))
         } else {
-            setExpandAttributes(prev=> ([...prev, attributeKey]))
+            setExpandAttributes(prev => ([...prev, attributeKey]))
         }
+    }
+
+    function toggleAttributeValue(obj, value) {
+        if (!obj) return [value]
+        if (obj.includes(value)) {
+            obj = obj.filter(p => p !== value)
+        } else {
+            obj.push(value)
+        }
+
+        return obj
+
+    }
+
+    function handleChooseAttributeValue(attributeName, value) {
+        filterObj.current = {
+            ...filterObj.current,
+            attributes: {
+                ...filterObj.current.attributes,
+                [attributeName]: toggleAttributeValue(filterObj.current.attributes?.[attributeName], value)
+            }
+        }
+        filterProduct(filterObj.current)
     }
 
     return (
@@ -373,14 +399,15 @@ const SearchProduct = () => {
                 <div className="bg-white p-2 sidebar product-attr-sidebar    ">
                     <div className="">
                         <div>
-                            <div className="flex justify-between items-center py-2 px-2 cursor-pointer" onClick={()=>handleToggleExpand("brand_id")}>
+                            <div className="flex justify-between items-center py-2 px-2 cursor-pointer"
+                                 onClick={() => handleToggleExpand("brand_id")}>
                                 <span>Brands</span>
                                 <span><FaAngleRight className="text-xs"/></span>
                             </div>
 
 
                             {expandAttributes.includes("brand_id") && brands.map(brand => (
-                                <div className="flex items-center gap-x-2  px-2 ">
+                                <div className="flex items-center gap-x-2  px-2" key={brand._id}>
                                     <input type="checkbox" id={brand.slug}/>
                                     <label className="text-sm text-neutral-600"
                                            htmlFor={brand.slug}>{brand.name}</label>
@@ -392,11 +419,12 @@ const SearchProduct = () => {
                         <div className="mt-4">
                             {cats?.map((attributeKey) => (
                                 <div key={attributeKey} className="">
-                                    <div className="flex justify-between items-center py-2 px-2 cursor-pointer" onClick={()=>handleToggleExpand(attributeKey)}>
+                                    <div className="flex justify-between items-center py-2 px-2 cursor-pointer"
+                                         onClick={() => handleToggleExpand(attributeKey)}>
                                         <span>{attributes[attributeKey].label}</span>
                                         <span><FaAngleRight className="text-xs"/></span>
                                     </div>
-                                    {expandAttributes.includes(attributeKey) && renderOptions(attributes[attributeKey])}
+                                    {expandAttributes.includes(attributeKey) && renderOptions(attributes[attributeKey], attributeKey)}
                                 </div>
                             ))}
                         </div>
@@ -406,7 +434,7 @@ const SearchProduct = () => {
 
                 <div className="grid grid-cols-4 gap-6 mt-12 product-content">
                     {searchProuduct.map(product => (
-                        <Product key={product.id} {...product} />
+                        <Product key={product._id} {...product} />
                     ))}
                 </div>
             </div>
