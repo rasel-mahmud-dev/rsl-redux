@@ -1,215 +1,291 @@
-
-@mixin getDown($size){
-  @media screen and (max-width: #{$size}) {
-    @content
-  }
+@mixin getDown($size) {
+	@media screen and (max-width: #{$size}) {
+		@content
+	}
 }
 
 
 .container {
-  max-width: 1240px;
-  margin: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  @include getDown(500px){
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+	max-width: 1240px;
+	margin: auto;
+	padding-left: 20px;
+	padding-right: 20px;
+	@include getDown(500px) {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
 }
 
 
 .common-table.employee-list-table {
-  width: 100%;
+	width: 100%;
 }
 
 .common-table.employee-list-table thead tr {
-  @apply text-center p-2;
-  background: #d9d9d9;
+	@apply text-center p-2;
+	background: #d9d9d9;
 }
 
 .common-table.employee-list-table tbody tr {
-  border-bottom: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
 }
 
 .common-table.employee-list-table tbody tr td {
-  padding: 10px 10px;
-  word-break: break-all;
-  text-align: center;
+	padding: 10px 10px;
+	word-break: break-all;
+	text-align: center;
 }
 
 .common-table.employee-list-table tr th {
-  padding: 14px;
-  text-transform: capitalize !important;
-  font-weight: 400;
-  @apply text-center
+	padding: 14px;
+	text-transform: capitalize !important;
+	font-weight: 400;
+	@apply text-center
 }
 
 .common-table.employee-list-table tr th:nth-child(1) {
-  @apply rounded-l
+	@apply rounded-l
 }
 
 .common-table.employee-list-table tr th:last-child {
-  @apply rounded-r
+	@apply rounded-r
 }
 
 .common-table.employee-list-table tbody {
-  height: calc(100vh - 350px);
-  overflow: auto;
+	height: calc(100vh - 350px);
+	overflow: auto;
 }
 
 .employee-list-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .employee-list-table td, th {
-  /*border: 1px solid #dddddd;*/
-  text-align: left;
-  padding: 8px;
+	/*border: 1px solid #dddddd;*/
+	text-align: left;
+	padding: 8px;
 }
 
 .employee-list-table tbody {
-  display: block;
-  overflow: auto;
+	display: block;
+	overflow: auto;
 }
 
 .employee-list-table thead, tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
 }
 
 .employee-list-table thead {
-  width: calc(100% - 5px)
+	width: calc(100% - 5px)
 }
 
 
 .popup-root {
-  padding: 14px;
-  border-radius: 5px;
-  position: absolute;
-  z-index: 1001;
-  outline: none;
-  transition: all 0.3s ease;
-  transform-origin: top;
-  background: #ffffff;
-  box-shadow: 2px 4px 23px 3px #898989c4;
+	padding: 14px;
+	border-radius: 5px;
+	position: absolute;
+	z-index: 1001;
+	outline: none;
+	transition: all 0.3s ease;
+	transform-origin: top;
+	background: #ffffff;
+	box-shadow: 2px 4px 23px 3px #898989c4;
 }
 
 .popup-root.open {
-  opacity: 1;
-  transform: translateY(0);
-  visibility: visible;
+	opacity: 1;
+	transform: translateY(0);
+	visibility: visible;
 }
 
 /* Styles for .close state */
 .popup-root.close {
-  transform: translateY(40px);
-  opacity: 0;
-  visibility: hidden;
+	transform: translateY(40px);
+	opacity: 0;
+	visibility: hidden;
 }
 
 .backdrop {
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0);
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1000;
 }
 
 
 ::-webkit-scrollbar {
-  width: 5px; /* Adjust the width as desired */
+	width: 5px; /* Adjust the width as desired */
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 5px;
+	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-  background: #d1d1d1; /* Change the color as desired */
-  border-radius: 5px;
+	background: #d1d1d1; /* Change the color as desired */
+	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-  background: #d1d1d1; /* Change the color as desired */
-  border-radius: 5px;
+	background: #d1d1d1; /* Change the color as desired */
+	border-radius: 5px;
 }
 
 .rs-input {
-  padding: 4px 10px;
-  min-height: 38px;
-  border: 1px solid pink;
-  border-radius: 16px;
-  background: rgba(255, 224, 230, 0.17);
-  outline: none;
+	padding: 4px 10px;
+	min-height: 38px;
+	border: 1px solid pink;
+	border-radius: 16px;
+	background: rgba(255, 224, 230, 0.17);
+	outline: none;
 
-  &:focus {
-    border: 1px solid #ff8ea4;
-  }
+	&:focus {
+		border: 1px solid #ff8ea4;
+	}
 }
 
 .admin-layout {
-  --sidebar-width: 300px;
-  --header-height: 72px;
+	--sidebar-width: 300px;
+	--header-height: 72px;
 
-  .sidebar {
-    width: var(--sidebar-width);
-    background: #f8f8f8;
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    padding: 5px;
+	.sidebar {
+		width: var(--sidebar-width);
+		background: #f8f8f8;
+		position: fixed;
+		top: var(--header-height);
+		left: 0;
+		padding: 5px;
 
-    & > div {
-      height: calc(100vh - 72px);
-      overflow-y: auto;
-      padding: 10px;
-    }
-  }
+		& > div {
+			height: calc(100vh - 72px);
+			overflow-y: auto;
+			padding: 10px;
+		}
+	}
 
-  .content {
-    margin-left: var(--sidebar-width);
-  }
+	.content {
+		margin-left: var(--sidebar-width);
+	}
 }
 
 .swal2-title {
-  font-size: 16px;
-  font-weight: 600;
+	font-size: 16px;
+	font-weight: 600;
 }
 
 .bread-fixed {
-  position: fixed;
-  width: 100%;
-  top: 75px;
-  left: 0;
-  background: #ffffff;
-  padding: 8px;
+	position: fixed;
+	width: 100%;
+	top: 75px;
+	left: 0;
+	background: #ffffff;
+	padding: 8px;
 }
 
 .product-attr-sidebar {
-  border-radius: 10px;
-  background: white;
-  position: fixed;
-  width: 300px;
-  top: 120px;
-  & > div{
-    border-radius: 10px;
-    height: calc(100vh - 150px);
-    overflow-y: auto;
-  }
+	border-radius: 10px;
+	background: white;
+	position: fixed;
+	width: 300px;
+	top: 120px;
+
+	& > div {
+		border-radius: 10px;
+		height: calc(100vh - 150px);
+		overflow-y: auto;
+	}
+
+
+	@include getDown(768px){
+		position: fixed;
+		left: -100%;
+		top: 120px;
+	}
 }
 
 .product-content {
-  margin-left: 310px;
+	margin-left: 310px;
+	@include getDown(768px){
+		margin-left: 0;
+	}
 }
 
 .product-image {
-  img {
-    aspect-ratio: 1/1;
-    object-fit: contain;
-  }
+	img {
+		aspect-ratio: 1/1;
+		object-fit: contain;
+	}
+}
+
+.home-wrapper {
+	display: flex;
+
+	.sidebar-home {
+		margin-right: 20px;
+		max-width: 350px;
+		width: 100%;
+		@include getDown(768px) {
+			position: fixed;
+			left: -100%;
+			top: 0;
+
+			width: 80%;
+			& > div {
+				border-radius: 0;
+				background: red;
+			}
+		}
+	}
+
+
+}
+
+
+.slider-root {
+	border-radius: 15px;
+	overflow: hidden;
+	@include getDown(768px) {
+		padding-bottom: 20px;
+	}
+
+	.slider-item {
+		max-height: 324px;
+		overflow: hidden;
+		border-radius: 15px;
+		@include getDown(768px) {
+			img {
+				object-fit: cover;
+				height: 250px !important;
+			}
+		}
+	}
+
+	.slick-dots li {
+		margin: 0 1px !important;
+		@include getDown(768px) {
+			font-size: 0;
+		}
+	}
+
+	.slick-dots li button:before {
+		font-size: 14px;
+		line-height: 20px;
+		color: hotpink;
+		@include getDown(768px) {
+			font-size: 10px;
+		}
+
+	}
+
+	.slick-slide:focus {
+		border: none !important;
+		outline: none !important;
+	}
 }

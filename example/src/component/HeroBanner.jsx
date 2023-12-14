@@ -15,7 +15,7 @@ const HeroBanner = ({categories}) => {
     ]
 
     const settings = {
-        dots: false,
+        dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -38,21 +38,23 @@ const HeroBanner = ({categories}) => {
         {name: "Sports & Outdoors", icon: ""}
     ]
     return (
-        <div className="grid-cols-12 grid gap-x-5 mt-4">
-            <div className="col-span-3 bg-white rounded-2xl py-2 px-4">
+        <div className="mt-4 home-wrapper">
 
-                {categories.map(item => (
-                    <Link to={`/p/${item.slug}`}>
-                        <div className="flex items-center gap-x-2 text-sm py-1 text-gray-800 font-medium  ">
-                            <span>{item.icon}</span>
-                            <span>{item.name}</span>
-                        </div>
-                    </Link>
-                ))}
-
-
+            <div className="sidebar-home">
+                <div className="col-span-3 bg-white rounded-2xl py-2 px-4">
+                    {categories.map(item => (
+                        <Link to={`/p/${item.slug}`}>
+                            <div className="flex items-center gap-x-2 text-sm py-1 text-gray-800 font-medium  ">
+                                <span>{item.icon}</span>
+                                <span>{item.name}</span>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
-            <div className="col-span-9 slider-root">
+
+
+            <div className="w-full slider-root">
                 <Slider {...settings}>
                     {items.map(item => (
                         <div className="slider-item">

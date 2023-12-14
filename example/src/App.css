@@ -20,19 +20,3 @@ input {
     padding: 5px 10px;
 }
 
-
-.slider-root {
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.slider-item {
-    max-height: 324px;
-    overflow: hidden;
-    border-radius: 15px;
-}
-
-.slick-slide:focus {
-    border: none !important;
-    outline: none !important;
-}

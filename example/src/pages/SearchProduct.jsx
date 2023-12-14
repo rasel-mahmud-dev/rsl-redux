@@ -297,6 +297,11 @@ const SearchProduct = () => {
 
     const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
 
+    const [pagination, setPagination] = useState({
+        page: 1,
+        totalPage: 10
+    })
+
     let selectedCategory = categories.find(cat => cat.slug === categoryName)
 
     const [searchProuduct, setSearchProduct] = useState([])
@@ -323,14 +328,14 @@ const SearchProduct = () => {
 
 
     useEffect(() => {
-        if (Object.keys(filterObj.current).length > 1) {
+        if (Object.keys(filterObj.current).length > 0) {
             filterProduct(filterObj.current)
         }
     }, [filterObj.current]);
 
 
     function filterProduct(filter) {
-        api.post("/products/filter", {
+        api.post("/products/filter?page=" + pagination.page, {
             ...filter
         }).then(r => {
             setSearchProduct(r.data)
@@ -356,7 +361,6 @@ const SearchProduct = () => {
     }
 
     function handleToggleExpand(attributeKey) {
-        console.log(expandAttributes)
         if (expandAttributes.includes(attributeKey)) {
             setExpandAttributes(prev => prev.filter(p => p !== attributeKey))
         } else {
@@ -432,7 +436,7 @@ const SearchProduct = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-6 mt-12 product-content">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product._id} {...product} />
                     ))}
