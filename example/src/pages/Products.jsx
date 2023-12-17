@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "rsl-redux";
 import Product from "../component/Product.jsx";
 import {fetchProducts} from "../store/actions/productAction.js";
 import HeroBanner from "../component/HeroBanner.jsx";
-import {Link} from "react-router-dom";
 import getAssetPath from "../utils/getAssetPath.js";
+import {useNavigate} from "react-router-dom";
 
 const Products = () => {
     const {products, categories} = useSelector((state) => state.productState)
@@ -16,6 +16,8 @@ const Products = () => {
         dispatch(fetchProducts())
     }, [])
 
+    const navigate = useNavigate()
+
 
     return (
         <div>
@@ -24,7 +26,7 @@ const Products = () => {
                     className="flex items-center justify-between max-w-8xl mx-auto  gap-x-2 md:gap-x-4 scroll-x-transparent overflow-x-auto md:overflow-visible ">
                     {categories.map((cat) => (
                         <div key={cat._id} className="home-category-list-item">
-                            <div
+                            <div onClick={()=>navigate(`/p/${cat._id}`)}
                                 className="flex home-category-list-item-content flex-col items-center  border md:border-none rounded-full md:bg-transparent ">
                                 <img alt={cat.name} className="category-list-item-img" src={getAssetPath(cat.image)}/>
                             </div>

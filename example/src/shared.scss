@@ -156,6 +156,7 @@
 	--header-height: 72px;
 
 	.sidebar {
+		transition: all .4s ease;
 		width: var(--sidebar-width);
 		background: #f8f8f8;
 		position: fixed;
@@ -195,6 +196,7 @@
 	position: fixed;
 	width: 300px;
 	top: 120px;
+	transition: all .4s ease;
 
 	& > div {
 		border-radius: 10px;
@@ -202,13 +204,29 @@
 		overflow-y: auto;
 	}
 
-
 	@include getDown(768px) {
-		position: fixed;
-		left: -100%;
-		top: 120px;
+		left: -100% !important;
+		top: 0 !important;
+		z-index: 10000;
+		& > div {
+			height: 100vh
+		}
 	}
+
+	&.filter-sidebar {
+		transition: all .4s ease;
+		left: -100% !important;
+		@include getDown(768px) {
+			position: fixed;
+			left: 0px !important;
+			background: #ffffff;
+
+			box-shadow: 0 3px 20px -5px #595959;
+		}
+	}
+
 }
+
 
 .product-content {
 	margin-left: 310px;
@@ -293,7 +311,7 @@
 .home-category-list {
 	display: none;
 
-	@include getDown(768px){
+	@include getDown(768px) {
 		display: block;
 	}
 

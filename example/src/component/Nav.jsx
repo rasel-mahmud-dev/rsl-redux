@@ -1,11 +1,12 @@
 import {Link, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useSelector} from "rsl-redux";
-import {logOut} from "../store/slices/authSlice.js";
+import {logOut, setSidebar} from "../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux";
 import {BiSearch} from "react-icons/bi";
 import {useEffect, useState} from "react";
 import {CiShoppingCart} from "react-icons/ci";
 import Popup from "./Popup.jsx";
+import {HiBars4} from "react-icons/hi2";
 
 const Nav = () => {
     const {auth} = useSelector(state => state?.authState)
@@ -27,7 +28,7 @@ const Nav = () => {
     const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
-        setSearchValue(search ? search : "")
+        setSearchValue(search ?? "")
     }, [search]);
 
 
@@ -40,14 +41,24 @@ const Nav = () => {
         navigate("/p/?search=" + val)
     }
 
+    function handleToggleLeft(){
+        let which = location.pathname.startsWith("/p/") ? "filter" : "home"
+        dispatch(setSidebar(which))
+    }
+
     return (
         <>
             <div className="bg-[#be5d9c] fixed w-full left-0 top-0 z-[1000]">
+
                 <div className="mx-auto max-w-5xl">
                     <div className="py-3">
                         <div className="w-full flex justify-between gap-x-6  rounded-3xl py-2 px-4">
                             <div className="flex items-center gap-x-6 w-full max-w-sm">
-                                <li className="text-sm font-medium list-none">
+
+                                <li className="text-sm font-medium list-none flex items-center gap-x-2">
+                                    <li className="">
+                                        <HiBars4 className="text-xl text-white" onClick={handleToggleLeft}/>
+                                    </li>
                                     <NavLink className="text-white" to="/">Home</NavLink>
                                 </li>
                                 <li className="text-sm font-medium list-none w-full">

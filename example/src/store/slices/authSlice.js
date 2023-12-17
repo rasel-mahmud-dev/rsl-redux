@@ -3,7 +3,8 @@ import {authVerifyAction, createAccountAction, loginAction} from "../actions/aut
 
 const initialState = {
     auth: null,
-    testAuth: {}
+    testAuth: {},
+    openSidebar: ""
 }
 
 const authSlice = createSlice({
@@ -18,6 +19,9 @@ const authSlice = createSlice({
         logOut(state){
             localStorage.removeItem("token")
             state.auth = null
+        }    ,
+        setSidebar(state, action){
+            state.openSidebar = action.payload
         }
     },
 
@@ -44,5 +48,5 @@ const authSlice = createSlice({
     }
 })
 
-export const {setAuth, logOut} = authSlice.actions
+export const {setAuth, logOut, setSidebar} = authSlice.actions
 export default authSlice
