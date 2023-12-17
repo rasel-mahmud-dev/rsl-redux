@@ -230,6 +230,7 @@
 
 .product-content {
 	margin-left: 310px;
+	margin-top: 46px;
 	@include getDown(768px) {
 		margin-left: 0;
 	}
@@ -347,5 +348,13 @@
 			object-fit: contain;
 			padding: 0;
 		}
+	}
+}
+
+.search-input{
+	width: 100%;
+	display: flex;
+	&::placeholder{
+		color: #e0e0e0;
 	}
 }
