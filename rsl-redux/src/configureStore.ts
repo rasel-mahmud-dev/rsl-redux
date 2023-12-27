@@ -8,7 +8,6 @@ function configureStore({reducer}) {
             [reducerKey]: a || undefined
         }
     }
-
     return store
 }
 

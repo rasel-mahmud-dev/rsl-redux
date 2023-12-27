@@ -9,8 +9,6 @@ import {useDispatch} from "rsl-redux";
 import getAssetPath from "../../utils/getAssetPath.js";
 
 const CategoryForm = () => {
-
-
     const {categoryId} = useParams()
 
     const dispatch = useDispatch()
@@ -40,6 +38,7 @@ const CategoryForm = () => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
+        console.log(value)
         setCategory(prev => ({...prev, [name]: value}));
     };
 
@@ -62,6 +61,10 @@ const CategoryForm = () => {
 
     };
 
+    function handleLoadError(e){
+        console.log(e)
+    }
+
     return (
         <div className="py-10 ">
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{categoryId ? "Update " : "Add "} Category</h2>
@@ -80,18 +83,19 @@ const CategoryForm = () => {
                     {categoryId && (
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Slug:</label>
-                            <input className="rs-input" type="text" name="slug" value={category.slug}
+                            <input className="rs-input" type="text" name="slug" value={category?.slug}
                                    onChange={handleChange}/>
                         </div>
                     )}
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Image:</label>
-                        <input className="rs-input" type="text" name="image" value={category.image}
+                        <input className="rs-input" type="text" name="image" value={category?.image}
                                onChange={handleChange}/>
                     </div>
-                    {category?.image && <div className="w-20">
-                        <img src={getAssetPath(category?.image)} alt=""/>
+
+                    {category?.image && getAssetPath(category?.image) && <div className="w-20">
+                        <img onError={handleLoadError} src={getAssetPath(category?.image) ?? ""} alt=""/>
                     </div> }
 
 

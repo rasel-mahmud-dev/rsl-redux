@@ -27,3 +27,62 @@ Very easy to use.
 Check Example [Live example]
 
 ## Params
+
+Project Directory:
+- .gitignore
+- .idea
+- README.md
+- app.js
+- example/
+    |-- .eslintrc.cjs
+    |-- .gitignore
+    |-- .netlify
+    |-- README.md
+    |-- dist
+    |-- index.html
+    |-- netlify.toml
+    |-- node_modules
+    |-- package-lock.json
+    |-- package.json
+    |-- postcss.config.js
+    |-- public
+    |-- src/
+        |-- App.css
+        |-- App.jsx
+        |-- assets
+        |-- axios
+        |-- component
+        |-- index.css
+        |-- layout
+        |-- main.jsx
+        |-- pages
+        |-- routes.jsx
+        |-- shared.scss
+        |-- store
+        |-- utils
+    |-- tailwind.config.js
+    |-- vite.config.js
+
+- lerna.json
+- node_modules
+- package-lock.json
+- package.json
+- rsl-redux/
+    - .netlify
+    - dist
+    - jest.config.js
+    - node_modules
+    - package.json
+    - readme.md
+    - rollup.config.js
+    - src/
+        |-- Provider.jsx
+        |-- configureStore.ts
+        |-- createApi.ts
+        |-- createAsyncAction.ts
+        |-- createSlice.ts
+        |-- index.ts
+        |-- store.ts
+        |-- useDispatch.ts
+        |-- useSelector.ts
+    - tsconfig.json

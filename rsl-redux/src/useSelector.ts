@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import store from "./store";
+import isArray from "./utils/isArray";
+import isObject from "./utils/isObject";
 
 type SelectorPayload = (args: any)=> any
 
@@ -7,9 +9,9 @@ function useSelector(cb: SelectorPayload) {
     let ini = {};
     const selectedState = cb(store.state);
 
-    if(selectedState && Array.isArray(selectedState)){
+    if(isArray(selectedState)){
         ini = [...selectedState]
-    }else if(typeof selectedState === "object") {
+    }else if(isObject(selectedState)) {
         ini = {...selectedState}
     }
 

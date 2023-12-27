@@ -1,23 +1,22 @@
 const store = {
     state: {},
     listens: [],
-    fireAsyncAction: [],
-    reducerAction: [],
-    dispatch: function (value) {
+    asyncActions: {},
+    dispatch: function (value: object | Array<any>) {
         this.state = {
             ...this.state,
             ...value
         }
         this.notify()
     },
-    reducerDispatch: function (reducerName, state) {
+    reducerDispatch: function (reducerName: string, state) {
         this.state[reducerName] = {
             ...this.state[reducerName],
             ...state
         }
         this.notify()
     },
-    subscribe: function (fn) {
+    subscribe: function (fn: Function) {
         let index = this.listens.findIndex(lis => lis === fn)
         if (index === -1) {
             this.listens.push(fn)
