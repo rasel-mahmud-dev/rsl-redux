@@ -1,11 +1,13 @@
 import {Link, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useSelector} from "rsl-redux";
-import {logOut} from "../store/slices/authSlice.js";
+import {logOut, setSidebar} from "../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux";
 import {BiSearch} from "react-icons/bi";
 import {useEffect, useState} from "react";
 import {CiShoppingCart} from "react-icons/ci";
 import Popup from "./Popup.jsx";
+import {HiBars4} from "react-icons/hi2";
+import getAssetPath from "../utils/getAssetPath.js";
 
 const Nav = () => {
     const {auth} = useSelector(state => state?.authState)
@@ -27,7 +29,7 @@ const Nav = () => {
     const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
-        setSearchValue(search ? search : "")
+        setSearchValue(search ?? "")
     }, [search]);
 
 
@@ -40,22 +42,33 @@ const Nav = () => {
         navigate("/p/?search=" + val)
     }
 
+    function handleToggleLeft(){
+        let which = location.pathname.startsWith("/p/") ? "filter" : "home"
+        dispatch(setSidebar(which))
+    }
+
     return (
         <>
             <div className="bg-[#be5d9c] fixed w-full left-0 top-0 z-[1000]">
+
                 <div className="mx-auto max-w-5xl">
                     <div className="py-3">
-                        <div className="w-full flex justify-between gap-x-6  rounded-3xl py-2 px-4">
+                        <div className="w-full flex justify-between gap-x-2  rounded-3xl py-2 px-4">
                             <div className="flex items-center gap-x-6 w-full max-w-sm">
-                                <li className="text-sm font-medium list-none">
+
+                                <li className="text-sm font-medium list-none flex items-center gap-x-2 ">
+                                    <span className="inline-block  md:hidden">
+                                        <HiBars4 className="text-xl text-white" onClick={handleToggleLeft}/>
+                                    </span>
                                     <NavLink className="text-white" to="/">Home</NavLink>
                                 </li>
                                 <li className="text-sm font-medium list-none w-full">
-                                    <div className="flex items-center border border-gray-300 bg-red-50 rounded-2xl">
+                                    <div className="flex items-center border border-pink-200 bg-pink-300/70 text-white  rounded-2xl">
                                         <input value={searchValue} onChange={handleSearchProduct} type="text"
                                                placeholder="Search products..."
-                                               className="w-full  px-4 bg-transparent rounded-lg focus:outline-none"/>
-                                        <button className="focus:outline-none px-4 rounded-2xl  mr-px">
+                                               className="w-full text-white search-input pl-4 bg-transparent rounded-lg focus:outline-none"
+                                        />
+                                        <button className="focus:outline-none pr-4 rounded-2xl  mr-px">
                                             <BiSearch/>
                                         </button>
                                     </div>
@@ -63,15 +76,17 @@ const Nav = () => {
                             </div>
 
                             {auth ? (
-                                <div className="text-sm text-white font-medium list-none flex items-center gap-x-6">
+                                <div className="text-sm text-white font-medium list-none flex items-center gap-x-3">
 
                                     <div>
                                         <div className="text-white  list-none flex items-center gap-x-4">
 
                                             <div onClick={() => setOpenMenu("carts")}
                                                  className="text-white  list-none flex items-center gap-x-1 relative">
-                                                <span>Your Cart</span>
-                                                <CiShoppingCart className="text-xl"/>
+                                                <span className="hidden md:inline-block">Your Cart</span>
+                                                <div className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                    <CiShoppingCart className="text-xl"/>
+                                                </div>
                                                 <span
                                                     className="absolute -top-3 -right-3 bg-white/20 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
                                             </div>
@@ -128,7 +143,16 @@ const Nav = () => {
                                     <div className="text-white relative list-none flex items-center gap-x-4">
 
                                         <li onClick={() => setOpenMenu("auth")}
-                                            className="text-sm  list-none">{auth?.email}</li>
+                                            className="text-sm  list-none ">
+
+
+                                            <div className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                {auth.avatar ? ( <img src={getAssetPath(auth.avatar)} alt=""/> ) : <span
+                                                    className="uppercase font-semibold">{auth?.username.slice(0, 1)}</span>}
+                                            </div>
+
+
+                                        </li>
                                         <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "auth"}
                                                className="top-9 w-[200px] right-0">
                                             <div className={`select-none cursor-auto text-slate-900 `}>

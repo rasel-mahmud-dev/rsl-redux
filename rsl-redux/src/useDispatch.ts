@@ -26,7 +26,7 @@ function useDispatch() {
                         type: lastPart + "/rejected"
                     }
                 }).finally(() => {
-                    const reducerActionInfo = store.reducerAction[action.type]
+                    const reducerActionInfo = store.asyncActions[action.type]
 
                     if (reducerActionInfo) {
                         const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
@@ -38,7 +38,7 @@ function useDispatch() {
                     payload: actionCall,
                     type: actionCall.type + "/fulfilled"
                 }
-                const reducerActionInfo = store.reducerAction[action.type]
+                const reducerActionInfo = store.asyncActions[action.type]
                 if (reducerActionInfo) {
                     const updatedState = reducerActionInfo.reducerActionFn(store.state[reducerActionInfo.reducerName], action)
                     store.reducerDispatch(reducerActionInfo.reducerName, updatedState)

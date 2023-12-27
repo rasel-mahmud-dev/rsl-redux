@@ -23,7 +23,6 @@ function createApi(payload) {
         mutation: function (mutationParams) {
             cacheKey = mutationParams.cacheKey
 
-
             return function (mutationUserPayload, cb) {
                 let fullURL = baseURL + mutationParams.query(mutationUserPayload)
 

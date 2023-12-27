@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Link} from "react-router-dom";
+import CategoryList from "./CategoryList/CategoryList.jsx";
 
 const HeroBanner = ({categories}) => {
 
@@ -41,18 +42,8 @@ const HeroBanner = ({categories}) => {
         <div className="mt-4 home-wrapper">
 
             <div className="sidebar-home">
-                <div className="col-span-3 bg-white rounded-2xl py-2 px-4">
-                    {categories.map(item => (
-                        <Link to={`/p/${item.slug}`}>
-                            <div className="flex items-center gap-x-2 text-sm py-1 text-gray-800 font-medium  ">
-                                <span>{item.icon}</span>
-                                <span>{item.name}</span>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                <CategoryList categories={categories} />
             </div>
-
 
             <div className="w-full slider-root">
                 <Slider {...settings}>

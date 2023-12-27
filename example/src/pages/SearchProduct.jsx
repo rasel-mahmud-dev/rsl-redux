@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useParams, useSearchParams} from "react-router-dom";
+import {NavLink, useParams, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "rsl-redux";
 import Product from "../component/Product.jsx";
 import {api} from "../axios/index.js";
@@ -7,6 +7,8 @@ import Breadcrumb from "../component/Breadcrumb.jsx";
 import {setFilter} from "../store/slices/productSlice.js";
 import {FaAngleRight} from "react-icons/fa";
 import Loader from "../component/Loader.jsx";
+import {HiBars4} from "react-icons/hi2";
+import {setSidebar} from "../store/slices/authSlice.js";
 
 export const attributes = {
     battery: {
@@ -294,6 +296,7 @@ const SearchProduct = () => {
     const [getQuery] = useSearchParams()
     const {categoryName} = useParams()
     const filterObj = useRef({attributes: {}})
+    const {openSidebar} = useSelector(state => state.authState)
     const {categories, filter, brands} = useSelector(state => state.productState)
 
     const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
@@ -396,6 +399,10 @@ const SearchProduct = () => {
         filterProduct(filterObj.current)
     }
 
+    function handleToggleLeft() {
+        dispatch(setSidebar(openSidebar === "filter" ? "" : "filter"))
+    }
+
     return (
         <div>
             <div className="bread-fixed">
@@ -407,8 +414,20 @@ const SearchProduct = () => {
             {isSearching && <Loader/>}
 
             <div className="gap-6 mt-4">
-                <div className="bg-white p-2 sidebar product-attr-sidebar    ">
+
+                <div
+                    className={`bg-white p-2 sidebar product-attr-sidebar  ${openSidebar === "filter" ? "filter-sidebar" : ""}`}>
                     <div className="">
+
+                        <div
+                            className="text-sm font-medium list-none flex items-center justify-between  px-2 mt-4 mb-4 md:hidden ">
+                            {openSidebar === "filter" && <li className="">
+                                <HiBars4 className="text-xl text-gray-900" onClick={handleToggleLeft}/>
+                            </li>}
+                            <h4 className="text-gray-900 text-base font-semibold uppercase">Filter Product</h4>
+                        </div>
+
+
                         <div>
                             <div className="flex justify-between items-center py-2 px-2 cursor-pointer"
                                  onClick={() => handleToggleExpand("brand_id")}>

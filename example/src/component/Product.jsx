@@ -22,10 +22,21 @@ const Product = (props) => {
             console.log(r)
         })
     }
+
+
+    function imagePath(link){
+        if(!link) return "/images/no-product.png"
+        return getAssetPath(link)
+    }
+
+    function handleImgLoadError(e) {
+        e.target.src = "/images/no-product.png"
+    }
+
     return (
         <div className="bg-white rounded-xl overflow-hidden">
             <div className="product-image">
-                <img className="object-contain max-w-[150px] max-h-[150px] mx-auto  " src={getAssetPath(cover_image)} alt={title} />
+                <img onError={handleImgLoadError} className="object-contain max-w-[150px] max-h-[150px] mx-auto" src={imagePath(cover_image)} alt={title} />
             </div>
             <div className="p-3">
                 <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>

@@ -12,14 +12,6 @@ type ReducersMap = {
     [key: string]: () => void; // Define the structure of your reducers
 };
 
-type ExtraReducersArg = {
-    addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
-};
-
-type ExtraReducersFunc = (builder: {
-    addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
-}) => void;
-
 type CreateSlicePayload = {
     name: string;
     initialState: any;
@@ -65,12 +57,13 @@ function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
     if (extraReducers) {
         extraReducers({
             addCase: function (actionCreator, reducerAction) {
-                if(Object.keys((store["reducerAction"])).includes(actionCreator.type)){
+
+                if(Object.keys((store["asyncActions"])).includes(actionCreator.type)){
                     console.warn("Duplicate action type:: "+ actionCreator.type)
                 }
 
-                store["reducerAction"] = {
-                    ...store["reducerAction"],
+                store["asyncActions"] = {
+                    ...store["asyncActions"],
                     [actionCreator.type]: {
                         reducerName: reducerName,
                         reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
