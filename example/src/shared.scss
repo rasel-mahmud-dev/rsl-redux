@@ -17,69 +17,74 @@
 }
 
 
-.common-table.employee-list-table {
+.common-table.fixed-header-table {
 	width: 100%;
 }
 
-.common-table.employee-list-table thead tr {
+.common-table.fixed-header-table thead tr {
 	@apply text-center p-2;
 	background: #d9d9d9;
 }
 
-.common-table.employee-list-table tbody tr {
+.common-table.fixed-header-table tbody tr:nth-child(2n ) {
+	@apply text-center p-2;
+	background: rgba(255, 192, 203, 0.16);
+}
+
+.common-table.fixed-header-table tbody tr {
 	border-bottom: 1px solid #e3e3e3;
 }
 
-.common-table.employee-list-table tbody tr td {
+.common-table.fixed-header-table tbody tr td {
 	padding: 10px 10px;
 	word-break: break-all;
 	text-align: center;
 }
 
-.common-table.employee-list-table tr th {
+.common-table.fixed-header-table tr th {
 	padding: 14px;
 	text-transform: capitalize !important;
 	font-weight: 400;
 	@apply text-center
 }
 
-.common-table.employee-list-table tr th:nth-child(1) {
+.common-table.fixed-header-table tr th:nth-child(1) {
 	@apply rounded-l
 }
 
-.common-table.employee-list-table tr th:last-child {
+.common-table.fixed-header-table tr th:last-child {
 	@apply rounded-r
 }
 
-.common-table.employee-list-table tbody {
+.common-table.fixed-header-table tbody {
 	height: calc(100vh - 350px);
 	overflow: auto;
 }
 
-.employee-list-table {
+.fixed-header-table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-.employee-list-table td, th {
+.fixed-header-table td, th {
 	/*border: 1px solid #dddddd;*/
 	text-align: left;
 	padding: 8px;
 }
 
-.employee-list-table tbody {
+.fixed-header-table tbody {
 	display: block;
 	overflow: auto;
 }
 
-.employee-list-table thead, tbody tr {
+.fixed-header-table thead, tbody tr {
 	display: table;
 	width: 100%;
 	table-layout: fixed;
 }
 
-.employee-list-table thead {
+.fixed-header-table thead {
 	width: calc(100% - 5px)
 }
 
@@ -357,4 +362,9 @@
 	&::placeholder{
 		color: #e0e0e0;
 	}
+}
+
+.home-loader .loader-backdrop{
+	background: rgba(222, 222, 222, 0) !important;
+	z-index: 10 !important;
 }

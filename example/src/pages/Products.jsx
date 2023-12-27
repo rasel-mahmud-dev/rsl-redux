@@ -74,7 +74,7 @@ const Products = () => {
     return (
         <div ref={divRef} onScroll={(e) => handleFetchPreviousMessage(e)}>
 
-            {isFetching && <Loader/>}
+            {isFetching && <Loader className="home-loader" />}
 
             <div className="home-category-list">
                 <div

@@ -13,7 +13,6 @@ function renderSkeleton() {
 }
 
 const CategoryList = ({categories}) => {
-
     return (
         <div>
             <div className="col-span-3 bg-white rounded-2xl py-2 px-4">

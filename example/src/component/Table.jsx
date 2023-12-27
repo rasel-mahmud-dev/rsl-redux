@@ -6,7 +6,7 @@ const CommonTable = (props) => {
 
     return (
         <div>
-            <table className={`common-table ${className}`}>
+            <table className={`common-table fixed-header-table ${className}`}>
                 {renderTbHeader && (
                     <thead className="table-header-div">
                     <tr>

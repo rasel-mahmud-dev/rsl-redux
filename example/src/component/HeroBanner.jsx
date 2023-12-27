@@ -2,7 +2,6 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Link} from "react-router-dom";
 import CategoryList from "./CategoryList/CategoryList.jsx";
 
 const HeroBanner = ({categories}) => {
@@ -38,9 +37,9 @@ const HeroBanner = ({categories}) => {
         {name: "Home & Lifestyle", icon: ""},
         {name: "Sports & Outdoors", icon: ""}
     ]
+
     return (
         <div className="mt-4 home-wrapper">
-
             <div className="sidebar-home">
                 <CategoryList categories={categories} />
             </div>

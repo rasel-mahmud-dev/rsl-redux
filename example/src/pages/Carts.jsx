@@ -1,7 +1,8 @@
 import React from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
 import CommonTable from "../component/Table.jsx";
-import {addToCart, decrementQuantity, incrementQuantity} from "../store/slices/cartSlice.js";
+import { decrementQuantity, incrementQuantity} from "../store/slices/cartSlice.js";
+import getAssetPath from "../utils/getAssetPath.js";
 
 const Carts = () => {
     const {carts} = useSelector(state => state.cartState)
@@ -16,17 +17,41 @@ const Carts = () => {
         dispatch(decrementQuantity(cart))
     }
 
+
+    function imagePath(link) {
+        if (!link) return "/images/no-product.png"
+        return getAssetPath(link)
+    }
+
+    function handleImgLoadError(e) {
+        e.target.src = "/images/no-product.png"
+    }
+
     const columns = [
+        {
+            name: "Image", field: "image", render: (_, item) => {
+                return (
+                    <div>
+                        <img onError={handleImgLoadError}
+                             className="object-contain max-w-[50px] max-h-[150px] mx-auto"
+                             src={imagePath(item?.product?.cover_image)}
+                             alt=""/>
+                    </div>
+
+                )
+            }
+        },
+
         {
             name: "title", field: "title", render: (_, item) => {
                 return (
-                    <div>{item.product.title}</div>
+                    <div>{item.product?.title || "Product deleted"}</div>
                 )
             }
         },
         {
             name: "Price", field: "price", render: (_, p) => {
-                return p.product.price * p.quantity
+                return p.product?.price * p.quantity
             }
         },
         {name: "Quantity", field: "quantity"},
@@ -47,10 +72,7 @@ const Carts = () => {
         <div className="py-6">
 
             <h2 className="text-xl font-semibold">My Carts</h2>
-
-            <CommonTable className="employee-list-table mt-6" column={columns} data={carts ? carts : []}/>
-
-
+            <CommonTable className="mt-6" column={columns} data={carts ? carts : []}/>
         </div>
     );
 };

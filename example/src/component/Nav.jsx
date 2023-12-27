@@ -3,7 +3,7 @@ import {useSelector} from "rsl-redux";
 import {logOut, setSidebar} from "../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux";
 import {BiSearch} from "react-icons/bi";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CiShoppingCart} from "react-icons/ci";
 import Popup from "./Popup.jsx";
 import {HiBars4} from "react-icons/hi2";
@@ -42,9 +42,18 @@ const Nav = () => {
         navigate("/p/?search=" + val)
     }
 
-    function handleToggleLeft(){
+    function handleToggleLeft() {
         let which = location.pathname.startsWith("/p/") ? "filter" : "home"
         dispatch(setSidebar(which))
+    }
+
+    function imagePath(link) {
+        if (!link) return "/images/no-product.png"
+        return getAssetPath(link)
+    }
+
+    function handleImgLoadError(e) {
+        e.target.src = "/images/no-product.png"
     }
 
     return (
@@ -63,7 +72,8 @@ const Nav = () => {
                                     <NavLink className="text-white" to="/">Home</NavLink>
                                 </li>
                                 <li className="text-sm font-medium list-none w-full">
-                                    <div className="flex items-center border border-pink-200 bg-pink-300/70 text-white  rounded-2xl">
+                                    <div
+                                        className="flex items-center border border-pink-200 bg-pink-300/70 text-white  rounded-2xl">
                                         <input value={searchValue} onChange={handleSearchProduct} type="text"
                                                placeholder="Search products..."
                                                className="w-full text-white search-input pl-4 bg-transparent rounded-lg focus:outline-none"
@@ -84,7 +94,8 @@ const Nav = () => {
                                             <div onClick={() => setOpenMenu("carts")}
                                                  className="text-white  list-none flex items-center gap-x-1 relative">
                                                 <span className="hidden md:inline-block">Your Cart</span>
-                                                <div className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                <div
+                                                    className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
                                                     <CiShoppingCart className="text-xl"/>
                                                 </div>
                                                 <span
@@ -110,25 +121,41 @@ const Nav = () => {
                                                                 items in carts</h4>
                                                         )}
 
-                                                        {carts?.map(cart => (
-                                                            <div key={cart.id}
-                                                                 className="text-slate-900 py-2 border-b border-b-primaryBorder last:border-none">
-                                                                <li className="flex items-center w-full">
-                                                               <span className="max-w-md w-full flex items-center ">
-                                                                <div className="w-10">
-                                                                    <img src={cart?.product?.cover_image} alt=""/>
-                                                                </div>
-                                                                   <span>
-                                                                       {cart?.product?.title}
-                                                                   </span>
-                                                               </span>
-                                                                    <span
-                                                                        className="max-w-sm w-full inline-block ml-2">{cart?.product?.price}</span>
-                                                                    <span
-                                                                        className="max-w-sm w-full inline-block">{cart.quantity}</span>
-                                                                </li>
-                                                            </div>
-                                                        ))}
+                                                        <table>
+                                                            <tbody>
+                                                            {carts?.map(cart => (
+                                                                <tr key={cart.id}
+                                                                    className="text-slate-900 py-2 border-b border-b-primaryBorder last:border-none">
+
+                                                                    <td>
+                                                                        <img onError={handleImgLoadError}
+                                                                             className="object-contain max-w-[50px] max-h-[150px] mx-auto"
+                                                                             src={imagePath(cart?.product?.cover_image)}
+                                                                             alt=""/>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <p className="whitespace-nowrapte">
+                                                                            {cart?.product?.title ?? (
+                                                                                <span className="text-red-500">Product deleted</span>
+                                                                            )}
+                                                                        </p>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span
+                                                                            className="max-w-sm w-full inline-block ml-2">{cart?.product?.price ?? "0.00"}</span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <span
+                                                                            className="max-w-sm w-full inline-block">{cart.quantity}</span>
+                                                                    </td>
+
+                                                                </tr>
+                                                            ))}
+                                                            </tbody>
+                                                        </table>
                                                     </div>
 
 
@@ -146,8 +173,9 @@ const Nav = () => {
                                             className="text-sm  list-none ">
 
 
-                                            <div className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
-                                                {auth.avatar ? ( <img src={getAssetPath(auth.avatar)} alt=""/> ) : <span
+                                            <div
+                                                className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                {auth.avatar ? (<img src={getAssetPath(auth.avatar)} alt=""/>) : <span
                                                     className="uppercase font-semibold">{auth?.username.slice(0, 1)}</span>}
                                             </div>
 
