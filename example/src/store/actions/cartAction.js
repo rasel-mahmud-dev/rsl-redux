@@ -1,5 +1,6 @@
 import {createAsyncAction} from "rsl-redux";
 import {api} from "../../axios/index.js";
+import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
 
 export const fetchCarts = createAsyncAction(
@@ -10,7 +11,7 @@ export const fetchCarts = createAsyncAction(
             return res.data
 
         } catch (e) {
-            throw e
+            throw catchErrorMessage(e)
         }
 
     })
@@ -23,7 +24,21 @@ export const addToCartAction = createAsyncAction(
             return cart
 
         } catch (e) {
-            throw e
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
+export const deleteCartItemAction = createAsyncAction(
+    "addToCartAction",
+    async function (cartId) {
+        try {
+             await api.delete("/carts/" + cartId)
+            return cartId
+
+        } catch (e) {
+            throw catchErrorMessage(e)
         }
 
     })

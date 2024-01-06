@@ -130,13 +130,13 @@ const Nav = () => {
                                                                     <td>
                                                                         <img onError={handleImgLoadError}
                                                                              className="object-contain max-w-[50px] max-h-[150px] mx-auto"
-                                                                             src={imagePath(cart?.product?.cover_image)}
+                                                                             src={imagePath(cart?.cover_image)}
                                                                              alt=""/>
                                                                     </td>
 
                                                                     <td>
                                                                         <p className="whitespace-nowrapte">
-                                                                            {cart?.product?.title ?? (
+                                                                            {cart?.title ?? (
                                                                                 <span className="text-red-500">Product deleted</span>
                                                                             )}
                                                                         </p>
@@ -144,7 +144,7 @@ const Nav = () => {
 
                                                                     <td>
                                                                         <span
-                                                                            className="max-w-sm w-full inline-block ml-2">{cart?.product?.price ?? "0.00"}</span>
+                                                                            className="max-w-sm w-full inline-block ml-2">{cart?.price ?? "0.00"}</span>
                                                                     </td>
 
                                                                     <td>

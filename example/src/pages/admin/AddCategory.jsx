@@ -94,7 +94,7 @@ const CategoryForm = () => {
                                onChange={handleChange}/>
                     </div>
 
-                    {category?.image && getAssetPath(category?.image) && <div className="w-20">
+                    {category?.image && getAssetPath(category?.image) && <div className="w-20 mb-6">
                         <img onError={handleLoadError} src={getAssetPath(category?.image) ?? ""} alt=""/>
                     </div> }
 
