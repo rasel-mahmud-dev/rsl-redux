@@ -4,6 +4,95 @@ import {deleteCategory, fetchBrands, fetchCategories} from "../actions/categoryA
 import {deleteAdminProduct, fetchAdminProducts} from "../actions/adminAction.js";
 
 const initialState = {
+    showCategories: [
+
+            {
+                "_id": "6570c5ae26c947e3c99321f7",
+                "name": "Laptop",
+                "slug": "laptop",
+                "image": "fashion.jpg"
+            },
+            {
+                "_id": "6570c5ae26c947e3c99321f8",
+                "name": "Health & Beauty",
+                "slug": "health-beauty",
+                "image": "beauty.jpg"
+            },
+            {
+                "_id": "6570c5ae26c947e3c99321f9",
+                "name": "Watches, Bags, Jewellery",
+                "slug": "watches-bags-jewellery",
+                "image": "accessories.jpg"
+            },
+
+            {
+                "_id": "6570c5ae26c947e3c99321fc",
+                "name": "Electronics Devices",
+                "slug": "electronics-devices",
+                "image": "electronics.jpg"
+            },
+            {
+                "_id": "6570c5ae26c947e3c99321fd",
+                "name": "TV & Home Appliances",
+                "slug": "tv-home-appliances",
+                "image": "tv-appliances.jpg"
+            },
+            {
+                "_id": "6570c5ae26c947e3c99321fe",
+                "name": "Electronic Accessories",
+                "slug": "electronic-accessories",
+                "image": "accessories.jpg"
+            },
+            {
+                "_id": "6570c5ae26c947e3c99321ff",
+                "name": "Groceries",
+                "slug": "groceries",
+                "image": "-original-imagg8d9hbkhfffg.webp"
+            },
+
+            {
+                "_id": "6570c5ae26c947e3c9932201",
+                "name": "Sports & Outdoors",
+                "slug": "sports-outdoors",
+                "image": "-original-imaghx9q5rvcdghy.webp"
+            },
+            {
+                "_id": "65736c291959c8d6cfec1e0d",
+                "created_at": "2023-12-08T19:19:05.643Z",
+                "name": "Mobile",
+                "slug": "mobile",
+                "image": "-original-imaghx9q5rvcdghy.webp"
+            },
+            {
+                "_id": "657489ecf06523a9349cdd92",
+                "created_at": "2023-12-09T15:38:20.286Z",
+                "name": "Watches",
+                "slug": "watches",
+                "image": "-original-imagg8d9hbkhfffg.webp"
+            },
+            {
+                "_id": "65748d86f06523a9349cdd93",
+                "created_at": "2023-12-09T15:53:42.942Z",
+                "name": "T-shart",
+                "slug": "t-shart",
+                "image": "s-cmb-po2-dab-wynk-smartees-original-imagm5vhumtz8epz.webp"
+            },
+            {
+                "_id": "657492f54b5b3e0607eeb3ae",
+                "created_at": "2023-12-09T16:16:53.216Z",
+                "name": "Jeans",
+                "slug": "jeans",
+                "image": "32-pm206796a083-pepe-jeans-original-imagqhmbzgxx3yhz.webp"
+            },
+            {
+                "_id": "658118609414196f798f2f86",
+                "created_at": "2023-12-19T04:13:20.261Z",
+                "name": "Televisions",
+                "slug": "televisions",
+                "image": "u-series-55-u1s-55uc1a00-oneplus-original-imag7xtnzgaaxqrg.webp"
+            }
+
+    ],
     homeProducts: {},
     products: [],
     brands: [],

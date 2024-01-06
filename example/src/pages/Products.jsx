@@ -9,11 +9,11 @@ import Loader from "../component/Loader.jsx";
 
 
 const Products = () => {
-    const {products, categories, homeProducts} = useSelector((state) => state.productState)
-    const scrollPosition = useRef(0); // Current scroll position
+    const {products, showCategories, homeProducts} = useSelector((state) => state.productState)
+
     const [pageNumber, setPageNumber] = useState(1); // Height of the content
     const [isEmpty, setEmpty] = useState(false); // Height of the content
-    const divRef = useRef(null); // Ref to the <div> element
+
     const pageRef = useRef([]); // Ref to the <div> element
 
     const [isFetching, setFetching] = useState(false)
@@ -74,7 +74,7 @@ const Products = () => {
             <div className="home-category-list">
                 <div
                     className="flex items-center justify-between max-w-8xl mx-auto  gap-x-2 md:gap-x-4 scroll-x-transparent overflow-x-auto md:overflow-visible ">
-                    {categories.map((cat) => (
+                    {showCategories.map((cat) => (
                         <div key={cat._id} className="home-category-list-item">
                             <div onClick={()=>navigate(`/p/${cat._id}`)}
                                  className="flex home-category-list-item-content flex-col items-center  border md:border-none rounded-full md:bg-transparent ">
@@ -85,7 +85,7 @@ const Products = () => {
                 </div>
             </div>
 
-            <HeroBanner categories={categories}/>
+            <HeroBanner showCategories={showCategories}/>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3 lg:gap-6 mt-4">
                 {getAllProducts(homeProducts).map(product => (
                     <Product key={product.id} {...product} />

@@ -13,6 +13,7 @@ function useDispatch() {
             let action: { type: string; payload?: any; };
 
             if (actionCall instanceof Promise) {
+
                 actionCall.then(payloadResponse => {
                     action = {
                         payload: payloadResponse,
@@ -56,11 +57,7 @@ function useDispatch() {
 
         return {
             unwrap() {
-                if (actionCall instanceof Promise) {
-                    return actionCall
-                } else {
-                    return Promise.resolve(actionCall)
-                }
+                return actionCall
             }
         }
     }

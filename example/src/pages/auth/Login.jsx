@@ -1,6 +1,7 @@
 import {useDispatch} from "rsl-redux";
 import {loginAction} from "../..//store/actions/authAction.js";
 import {Link, useNavigate} from "react-router-dom";
+import toast from "../../utils/toast.js";
 
 function Login() {
 
@@ -12,14 +13,21 @@ function Login() {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
+
+        if(!email || !password){
+            return toast.openError("Email and password required")
+        }
+
         dispatch(loginAction({email, password})).unwrap().then(()=>{
             navigate("/")
+        }).catch(ex=>{
+            toast.openError(ex)
         })
     }
 
 
     return (<div className="mt-10">
-            <div className="bg-white p-8 rounded shadow-md max-w-md w-full mx-auto">
+            <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full mx-auto">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
@@ -39,7 +47,7 @@ function Login() {
                     </div>
 
                     <button type="submit"
-                            className="w-full bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">Login
+                            className="w-full bg-pink-400 primary-btn text-white font-semibold px-4 py-2 rounded-lg  transition duration-300">Login
                     </button>
                 </form>
             </div>

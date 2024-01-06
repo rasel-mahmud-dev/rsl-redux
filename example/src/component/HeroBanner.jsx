@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CategoryList from "./CategoryList/CategoryList.jsx";
 
-const HeroBanner = ({categories}) => {
+const HeroBanner = ({showCategories}) => {
 
     const items = [
         {image: "/ecfcb747-0e8c-4c16-a6a2-88b810351aeb.jpg_1200x1200.jpg"},
@@ -24,24 +24,10 @@ const HeroBanner = ({categories}) => {
         autoplaySpeed: 2000
     }
 
-    const cat = [
-        {name: "Women's & Girls' Fashion", icon: ""},
-        {name: "Health & Beauty", icon: ""},
-        {name: "Watches, Bags, Jewellery", icon: ""},
-        {name: "Men's & Boys' Fashion", icon: ""},
-        {name: "Mother & Baby", icon: ""},
-        {name: "Electronics Devices", icon: ""},
-        {name: "TV & Home Appliances", icon: ""},
-        {name: "Electronic Accessories", icon: ""},
-        {name: "Groceries", icon: ""},
-        {name: "Home & Lifestyle", icon: ""},
-        {name: "Sports & Outdoors", icon: ""}
-    ]
-
     return (
         <div className="mt-4 home-wrapper">
             <div className="sidebar-home">
-                <CategoryList categories={categories} />
+                <CategoryList categories={showCategories} />
             </div>
 
             <div className="w-full slider-root">
