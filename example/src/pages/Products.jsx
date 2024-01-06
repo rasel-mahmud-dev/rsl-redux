@@ -19,11 +19,6 @@ const Products = () => {
     const [isFetching, setFetching] = useState(false)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
-
 
     function handleScroll(e) {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -72,7 +67,7 @@ const Products = () => {
     }
 
     return (
-        <div ref={divRef} onScroll={(e) => handleFetchPreviousMessage(e)}>
+        <div>
 
             {isFetching && <Loader className="home-loader" />}
 
@@ -106,6 +101,8 @@ const Products = () => {
                 )}
 
             </div>
+
+            <button>Load More</button>
         </div>
     );
 };
