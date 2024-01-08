@@ -4,6 +4,7 @@ import {addToCart} from "../store/slices/cartSlice.js";
 import getAssetPath from "../utils/getAssetPath.js";
 import subStr from "../utils/subStr.js";
 import {addToCartAction} from "../store/actions/cartAction.js";
+import Toast from "../utils/toast.js";
 
 
 const Product = (props) => {
@@ -11,21 +12,21 @@ const Product = (props) => {
 
     const dispatch = useDispatch()
 
-    function handleAddToCart(){
+    function handleAddToCart() {
         dispatch(addToCartAction({
             title,
             price,
             product_id: _id,
             cover_image,
             quantity: 1
-        })).unwrap().then(r=>{
-            console.log(r)
+        })).unwrap().then(() => {
+            Toast.openSuccess("Successfully added on the cart")
         })
     }
 
 
-    function imagePath(link){
-        if(!link) return "/images/no-product.png"
+    function imagePath(link) {
+        if (!link) return "/images/no-product.png"
         return getAssetPath(link)
     }
 
@@ -36,12 +37,15 @@ const Product = (props) => {
     return (
         <div className="bg-white rounded-xl overflow-hidden">
             <div className="product-image">
-                <img onError={handleImgLoadError} className="object-contain max-w-[150px] max-h-[150px] mx-auto" src={imagePath(cover_image)} alt={title} />
+                <img onError={handleImgLoadError} className="object-contain max-w-[150px] max-h-[150px] mx-auto"
+                     src={imagePath(cover_image)} alt={title}/>
             </div>
             <div className="p-3">
                 <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
                 <p>Tk:{price}</p>
-                <button className="bg-pink-400 primary-btn py-1 text-neutral-100" onClick={handleAddToCart}>Add to Cart</button>
+                <button className="mx-auto block bg-pink-400 primary-btn py-1 mt-4 text-neutral-100"
+                        onClick={handleAddToCart}>Add to Cart
+                </button>
             </div>
         </div>
     );

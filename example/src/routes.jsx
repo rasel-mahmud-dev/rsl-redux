@@ -16,6 +16,7 @@ import ProductList from "./pages/admin/ProductList.jsx";
 import BrandList from "./pages/admin/BrandList.jsx";
 import CategoryList from "./pages/admin/CategoryList.jsx";
 import AddBrand from "./pages/admin/AddBrand.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
 
 const routes = createBrowserRouter([
@@ -29,6 +30,7 @@ const routes = createBrowserRouter([
             {path: "p/:categoryName", element: <SearchProduct/>},
             {path: "p/", element: <SearchProduct/>},
             {path: "carts", element: <Carts/>},
+            {path: "checkout", element: <Checkout/>},
             {path: "register", element: <Registration/>},
             {path: "rtk", element: <ReduxRTK/>},
             {path: "about", element: <AboutPage/>},

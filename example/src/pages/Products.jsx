@@ -20,16 +20,14 @@ const Products = () => {
     const dispatch = useDispatch()
 
 
-    function handleScroll(e) {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            setPageNumber(prevState => {
-                if (!pageRef.current.includes(prevState + 1)) {
-                    pageRef.current.push(prevState + 1)
-                    return prevState + 1
-                }
-                return prevState
-            })
-        }
+    function handleLoadMore() {
+        setPageNumber(prevState => {
+            if (!pageRef.current.includes(prevState + 1)) {
+                pageRef.current.push(prevState + 1)
+                return prevState + 1
+            }
+            return prevState
+        })
     }
 
     useEffect(() => {
@@ -91,18 +89,18 @@ const Products = () => {
                     <Product key={product.id} {...product} />
                 ))}
 
-                { !isArray(products) || products?.length === 0 ? Array.from({length: 20}).fill(1).map(item=>(
+                { !isArray(getAllProducts(homeProducts)) || getAllProducts(homeProducts)?.length === 0 && Array.from({length: 20}).fill(1).map(item=>(
                     <ProductSkeleton key={item} />
 
-                )) : (
-                    products.map(product => (
-                        <Product key={product.id} {...product} />
-                    ))
-                )}
+                ))}
+
+                {isArray(products) && products.map(product => (
+                    <Product key={product.id} {...product} />
+                )) }
 
             </div>
 
-            <button>Load More</button>
+            <button className="bg-pink-400 mx-auto block w-max my-20" onClick={handleLoadMore}>Load More</button>
         </div>
     );
 };

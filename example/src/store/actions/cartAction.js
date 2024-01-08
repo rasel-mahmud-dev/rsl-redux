@@ -21,7 +21,7 @@ export const addToCartAction = createAsyncAction(
     async function (cart) {
         try {
             const res = await api.post("/carts", cart)
-            return cart
+            return res.data
 
         } catch (e) {
             throw catchErrorMessage(e)
@@ -31,7 +31,7 @@ export const addToCartAction = createAsyncAction(
 
 
 export const deleteCartItemAction = createAsyncAction(
-    "addToCartAction",
+    "deleteCartAction",
     async function (cartId) {
         try {
              await api.delete("/carts/" + cartId)
