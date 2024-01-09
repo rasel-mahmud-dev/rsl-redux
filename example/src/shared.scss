@@ -61,6 +61,10 @@
 	overflow: auto;
 }
 
+.common-table.fixed-header-table.checkout-items-table tbody{
+	height: calc(100vh - 500px) !important;
+}
+
 .fixed-header-table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;

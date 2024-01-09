@@ -1,15 +1,12 @@
-import React from 'react';
-import dynamic from "next/dynamic";
-import apis, { blogApi } from "@/apis/index";
-import Loader from "@/components/HttpResponse/Loader/Loader";
+import React, {lazy} from 'react';
+import {api} from "../../axios"
+import Loader from "../Loader.jsx";
 
+const ReactApexChart = lazy(() => import("react-apexcharts"));
 
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {ssr: false});
+class CountChart extends React.Component{
 
-
-class CountChart extends React.Component<any, any> {
-
-    recentYears: number[] = []
+    recentYears = []
 
     constructor(props) {
         super(props);
@@ -26,13 +23,19 @@ class CountChart extends React.Component<any, any> {
 
             series: [],
             options: {
+                plotOptions: {
+                    pie: {
+                        size: 200
+                    }
+                },
                 chart: {
-                    width: 380,
+                    // width: 180,
                     type: 'pie',
                 },
-                labels: this.recentYears,
+
+                labels: [],
                 legend: {
-                    position: 'bottom'
+                    position: 'top'
                 },
                 dataLabels: {
                     formatter(val, opts) {
@@ -51,9 +54,6 @@ class CountChart extends React.Component<any, any> {
                 responsive: [{
                     breakpoint: 480,
                     options: {
-                        chart: {
-                            width: 400
-                        },
                         legend: {
                             position: 'bottom'
                         }
@@ -66,33 +66,37 @@ class CountChart extends React.Component<any, any> {
     }
 
     async componentDidMount() {
-        // let t = [{"_id": 2022, "count": 2137}, {"_id": 2023, "count": 913}]
-        blogApi.get("/visitors/stats?groupYear=true").then(({data, status}) => {
+
+        api.get("/orders/stats/categories").then(({data, status}) => {
             if (status === 200) {
 
+                const {categories} = data
+
+
                 let addPopulateDate  = []
-                for (let datum of data) {
-                    for (let recentYear of this.recentYears) {
-                        if(datum._id === recentYear){
-                            addPopulateDate.push({_id: recentYear, count: datum.count})
-                        }
+                // for (let datum of data) {
+                //     for (let recentYear of this.recentYears) {
+                //         if(datum._id === recentYear){
+                //             addPopulateDate.push({_id: recentYear, count: datum.count})
+                //         }
+                //     }
+                // }
+                //
+
+                for (let cat of categories) {
+                    if(addPopulateDate.findIndex(el=>el.name == cat.name) === -1){
+                        addPopulateDate.push({_id: cat.name, count: 23})
                     }
                 }
 
-                for (let recentYear of this.recentYears) {
-                    if(addPopulateDate.findIndex(el=>el._id == recentYear) === -1){
-                        addPopulateDate.push({_id: recentYear, count: 0})
-                    }
-                }
-
-                addPopulateDate.sort((a, b)=>a._id > b._id ? 1 : -1)
+                // addPopulateDate.sort((a, b)=>a._id > b._id ? 1 : -1)
 
                 this.setState(prev => ({
                     ...prev,
-                    series: addPopulateDate.map(item => item.count),
+                    series: addPopulateDate.map(i=>i.count),
                     options: {
                         ...prev.options,
-                        labels: addPopulateDate.map(item => item._id)
+                        labels: categories.map(cat=>cat.name)
                     }
                 }))
             }
@@ -104,8 +108,8 @@ class CountChart extends React.Component<any, any> {
         })
     }
 
-    getUnique<T>(arr: Array<T>, cb: (arg: T, items: Array<T>)=> boolean){
-        let items: Array<T> = []
+    getUnique(arr, cb){
+        let items = []
         for (let arrElement of arr) {
             if(cb(arrElement, items)){
                 items.push(arrElement)
@@ -119,12 +123,15 @@ class CountChart extends React.Component<any, any> {
         return (
                 <div id="chart" className="bg-body">
 
-                    {this.state.series.length === 0 ? <Loader
-                            size="small"
-                            title="Data fetching"
-                            className="flex justify-center items-center"
-                            titleClass="text-xs !font-semibold !mt-2"
-                    /> : <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380}/>}
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="pie"  />
+
+                    {/*{this.state.series.length === 0 ? <Loader*/}
+                    {/*        size="small"*/}
+                    {/*        title="Data fetching"*/}
+                    {/*        className="flex justify-center items-center"*/}
+                    {/*        titleClass="text-xs !font-semibold !mt-2"*/}
+                    {/*/> : <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380}/>}*/}
+
                 </div>
 
         )

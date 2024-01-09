@@ -34,9 +34,21 @@ export const deleteCartItemAction = createAsyncAction(
     "deleteCartAction",
     async function (cartId) {
         try {
-             await api.delete("/carts/" + cartId)
+            await api.delete("/carts/" + cartId)
             return cartId
 
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+export const orderCartProductsAction = createAsyncAction(
+    "orderCartProductsAction",
+    async function (products) {
+        try {
+            const {data} = await api.post("/orders", products)
+            return data
         } catch (e) {
             throw catchErrorMessage(e)
         }

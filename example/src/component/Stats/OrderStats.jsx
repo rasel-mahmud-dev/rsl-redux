@@ -14,7 +14,7 @@ class OrderStats extends React.Component {
             startDate: 2022,
             isFetchingData: false,
             series: [{
-                name: 'Visitors',
+                name: 'count',
                 data: []
             }],
             options: {
@@ -42,11 +42,11 @@ class OrderStats extends React.Component {
                     ]
                 },
                 yaxis: {
-                    title: "Hits",
+                    title: "Total",
                     type: 'numeric',
                     labels: {
                         formatter: function (value) {
-                            return value + " hits";
+                            return value;
                         }
                     },
                     // categories: [
@@ -59,7 +59,7 @@ class OrderStats extends React.Component {
                         format: 'dd/MM/yy'
                     },
                     y: {
-                        format: 'hits'
+                        format: 'count'
                     },
                 },
 
@@ -91,7 +91,7 @@ class OrderStats extends React.Component {
             ...prev,
             isFetchingData: false,
             series: [{
-                name: 'Visitors',
+                name: 'count',
                 data: dataa
             }],
         }))
@@ -178,7 +178,7 @@ class OrderStats extends React.Component {
             currentYear: year,
             isFetchingData: false,
             series: [{
-                name: 'Visitors',
+                name: 'count',
                 data: dataa
             }],
         }))
