@@ -35,13 +35,14 @@ class CountChart extends React.Component{
 
                 labels: [],
                 legend: {
-                    position: 'top'
+                    position: 'top',
+
                 },
                 dataLabels: {
                     formatter(val, opts) {
                         const name = opts.w.globals.labels[opts.seriesIndex]
                         let v = opts.w.globals.seriesTotals[opts.seriesIndex] + " hits"
-                        return [name, v]
+                        return ""
                     }
                 },
                 colors: [
@@ -123,7 +124,7 @@ class CountChart extends React.Component{
         return (
                 <div id="chart" className="bg-body">
 
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="pie"  />
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={500}  />
 
                     {/*{this.state.series.length === 0 ? <Loader*/}
                     {/*        size="small"*/}
