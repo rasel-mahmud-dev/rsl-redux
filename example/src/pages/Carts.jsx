@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import CommonTable from "../component/Table.jsx";
+import CommonTable from "../components/Table.jsx";
 import {decrementQuantity, incrementQuantity} from "../store/slices/cartSlice.js";
 import getAssetPath from "../utils/getAssetPath.js";
 import {BiTrash} from "react-icons/bi";

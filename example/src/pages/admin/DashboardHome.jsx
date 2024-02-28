@@ -1,9 +1,9 @@
 import React, {lazy, Suspense} from 'react';
 
-const OrderStats = lazy(()=>import("../../component/Stats/OrderStats"));
-const OrderByCategories = lazy(()=>import("../../component/Stats/OrderByCategories"));
-const TotalIncome = lazy(()=>import("../../component/Stats/TotalIncome"));
-const TotalOrder = lazy(()=>import("../../component/Stats/TotalOrder"));
+const OrderStats = lazy(()=>import("../../components/Stats/OrderStats"));
+const OrderByCategories = lazy(()=>import("../../components/Stats/OrderByCategories"));
+const TotalIncome = lazy(()=>import("../../components/Stats/TotalIncome"));
+const TotalOrder = lazy(()=>import("../../components/Stats/TotalOrder"));
 
 const DashboardHome = () => {
     return (

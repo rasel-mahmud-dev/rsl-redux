@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {NavLink, useParams, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "rsl-redux";
-import Product from "../component/Product.jsx";
+import Product from "../components/Product.jsx";
 import {api} from "../axios/index.js";
-import Breadcrumb from "../component/Breadcrumb.jsx";
+import Breadcrumb from "../components/Breadcrumb.jsx";
 import {setFilter} from "../store/slices/productSlice.js";
 import {FaAngleRight} from "react-icons/fa";
-import Loader from "../component/Loader.jsx";
+import Loader from "../components/Loader.jsx";
 import {HiBars4} from "react-icons/hi2";
 import {setSidebar} from "../store/slices/authSlice.js";
 

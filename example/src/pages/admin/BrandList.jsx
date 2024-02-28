@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import CommonTable from "../../component/Table.jsx";
+import CommonTable from "../../components/Table.jsx";
 import {Link} from "react-router-dom";
 import {deleteBrand} from "../../store/actions/productAction.js";
 import getAssetPath from "../../utils/getAssetPath.js";

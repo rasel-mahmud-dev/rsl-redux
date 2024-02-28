@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector, isArray} from "rsl-redux";
-import Product from "../component/Product.jsx";
+import Product from "../components/Product.jsx";
 import {fetchProducts} from "../store/actions/productAction.js";
-import HeroBanner from "../component/HeroBanner.jsx";
+import HeroBanner from "../components/HeroBanner.jsx";
 import getAssetPath from "../utils/getAssetPath.js";
-import ProductSkeleton from "../component/Product.Skeleton.jsx";
-import Loader from "../component/Loader.jsx";
+import ProductSkeleton from "../components/Product.Skeleton.jsx";
+import Loader from "../components/Loader.jsx";
 
 
 const Products = () => {
@@ -100,7 +100,7 @@ const Products = () => {
 
             </div>
 
-            <button className="bg-pink-400 mx-auto block w-max my-20" onClick={handleLoadMore}>Load More</button>
+            <button className="primary-btn mx-auto block w-max my-20" onClick={handleLoadMore}>Load More</button>
         </div>
     );
 };

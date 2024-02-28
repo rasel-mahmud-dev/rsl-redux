@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, Outlet,} from "react-router-dom";
-import Sidebar from "../component/Sidebar.jsx";
-import Nav from "../component/Nav.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import Nav from "../components/Nav.jsx";
 
 
 const AdminLayout = () => {

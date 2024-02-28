@@ -25,10 +25,10 @@ function useSelector(cb: SelectorPayload) {
 
 
     useEffect(() => {
-        // Subscribe to the store when the component mounts
+        // Subscribe to the store when the components mounts
         store.subscribe(listener);
 
-        // Clean up the subscription when the component unmounts
+        // Clean up the subscription when the components unmounts
         return () => {
             store.removeListener(listener);
         };

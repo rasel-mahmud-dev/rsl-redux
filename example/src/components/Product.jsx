@@ -43,7 +43,7 @@ const Product = (props) => {
             <div className="p-3">
                 <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
                 <p>Tk:{price}</p>
-                <button className="mx-auto block bg-pink-400 primary-btn py-1 mt-4 text-neutral-100"
+                <button className="mx-auto block primary-btn py-1 mt-4 text-neutral-100"
                         onClick={handleAddToCart}>Add to Cart
                 </button>
             </div>

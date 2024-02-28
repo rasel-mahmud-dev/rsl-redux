@@ -8,6 +8,7 @@ import {CiShoppingCart} from "react-icons/ci";
 import Popup from "./Popup.jsx";
 import {HiBars4} from "react-icons/hi2";
 import getAssetPath from "../utils/getAssetPath.js";
+import MobileNavigation from "./MobileNavigation/MobileNavigation.jsx";
 
 const Nav = () => {
     const {auth} = useSelector(state => state?.authState)
@@ -58,7 +59,7 @@ const Nav = () => {
 
     return (
         <>
-            <div className="bg-[#be5d9c] fixed w-full left-0 top-0 z-[1000]">
+            <div className="navigation fixed w-full left-0 top-0 z-[1000]">
 
                 <div className="mx-auto max-w-5xl">
                     <div className="py-3">
@@ -206,6 +207,8 @@ const Nav = () => {
                 </div>
             </div>
             <div className="h-[75px]"></div>
+
+            <MobileNavigation/>
         </>
     );
 };

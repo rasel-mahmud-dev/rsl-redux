@@ -1,12 +1,13 @@
 import React from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import CommonTable from "../../component/Table.jsx";
+import CommonTable from "../../components/Table.jsx";
 import {Link} from "react-router-dom";
 import {deleteCategory} from "../../store/actions/categoryAction.js";
 import getAssetPath from "../../utils/getAssetPath.js";
 
 
 const ProductList = () => {
+
     const {categories} = useSelector(state => state.productState)
 
     const dispatch = useDispatch()

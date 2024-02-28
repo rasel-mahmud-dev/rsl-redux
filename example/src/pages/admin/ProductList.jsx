@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
 import formatPrice from "../../utils/formatPrice.js";
-import CommonTable from "../../component/Table.jsx";
+import CommonTable from "../../components/Table.jsx";
 import {deleteAdminProduct, fetchAdminProducts} from "../../store/actions/adminAction.js";
 import {Link} from "react-router-dom";
 import getAssetPath from "../../utils/getAssetPath.js";

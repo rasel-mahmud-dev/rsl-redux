@@ -6,7 +6,7 @@ import {orderCartProductsAction} from "../store/actions/cartAction.js";
 import Toast from "../utils/toast.js";
 import getAssetPath from "../utils/getAssetPath.js";
 import {BiTrash} from "react-icons/bi";
-import CommonTable from "../component/Table.jsx";
+import CommonTable from "../components/Table.jsx";
 
 const Checkout = () => {
     const [selectedCartItems, setSelectedCartItems] = useState([])
