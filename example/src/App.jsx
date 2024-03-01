@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "rsl-redux";
 import {fetchBrands, fetchCategories} from "./store/actions/categoryAction.js";
 import {fetchCarts} from "./store/actions/cartAction.js";
 import routes from "./routes.jsx";
+import {fetchWishlists} from "./store/actions/wishlistAction.js";
 
 function App() {
     const {auth} = useSelector(state => state.authState)
@@ -20,6 +21,7 @@ function App() {
     useEffect(() => {
         if (auth?._id) {
             dispatch(fetchCarts())
+            dispatch(fetchWishlists())
         }
     }, [auth, auth?._id, dispatch]);
 

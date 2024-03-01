@@ -16,7 +16,7 @@ const MainLayout = () => {
         dispatch(setSidebar(val))
     }
 
-    console.log(openSidebar)
+
 
     return (
         <div>
