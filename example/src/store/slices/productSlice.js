@@ -92,11 +92,20 @@ const productSlice = createSlice({
             for (let payloadKey in action.payload) {
                 state.filter[payloadKey] = action.payload[payloadKey]
             }
+        },
+
+        addToWishlist(state, action){
+            state.wishlist.push(action.payload)
+        },
+
+        removeFromWishlist(state, action){
+            state.wishlist = state.wishlist.filter(item=>item.productId !== action?.payload)
         }
 
     },
 
     extraReducers: (builder) => {
+
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
             const {pageNumber, data} = action.payload
             // state.products[pageNumber] = data
@@ -104,7 +113,7 @@ const productSlice = createSlice({
 
         })
 
- builder.addCase(fetchWishlists.fulfilled, (state, action) => {
+        builder.addCase(fetchWishlists.fulfilled, (state, action) => {
            state.wishlist = action?.payload || []
 
         })
@@ -139,5 +148,5 @@ const productSlice = createSlice({
 })
 
 
-export const {setFilter} = productSlice.actions
+export const {removeFromWishlist, addToWishlist, setFilter} = productSlice.actions
 export default productSlice

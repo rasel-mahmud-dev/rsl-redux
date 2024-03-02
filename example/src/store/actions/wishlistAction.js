@@ -33,6 +33,24 @@ export const addToWishlistAction = createAsyncAction(
     })
 
 
+export const removeFromWishlistAction = createAsyncAction(
+    "removeFromWishlistAction",
+    async function (productId) {
+        try {
+            const res = await api.delete("/wishlist", {
+                data: {
+                    productId: productId
+                }
+            })
+            return res.data
+
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
 export const deleteWishlistItemAction = createAsyncAction(
     "deleteWishlistAction",
     async function (cartId) {

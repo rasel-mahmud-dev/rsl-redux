@@ -5,7 +5,8 @@ import subStr from "../utils/subStr.js";
 import {addToCartAction} from "../store/actions/cartAction.js";
 import Toast from "../utils/toast.js";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
-import {addToWishlistAction} from "../store/actions/wishlistAction.js";
+import {addToWishlistAction, removeFromWishlistAction} from "../store/actions/wishlistAction.js";
+import {addToWishlist, removeFromWishlist} from "../store/slices/productSlice.js";
 
 
 const Product = (props) => {
@@ -29,15 +30,38 @@ const Product = (props) => {
         })
     }
 
+    const wishListIndex = wishlist?.findIndex(w=>w.productId === _id)
+    const isInWishlist = wishListIndex !== -1
+
     function handleTooggleWishlist(id){
         if(!auth){
             return Toast.openError("Need to login for add item in wishlist.")
         }
-        dispatch(addToWishlistAction(id)).unwrap().then(()=>{
-            Toast.openSuccess("Product has been successfully added in wishlist")
-        }).catch(ex=>{
-            Toast.openError(ex)
-        })
+
+        const item = wishlist[wishListIndex]
+
+        if(isInWishlist){
+            dispatch(removeFromWishlist(id))
+            dispatch(removeFromWishlistAction(id)).unwrap().then(()=>{
+                Toast.openSuccess("Product has been successfully removed from wishlist")
+            }).catch(ex=>{
+                // revert to state
+                dispatch(addToWishlist(item))
+                Toast.openError(ex)
+            })
+        } else {
+            dispatch(addToWishlist({
+                productId: id,
+                customerId: auth._id,
+                createdAt: new Date()
+            }))
+            dispatch(addToWishlistAction(id)).unwrap().then(()=>{
+                Toast.openSuccess("Product has been successfully added in wishlist")
+            }).catch(ex=>{
+                dispatch(removeFromWishlist(id))
+                Toast.openError(ex)
+            })
+        }
     }
 
     function imagePath(link) {
@@ -49,7 +73,6 @@ const Product = (props) => {
         e.target.src = "/images/no-product.png"
     }
 
-    const isInWishlist = wishlist?.findIndex(w=>w.productId === _id) !== -1
 
     return (
         <div className="bg-white rounded-xl overflow-hidden">

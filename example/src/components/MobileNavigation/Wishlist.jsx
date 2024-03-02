@@ -1,23 +1,22 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'rsl-redux';
 import getAssetPath from "../../utils/getAssetPath.js";
+import {TiTimes} from "react-icons/ti";
 
 const WishlistDrawer = ({isOpen, onClose}) => {
     return (
         <div>
-
             <>
                 <div className={`login-page top-right ${isOpen ? "open-top-right": ""}`}>
-                    <Wishlist />
+                    <Wishlist onClose={onClose} />
                 </div>
                 {isOpen && <div onClick={onClose} className="popup-backdrop login-page-backdrop"></div> }
             </>
-
         </div>
     );
 };
 
-function Wishlist(){
+function Wishlist({onClose}){
     const {auth} = useSelector(state=>state.authState)
     const {wishlist} = useSelector(state=>state.productState)
     const dispatch = useDispatch()
@@ -35,8 +34,11 @@ function Wishlist(){
 
     return (
         <div>
-            <h2 className="drawer-title">Wishlist</h2>
-            <div>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="drawer-title !mb-0">Wishlist</h2>
+                <TiTimes onClick={()=>onClose()} />
+            </div>
+            <div className="wishlist-content">
                 {wishlist?.map(item=>(
                     <div key={item._id} className="flex items-start gap-x-2 ">
                         <div className="w-[60px] h-[60px] ">
