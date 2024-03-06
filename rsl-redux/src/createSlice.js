@@ -1,44 +1,12 @@
 import store from "./store"
 
-type ActionCreator = {
-    type: string;
-};
 
-type ReducerAction = {
-    (state: any, action: any): void; // Define the signature of your reducer action function
-};
-
-type ReducersMap = {
-    [key: string]: () => void; // Define the structure of your reducers
-};
-
-type CreateSlicePayload = {
-    name: string;
-    initialState: any;
-    extraReducers: (builder: {
-        addCase: (actionCreator: ActionCreator, reducerAction: ReducerAction) => void;
-    }) => void
-    reducers: ReducersMap;
-};
-
-
-type CreateSliceReturn = {
-    name: string,
-    reducer: {
-        [key in string]: () => void
-    },
-    actions: {
-        [key in string]: () => void
-    }
-}
-
-
-function createSlice(payload: CreateSlicePayload): CreateSliceReturn {
+function createSlice(payload) {
 
     const reducerName = payload.name
     const extraReducers = payload.extraReducers
 
-    let actions: {[key: string]: (...arg: any)=>void} = {}
+    let actions = {}
 
     for (let actionName in payload.reducers) {
         let actionFn = payload.reducers[actionName]

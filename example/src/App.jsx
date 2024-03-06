@@ -6,6 +6,7 @@ import {fetchBrands, fetchCategories} from "./store/actions/categoryAction.js";
 import {fetchCarts} from "./store/actions/cartAction.js";
 import routes from "./routes.jsx";
 import {fetchWishlists} from "./store/actions/wishlistAction.js";
+import changeThemeColor from "./utils/changeThemeColor.js";
 
 function App() {
     const {auth} = useSelector(state => state.authState)
@@ -15,6 +16,8 @@ function App() {
         dispatch(authVerifyAction())
         dispatch(fetchCategories())
         dispatch(fetchBrands())
+        const theme = localStorage.getItem("theme") || ""
+        theme && changeThemeColor({color: theme})
     }, [])
 
 

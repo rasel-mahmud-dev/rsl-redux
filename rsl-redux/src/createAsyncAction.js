@@ -1,10 +1,5 @@
-
-type PayloadCreator = (payload: string | null | object | Array<any>, thunkApi: any)=>
-    Promise<{ arg: any, type: string }>
-
-
-function createAsyncThunk(typePrefix: string, payloadCreator: PayloadCreator) {
-    function actionCreator(arg?: any) {
+function createAsyncThunk(typePrefix, payloadCreator) {
+    function actionCreator(arg) {
         return (dispatch, getState, extra) => {
             const result = payloadCreator(arg, {dispatch, getState, extra});
             return Object.assign(result, {

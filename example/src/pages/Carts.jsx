@@ -14,7 +14,7 @@ const Carts = () => {
 
     const dispatch = useDispatch()
 
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
     const [selectedCartItems, setSelectedCartItems] = useState([])
 
@@ -85,9 +85,9 @@ const Carts = () => {
         {
             name: "Image", field: "image", render: (_, item) => {
                 return (
-                    <div>
+                    <div className="w-20">
                         <img onError={handleImgLoadError}
-                             className="object-contain max-w-[50px] max-h-[150px] mx-auto"
+                             className="object-contain aspect-square mx-auto"
                              src={imagePath(item?.cover_image)}
                              alt=""/>
                     </div>
@@ -105,7 +105,7 @@ const Carts = () => {
         },
         {
             name: "Price", field: "price", render: (_, p) => {
-                return p.price * p.quantity
+                return Number(p.price * p.quantity).toFixed(2)
             }
         },
         {name: "Quantity", field: "quantity"},
@@ -114,9 +114,9 @@ const Carts = () => {
             name: "Action", field: "quantity", render: (quantity, item) => (
                 <div className="flex justify-center items-center gap-x-3">
                     <div className="flex justify-center items-center gap-x-1">
-                        <button onClick={() => handleDecrement(item)}>-</button>
-                        <h4>{quantity}</h4>
-                        <button onClick={() => handleIncrement(item)}>+</button>
+                        <button className="btn btn-outline outline-sm" onClick={() => handleDecrement(item)}>-</button>
+                        <h4 className="px-2">{quantity}</h4>
+                        <button className="btn btn-outline outline-sm" onClick={() => handleIncrement(item)}>+</button>
                     </div>
                     <div className="cursor-pointer " onClick={() => handleDeleteCartItem(item._id)}>
                         <BiTrash/>
@@ -126,7 +126,7 @@ const Carts = () => {
         },
     ]
 
-    function goCheckout(){
+    function goCheckout() {
         localStorage.setItem("selected-carts", JSON.stringify(selectedCartItems))
         navigate("/checkout")
     }
@@ -136,7 +136,7 @@ const Carts = () => {
         <div className="py-6">
 
             <h2 className="text-xl font-semibold">My Carts</h2>
-            <CommonTable  className="mt-6" column={columns} data={carts ? carts : []}/>
+            <CommonTable className="mt-6" column={columns} data={carts ? carts : []}/>
 
 
             <div className="flex justify-between items-center">
@@ -145,7 +145,9 @@ const Carts = () => {
                 </Link>
 
 
-                    <button onClick={goCheckout} disabled={!selectedCartItems.length} className="primary-btn bg-pi">Checkout</button>
+                <button onClick={goCheckout} disabled={!selectedCartItems.length}
+                        className="btn primary-btn bg-pi">Checkout
+                </button>
 
             </div>
 

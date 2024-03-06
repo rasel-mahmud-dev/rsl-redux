@@ -32,7 +32,7 @@ const cartSlice = createSlice({
             }
         },
         incrementQuantity: (state, action) => {
-            const existingItemIndex = state.carts.findIndex(item => item.id === action.payload.id);
+            const existingItemIndex = state.carts.findIndex(item => item._id === action.payload._id);
             if (existingItemIndex !== -1) {
                 const updatedCart = [...state.carts];
                 updatedCart[existingItemIndex].quantity += 1;
@@ -45,7 +45,7 @@ const cartSlice = createSlice({
             }
         },
         decrementQuantity: (state, action) => {
-            const existingItemIndex = state.carts.findIndex(item => item.id === action.payload.id);
+            const existingItemIndex = state.carts.findIndex(item => item._id === action.payload._id);
 
             if (existingItemIndex !== -1) {
                 // If the item exists, increment its quantity by the payload amount

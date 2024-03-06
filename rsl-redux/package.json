@@ -9,20 +9,17 @@
   ],
   "scripts": {
     "build": "rimraf dist && rollup  -c --bundleConfigAsCjs",
-    "deploy": "npm publish",
-    "test": "jest"
+    "deploy": "npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "node-sass": "^9.0.0",
     "rollup": "^4.4.1",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "rimraf": "^3.0.2",
-    "rollup-plugin-typescript2": "^0.36.0"
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

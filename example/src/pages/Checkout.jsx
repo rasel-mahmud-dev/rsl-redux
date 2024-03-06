@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "rsl-redux";
 import {orderCartProductsAction} from "../store/actions/cartAction.js";
 import Toast from "../utils/toast.js";
 import getAssetPath from "../utils/getAssetPath.js";
-import {BiTrash} from "react-icons/bi";
 import CommonTable from "../components/Table.jsx";
 
 const Checkout = () => {
@@ -18,35 +17,43 @@ const Checkout = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const items = localStorage.getItem("selected-carts")
-        if (items) {
-            const el = JSON.parse(items)
-            if (el) {
-                let cartProducts = carts.filter(ct => el.includes(ct._id))
-                setSelectedCartItems(cartProducts)
+        try {
+            const items = localStorage.getItem("selected-carts")
+            if (items) {
+                const el = JSON.parse(items)
+                if (el) {
+                    let cartProducts = carts.filter(ct => el.includes(ct._id))
+                    setSelectedCartItems(cartProducts)
+                }
             }
+            setFetchLocalStorage(true)
+        } catch (ex) {
+
         }
-        setFetchLocalStorage(true)
 
     }, [])
 
 
     useEffect(() => {
-       if(fetchedLocalStorage){
-           if(selectedCartItems.length === 0){
-               navigate('/carts')
-           }
-       }
-
+        if (fetchedLocalStorage) {
+            if (selectedCartItems.length === 0) {
+                navigate('/carts')
+            }
+        }
     }, [fetchedLocalStorage, selectedCartItems.length])
 
 
+    const totalAmount = useMemo(() => {
+        return selectedCartItems?.reduce((p, c) => p + c.price, 0) ?? 0
+    }, [selectedCartItems?.length])
+
+
     function orderNow() {
-        if(!selectedCartItems.length){
+        if (!selectedCartItems.length) {
             return Toast.openError("Please select some from your cart.")
         }
         dispatch(orderCartProductsAction(selectedCartItems)).unwrap().then(() => {
-            Toast.openSuccess("Your order has been place")
+            Toast.openSuccess("Your order has been placed")
             localStorage.removeItem("selected-carts")
             setSelectedCartItems([])
         }).catch(ex => {
@@ -55,16 +62,26 @@ const Checkout = () => {
     }
 
 
+    function imagePath(link) {
+        if (!link) return "/images/no-product.png"
+        return getAssetPath(link)
+    }
+
+    function handleImgLoadError(e) {
+        e.target.src = "/images/no-product.png"
+    }
+
     const columns = [
 
         {
             name: "Image", field: "image", render: (_, item) => {
                 return (
-                    <div>
+                    <div className="w-20">
                         <img
-                             className="object-contain max-w-[80px] max-h-[80px] mx-auto"
-                             src={getAssetPath(item?.cover_image)}
-                             alt=""/>
+                            onError={handleImgLoadError}
+                            className="object-contain aspect-square mx-auto"
+                            src={imagePath(item?.cover_image)}
+                            alt=""/>
                     </div>
 
                 )
@@ -93,17 +110,22 @@ const Checkout = () => {
 
                 <h2 className="text-xl font-semibold">Checkout</h2>
 
-                <CommonTable  className="mt-10 checkout-items-table" column={columns} data={selectedCartItems ? selectedCartItems : []}/>
+                <CommonTable className="mt-10 checkout-items-table" column={columns}
+                             data={selectedCartItems ? selectedCartItems : []}/>
 
-                <div className="pb-20 flex justify-end ">
-                    <button onClick={orderNow} className="w-[240px] hover:bg-pink-400 primary-btn bg-pink-500/10 font-medium ">Order</button>
+                <div className="py-6    flex justify-end items-center ">
+                    <h2 className="font-semibold">Total Amount: {totalAmount} Tk</h2>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex pt-10 justify-between items-center">
                     <Link to="/carts" className="text-neutral-800">
                         <button className="primary-btn">Back to Cart</button>
                     </Link>
-                    <button className="primary-btn bg-pi">Checkout</button>
+                    <button onClick={orderNow}
+                            className="w-[240px] hover:bg-pink-400 primary-btn bg-pink-500/10 font-medium ">Confirm
+                        Order
+                    </button>
+
                 </div>
 
             </div>

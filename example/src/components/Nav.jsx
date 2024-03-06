@@ -74,7 +74,7 @@ const Nav = () => {
                                 </li>
                                 <li className="text-sm font-medium list-none w-full">
                                     <div
-                                        className="flex items-center border border-pink-200 bg-pink-300/70 text-white  rounded-2xl">
+                                        className="flex items-center search-input-root text-white  rounded-2xl">
                                         <input value={searchValue} onChange={handleSearchProduct} type="text"
                                                placeholder="Search products..."
                                                className="w-full text-white search-input pl-4 bg-transparent rounded-lg focus:outline-none"
@@ -90,7 +90,7 @@ const Nav = () => {
                                 <div className="text-sm text-white font-medium list-none flex items-center gap-x-3">
 
                                     <div>
-                                        <div className="text-white  list-none flex items-center gap-x-4">
+                                        <div className="text-white relative list-none flex items-center gap-x-4">
 
                                             <div onClick={() => setOpenMenu("carts")}
                                                  className="text-white  list-none flex items-center gap-x-1 relative">
@@ -103,17 +103,19 @@ const Nav = () => {
                                                     className="absolute -top-3 -right-3 bg-white/20 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
                                             </div>
 
-                                            <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
-                                                   className="top-16 w-[240px]">
+                                            <Popup  onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
+                                                   className="top-12 w-[340px] right-0">
                                                 <div className={`select-none cursor-auto `}>
 
                                                     <div className="flex justify-between items-center mb-2">
                                                         <h4 className="text-slate-900 font-bold text-sm  uppercase">Your
                                                             Carts</h4>
-                                                        <Link to="/carts"
-                                                              className="text-slate-900  list-none flex items-center gap-x-2">
-                                                            Show Detail
-                                                        </Link>
+                                                        <button className="btn btn-outline">
+                                                            <Link to="/carts"
+                                                                  className="text-slate-900  list-none flex items-center gap-x-2">
+                                                                Show Detail
+                                                            </Link>
+                                                        </button>
                                                     </div>
 
                                                     <div className=" max-h-[300px] overflow-y-auto">
@@ -128,29 +130,29 @@ const Nav = () => {
                                                                 <tr key={cart.id}
                                                                     className="text-slate-900 py-2 border-b border-b-primaryBorder last:border-none">
 
-                                                                    <td>
+                                                                    <td className="w-10">
                                                                         <img onError={handleImgLoadError}
-                                                                             className="object-contain max-w-[50px] max-h-[150px] mx-auto"
+                                                                             className="object-contain max-w-[50px] max-h-[50px] mx-auto"
                                                                              src={imagePath(cart?.cover_image)}
                                                                              alt=""/>
                                                                     </td>
 
-                                                                    <td>
-                                                                        <p className="whitespace-nowrapte">
+                                                                    <td className=" ">
+                                                                        <p className="wishlist-content  truncate pl-2">
                                                                             {cart?.title ?? (
-                                                                                <span className="text-red-500">Product deleted</span>
+                                                                                <span className=" text-red-500">Product deleted</span>
                                                                             )}
                                                                         </p>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td className="w-1/5">
                                                                         <span
-                                                                            className="max-w-sm w-full inline-block ml-2">{cart?.price ?? "0.00"}</span>
+                                                                            className="inline-block ml-2">{cart?.price ?? "0.00"}</span>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td className="w-4">
                                                                         <span
-                                                                            className="max-w-sm w-full inline-block">{cart.quantity}</span>
+                                                                            className="  inline-block">{cart.quantity}</span>
                                                                     </td>
 
                                                                 </tr>
@@ -183,7 +185,7 @@ const Nav = () => {
 
                                         </li>
                                         <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "auth"}
-                                               className="top-9 w-[200px] right-0">
+                                               className="top-12 w-[200px] right-0">
                                             <div className={`select-none cursor-auto text-slate-900 `}>
                                                 <div className="">
                                                     <li>{auth.username}</li>

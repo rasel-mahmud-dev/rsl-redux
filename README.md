@@ -77,12 +77,12 @@ Project Directory:
     - rollup.config.js
     - src/
         |-- Provider.jsx
-        |-- configureStore.ts
-        |-- createApi.ts
-        |-- createAsyncAction.ts
-        |-- createSlice.ts
-        |-- index.ts
-        |-- store.ts
-        |-- useDispatch.ts
-        |-- useSelector.ts
+        |-- configureStore.js
+        |-- createApi.js
+        |-- createAsyncAction.js
+        |-- createSlice.js
+        |-- index.js
+        |-- store.js
+        |-- useDispatch.js
+        |-- useSelector.js
     - tsconfig.json

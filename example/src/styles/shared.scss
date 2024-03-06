@@ -4,7 +4,8 @@
 	--primary-500-05: rgba(44, 101, 236, 0.19);
 	--primary-500-03: rgba(44, 101, 236, 0.19);
 	--primary-500-04: rgba(44, 101, 236, 0.19);
-	--primary-500-02: rgba(44, 101, 236, 0.1);
+	--primary-500-02: rgba(44, 101, 236, 0.2);
+	--primary-500-01: rgba(44, 101, 236, 0.1);
 }
 
 
@@ -17,6 +18,18 @@
 	}
 }
 
+.btn{
+	background: transparent;
+	outline: none;
+	border: none;
+	&.btn-outline{
+		border: 1px solid var(--primary-500);
+	}
+
+	&.outline-sm{
+		padding: 0px 10px;
+	}
+}
 .primary-btn {
 	border: 1px solid var(--primary-500);
 	border-radius: 20px;
@@ -52,7 +65,7 @@
 
 .common-table.fixed-header-table tbody tr:nth-child(2n ) {
 	@apply text-center p-2;
-	background: rgba(255, 192, 203, 0.16);
+	background: var(--primary-500-01)
 }
 
 .common-table.fixed-header-table tbody tr {
@@ -384,11 +397,17 @@
 	}
 }
 
+.search-input-root{
+	background: rgba(100, 100, 100, 0.24);
 .search-input{
 	width: 100%;
 	display: flex;
 	&::placeholder{
 		color: #e0e0e0;
+	}
+}
+	button{
+		background: var(--primary-500);
 	}
 }
 
@@ -430,4 +449,10 @@
 .navigation{
 	background: var(--primary-500-05);
 	backdrop-filter: blur(5px);
+}
+
+.category-list-item{
+	&:hover{
+		background: var(--primary-500-02);
+	}
 }

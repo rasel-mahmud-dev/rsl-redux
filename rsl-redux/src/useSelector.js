@@ -3,9 +3,7 @@ import store from "./store";
 import isArray from "./utils/isArray";
 import isObject from "./utils/isObject";
 
-type SelectorPayload = (args: any)=> any
-
-function useSelector(cb: SelectorPayload) {
+function useSelector(cb) {
     let ini = {};
     const selectedState = cb(store.state);
 

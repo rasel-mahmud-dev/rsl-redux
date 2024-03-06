@@ -1,34 +1,27 @@
 import React, {useState} from 'react';
 import {MdColorLens} from "react-icons/md";
 import getAlpha from "../../utils/getAlpha.js";
+import changeThemeColor from "../../utils/changeThemeColor.js";
 
 const ThemeChoose = () => {
 
-    function changeColor(theme) {
-
-        const colors = {
-            "primary-500": theme.color,
-            "primary-500-02": getAlpha(theme.color, 0.2),
-            "primary-500-03": getAlpha(theme.color, 0.3),
-            "primary-500-04": getAlpha(theme.color, 0.4),
-            "primary-500-05": getAlpha(theme.color, 0.5),
-        }
-
-        for (const colorsKey in colors) {
-
-            document.documentElement.style.setProperty(
-                "--" + colorsKey,
-                colors[colorsKey]
-            )
-        }
 
 
-    }
+    /*
+    * 	--primary-500: #2c65ec;
+	--primary-500-05: rgba(44, 101, 236, 0.19);
+	--primary-500-03: rgba(44, 101, 236, 0.19);
+	--primary-500-04: rgba(44, 101, 236, 0.19);
+	--primary-500-02: rgba(44, 101, 236, 0.1);
+    * */
 
     const [open, setOpen] = useState(false)
 
     const themes = [
         {
+            name: "default",
+            color: "#2c65ec",
+        },{
             name: "dsf",
             color: "red",
         },
@@ -56,8 +49,8 @@ const ThemeChoose = () => {
 
     function handleSetTheme(theme){
         setOpen(false)
-        changeColor(theme)
-
+        changeThemeColor(theme)
+        localStorage.setItem("theme", theme.name === "default" ? "" : theme.color)
     }
 
     return (

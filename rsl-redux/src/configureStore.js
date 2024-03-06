@@ -11,5 +11,4 @@ function configureStore({reducer}) {
     return store
 }
 
-export type RootState = typeof store.state
 export default configureStore

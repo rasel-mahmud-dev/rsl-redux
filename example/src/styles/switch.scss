@@ -16,13 +16,13 @@
     width: 0;
     height: 0;
     &:focus + .slider {
-      box-shadow: 0 0 1px var(--green-400);
+      box-shadow: 0 0 1px var(--primary-500);
     }
     &:checked + .slider {
-      background-color: rgba(68, 173, 94, 0.42);
+      background-color:  var(--primary-500-03);
 
       &::before {
-        background-color: var(--primary-400);
+        background-color:  var(--primary-500);
         left: 0%;
         transform: translate(50%, -50%);
       }
@@ -37,7 +37,8 @@
     right: 0;
     bottom: 0;
     transform: translate(0%, -50%);
-    background-color: rgba(77, 77, 77, 0.56);
+    //background-color:  var(--primary-500-04);
+    background-color: rgba(112, 112, 112, 0.56);
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
@@ -51,7 +52,8 @@
       top: 50%;
       //background-color: red;
       transform: translate(0%, -50%);
-      background-color: rgb(77, 77, 77);
+      background-color: rgb(138, 138, 138);
+      //background-color:  var(--primary-500-02);
       -webkit-transition: .4s;
       transition: .4s;
       border-radius: 50%;

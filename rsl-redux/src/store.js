@@ -2,21 +2,21 @@ const store = {
     state: {},
     listens: [],
     asyncActions: {},
-    dispatch: function (value: object | Array<any>) {
+    dispatch: function (value) {
         this.state = {
             ...this.state,
             ...value
         }
         this.notify()
     },
-    reducerDispatch: function (reducerName: string, state) {
+    reducerDispatch: function (reducerName, state) {
         this.state[reducerName] = {
             ...this.state[reducerName],
             ...state
         }
         this.notify()
     },
-    subscribe: function (fn: Function) {
+    subscribe: function (fn) {
         let index = this.listens.findIndex(lis => lis === fn)
         if (index === -1) {
             this.listens.push(fn)

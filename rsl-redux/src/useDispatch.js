@@ -10,7 +10,7 @@ function useDispatch() {
 
             // handle asynchronous createAsyncThunk action.
             actionCall = actionObj(useDispatch, store.getState, {})
-            let action: { type: string; payload?: any; };
+            let action = {};
 
             if (actionCall instanceof Promise) {
 
