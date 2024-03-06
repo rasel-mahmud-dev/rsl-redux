@@ -1,5 +1,4 @@
 import React, {lazy} from "react";
-import {api} from "../../axios"
 import Loader from "../Loader.jsx";
 
 const ReactApexChart = lazy(() => import("react-apexcharts"));
@@ -78,7 +77,7 @@ class OrderStats extends React.Component {
     }
 
 
-    async componentDidMount() {
+    async componentDidUpdate() {
 
         this.setState(prev => ({
             ...prev,
@@ -86,7 +85,9 @@ class OrderStats extends React.Component {
         }))
 
 
-        let dataa = await this.calculateDate(this.state.currentYear.toString())
+        const {year, items} = this.props
+
+        let dataa = this.calculateDate(items, year)
         this.setState(prev => ({
             ...prev,
             isFetchingData: false,
@@ -97,70 +98,63 @@ class OrderStats extends React.Component {
         }))
     }
 
-    calculateDate = (year) => {
-        return new Promise(async (resolve) => {
-            try {
-                const response = await api.get("/orders/stats?year=" + year)
-                if (response.status === 200) {
-                    let group = {
-                        0: 0,
-                        1: 0,
-                        2: 0,
-                        3: 0,
-                        4: 0,
-                        5: 0,
-                        6: 0,
-                        7: 0,
-                        8: 0,
-                        9: 0,
-                        10: 0,
-                        11: 0
-                    }
+    calculateDate = (items, year) => {
 
-                    response.data.forEach(item => {
-                        const createdAt = new Date(item.createdAt)
-                        const date = createdAt.getMonth()
-                        if (group[date]) {
-                            group[date]++
-                        } else {
-                            group[date] = 1
-                        }
-                    })
+        let group = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0,
+            10: 0,
+            11: 0
+        }
 
-                    let data = []
-
-                    // let totalDays = daysInYear(year)
-                    // for (let i = 0; i < totalDays; i++) {
-                    //     let n = new Date(year.toString())
-                    //     n.setDate(i)
-                    //     let dateString = n.toDateString()
-                    //
-                    //     let dateNumber = new Date(dateString).getTime()
-                    //     data.push([
-                    //         dateNumber, group[dateString]
-                    //     ])
-                    // }
-                    // this.setState(prev=>({
-                    //     ...prev,
-                    //
-                    //     series: [{
-                    //         name: 'series1',
-                    //         data: data
-                    //     }],
-                    // }))
-
-                    for (let groupKey in group) {
-                        // let dateNumber = new Date(groupKey).getTime()
-                        data.push(group[groupKey]
-                        )
-                    }
-
-                    resolve(data)
-                }
-            } catch (ex) {
-                resolve([])
+        items?.forEach(item => {
+            const createdAt = new Date(item.createdAt)
+            const date = createdAt.getMonth()
+            if (group[date]) {
+                group[date]++
+            } else {
+                group[date] = 1
             }
         })
+
+        let data = []
+
+        // let totalDays = daysInYear(year)
+        // for (let i = 0; i < totalDays; i++) {
+        //     let n = new Date(year.toString())
+        //     n.setDate(i)
+        //     let dateString = n.toDateString()
+        //
+        //     let dateNumber = new Date(dateString).getTime()
+        //     data.push([
+        //         dateNumber, group[dateString]
+        //     ])
+        // }
+        // this.setState(prev=>({
+        //     ...prev,
+        //
+        //     series: [{
+        //         name: 'series1',
+        //         data: data
+        //     }],
+        // }))
+
+        for (let groupKey in group) {
+            // let dateNumber = new Date(groupKey).getTime()
+            data.push(group[groupKey]
+            )
+        }
+
+        return data
+
     }
 
     handleShowYear = async (year) => {

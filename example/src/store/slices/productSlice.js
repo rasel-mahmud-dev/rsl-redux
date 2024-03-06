@@ -1,5 +1,5 @@
 import {createSlice} from "rsl-redux";
-import {deleteBrand, fetchProducts} from "../actions/productAction.js";
+import {deleteBrand, fetchOrdersAction, fetchProducts} from "../actions/productAction.js";
 import {deleteCategory, fetchBrands, fetchCategories} from "../actions/categoryAction.js";
 import {deleteAdminProduct, fetchAdminProducts} from "../actions/adminAction.js";
 import {fetchWishlists} from "../actions/wishlistAction.js";
@@ -73,6 +73,7 @@ const initialState = {
     products: [],
     brands: [],
     wishlist: [],
+    orders: {}, // {1: {items: Array<>, count: number} }
     adminProducts: [],
     categories: [],
     filter: {
@@ -94,12 +95,12 @@ const productSlice = createSlice({
             }
         },
 
-        addToWishlist(state, action){
+        addToWishlist(state, action) {
             state.wishlist.push(action.payload)
         },
 
-        removeFromWishlist(state, action){
-            state.wishlist = state.wishlist.filter(item=>item.productId !== action?.payload)
+        removeFromWishlist(state, action) {
+            state.wishlist = state.wishlist.filter(item => item.productId !== action?.payload)
         }
 
     },
@@ -114,8 +115,15 @@ const productSlice = createSlice({
         })
 
         builder.addCase(fetchWishlists.fulfilled, (state, action) => {
-           state.wishlist = action?.payload || []
+            state.wishlist = action?.payload || []
 
+        })
+
+        builder.addCase(fetchOrdersAction.fulfilled, (state, action) => {
+            state.orders[action.payload.pageNumber] = {
+                items: action.payload.items,
+                count: action.payload.count
+            }
         })
 
         builder.addCase(fetchAdminProducts.fulfilled, (state, action) => {

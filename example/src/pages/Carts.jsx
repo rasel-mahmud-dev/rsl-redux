@@ -139,14 +139,14 @@ const Carts = () => {
             <CommonTable className="mt-6" column={columns} data={carts ? carts : []}/>
 
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pt-6">
                 <Link to="/" className="text-neutral-800">
                     <button className="primary-btn">Back to shop</button>
                 </Link>
 
 
                 <button onClick={goCheckout} disabled={!selectedCartItems.length}
-                        className="btn primary-btn bg-pi">Checkout
+                        className="btn primary-btn  ">Checkout
                 </button>
 
             </div>

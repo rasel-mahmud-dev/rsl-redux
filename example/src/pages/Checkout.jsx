@@ -44,7 +44,7 @@ const Checkout = () => {
 
 
     const totalAmount = useMemo(() => {
-        return selectedCartItems?.reduce((p, c) => p + c.price, 0) ?? 0
+        return selectedCartItems?.reduce((p, c) => p + c.price * c.quantity, 0) ?? 0
     }, [selectedCartItems?.length])
 
 

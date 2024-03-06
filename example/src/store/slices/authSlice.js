@@ -1,9 +1,24 @@
 import {createSlice} from "rsl-redux";
-import {authVerifyAction, createAccountAction, loginAction} from "../actions/authAction.js";
+import {
+    authVerifyAction,
+    createAccountAction,
+    fetchOrdersSlatsAction,
+    fetchOrdersSlatsSummaryAction,
+    loginAction
+} from "../actions/authAction.js";
 
 const initialState = {
     auth: null,
+    authLoaded: false,
     testAuth: {},
+    orderSlats: {}, // {2022: Array<{_id, price, quantity} }
+    dashboardSlatsSummary: {
+        totalIncome: 0,
+        totalSpend: 0,
+        totalProducts: 0,
+        totalUsers: 0,
+        totalCategories: 0
+    },
     openSidebar: ""
 }
 
@@ -29,12 +44,28 @@ const authSlice = createSlice({
 
         builder.addCase(loginAction.fulfilled, (state, action)=>{
             state.auth = action.payload.user
+            state.authLoaded = true
             localStorage.setItem('token', action.payload.token)
         })
 
 
         builder.addCase(loginAction.rejected, (state, action)=>{
-            console.log(state, action)
+            state.auth = null
+            state.authLoaded = true
+        })
+
+
+        builder.addCase(fetchOrdersSlatsAction.fulfilled, (state, action)=>{
+            const {year, items} = action.payload
+            state.orderSlats[year] = items
+        })
+
+
+        builder.addCase(fetchOrdersSlatsSummaryAction.fulfilled, (state, action)=>{
+            state.dashboardSlatsSummary = {
+                ...state.dashboardSlatsSummary,
+                ...action.payload
+            }
         })
 
         builder.addCase(createAccountAction.fulfilled, (state, action)=>{
@@ -44,6 +75,11 @@ const authSlice = createSlice({
 
         builder.addCase(authVerifyAction.fulfilled, (state, action)=>{
             state.auth = action.payload.user
+            state.authLoaded = true
+        })
+        builder.addCase(authVerifyAction.rejected, (state)=>{
+            state.auth = null
+            state.authLoaded = true
         })
     }
 })

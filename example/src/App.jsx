@@ -7,6 +7,8 @@ import {fetchCarts} from "./store/actions/cartAction.js";
 import routes from "./routes.jsx";
 import {fetchWishlists} from "./store/actions/wishlistAction.js";
 import changeThemeColor from "./utils/changeThemeColor.js";
+import {Tooltip} from "react-tooltip";
+import ThemeChoose from "./components/ThemeChoose/ThemeChoose.jsx";
 
 function App() {
     const {auth} = useSelector(state => state.authState)
@@ -30,7 +32,9 @@ function App() {
 
     return (
         <div>
+            <Tooltip id="my-tooltip" />
             <RouterProvider router={routes}/>
+            <ThemeChoose />
         </div>
     )
 }

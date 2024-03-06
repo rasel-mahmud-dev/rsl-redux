@@ -37,3 +37,36 @@ export const authVerifyAction = createAsyncAction(
         }
 
     })
+
+export const fetchOrdersSlatsAction = createAsyncAction(
+    "fetchOrdersSlatsAction",
+    async ({year, role}) => {
+        try {
+            const {data} = await api.post("/orders/stats", {
+                year,
+                role
+            })
+            return {items: data, year}
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+export const fetchOrdersSlatsSummaryAction = createAsyncAction(
+    "fetchOrdersSlatsSummaryAction",
+    async (role) => {
+        try {
+            const {data} = await api.post("/orders/stats/summary", {
+                role, taskList: [
+                    "totalIncome",
+                    "totalProducts"
+                ]
+            })
+
+            return data
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })

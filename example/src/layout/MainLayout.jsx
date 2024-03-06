@@ -35,7 +35,7 @@ const MainLayout = () => {
             <WishlistDrawer onClose={() => setSidebarVal("")}
                           isOpen={openSidebar === "wishlist"}
             />
-            <ThemeChoose />
+
 
         </div>
     );

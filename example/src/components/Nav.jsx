@@ -95,11 +95,11 @@ const Nav = () => {
                                                  className="text-white  list-none flex items-center gap-x-1 relative">
                                                 <span className="hidden md:inline-block">Your Cart</span>
                                                 <div
-                                                    className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                    className="w-9 h-9 circle-pill rounded-full flex items-center justify-center">
                                                     <CiShoppingCart className="text-xl"/>
                                                 </div>
                                                 <span
-                                                    className="absolute -top-3 -right-3 bg-white/20 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
+                                                    className="absolute -top-3 -right-3 bg-primary-500 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
                                             </div>
 
                                             <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
@@ -176,7 +176,7 @@ const Nav = () => {
 
 
                                             <div
-                                                className="w-9 h-9 bg-pink-300/30 rounded-full flex items-center justify-center">
+                                                className="w-9 h-9 circle-pill rounded-full flex items-center justify-center">
                                                 {auth.avatar ? (<img src={getAssetPath(auth.avatar)} alt=""/>) : <span
                                                     className="uppercase font-semibold">{auth?.username.slice(0, 1)}</span>}
                                             </div>
@@ -187,18 +187,18 @@ const Nav = () => {
                                                className="top-12 w-[200px] right-0">
                                             <div className={`select-none cursor-auto text-slate-900 `}>
                                                 <div className="">
-                                                    <li>{auth.username}</li>
+                                                    <li className="list-item">{auth.username}</li>
 
                                                     <Link to="/dashboard">
-                                                        <li>Dashboard</li>
+                                                        <li className="list-item">Dashboard</li>
                                                     </Link>
 
                                                     {auth.role === "admin" && (
                                                         <Link to="/admin">
-                                                            <li>Admin Dashboard</li>
+                                                            <li className="list-item">Admin Dashboard</li>
                                                         </Link>
                                                     )}
-                                                    <li onClick={handleLogout}>logout</li>
+                                                    <li className="list-item " onClick={handleLogout}>logout</li>
                                                 </div>
                                             </div>
                                         </Popup>

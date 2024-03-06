@@ -21,6 +21,7 @@ import Checkout from "./pages/Checkout.jsx";
 import CustomerDashboardLayout from "./layout/CustomerDashboardLayout.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
 import MyOrders from "./pages/customer/MyOrders.jsx";
+import Auth from "./middleware/Auth.jsx";
 
 
 const routes = createBrowserRouter([
@@ -42,7 +43,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminLayout/>,
+        element: <Auth accessRoles={["admin"]}><AdminLayout/></Auth>,
         children: [
             {path: "", element: <DashboardHome/>},
             {path: "add-product", element: <AddProduct/>},
@@ -59,7 +60,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <CustomerDashboardLayout/>,
+        element: <Auth accessRoles={["customer", "admin"]}><CustomerDashboardLayout/></Auth>,
         children: [
             {path: "", element: <CustomerDashboardHome/>},
             {path: "orders", element: <MyOrders/>},

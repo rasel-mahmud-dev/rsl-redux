@@ -15,13 +15,15 @@ class CountChart extends React.Component {
         let d = new Date(start)
         let now = new Date()
 
+        const label = this.props?.label
+
         let totalYear = now.getFullYear() - new Date(start).getFullYear()
 
         this.recentYears = Array.from({length: totalYear + 1}).map((_, index) => d.getFullYear() + index)
 
         this.state = {
             series: [70],
-            labels: ['Income'],
+            labels: [label],
             options: {
 
                 chart: {
@@ -47,7 +49,7 @@ class CountChart extends React.Component {
                             },
                             total: {
                                 show: true,
-                                label: 'Income'
+                                label: label
                             }
                         }
                     }
@@ -56,65 +58,14 @@ class CountChart extends React.Component {
         }
     }
 
-    async componentDidMount() {
-
-        api.get("/orders/stats/categories").then(({data, status}) => {
-            if (status === 200) {
-
-                const {categories} = data
-
-
-                let addPopulateDate = []
-                // for (let datum of data) {
-                //     for (let recentYear of this.recentYears) {
-                //         if(datum._id === recentYear){
-                //             addPopulateDate.push({_id: recentYear, count: datum.count})
-                //         }
-                //     }
-                // }
-                //
-
-                for (let cat of categories) {
-                    if (addPopulateDate.findIndex(el => el.name == cat.name) === -1) {
-                        addPopulateDate.push({_id: cat.name, count: 23})
-                    }
-                }
-
-                // addPopulateDate.sort((a, b)=>a._id > b._id ? 1 : -1)
-
-                // this.setState(prev => ({
-                //     ...prev,
-                //     series: addPopulateDate.map(i=>i.count),
-                //     options: {
-                //         ...prev.options,
-                //         labels: categories.map(cat=>cat.name)
-                //     }
-                // }))
-            }
-        }).catch(ex => {
-            this.setState(prev => ({
-                ...prev,
-                series: [],
-            }))
-        })
-    }
-
-    getUnique(arr, cb) {
-        let items = []
-        for (let arrElement of arr) {
-            if (cb(arrElement, items)) {
-                items.push(arrElement)
-            }
-        }
-        return items
-    }
-
-
     render() {
         return (
             <div id="chart" className="bg-body">
 
-                <ReactApexChart options={this.state.options} series={this.state.series} type="radialBar" width={200}/>
+                <div className="flex flex-col    items-center">
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="radialBar" width={200}/>
+                    <h4 className="-mt-3 pb-4 font-semibold">{this.props.value}</h4>
+                </div>
 
                 {/*{this.state.series.length === 0 ? <Loader*/}
                 {/*        size="small"*/}
