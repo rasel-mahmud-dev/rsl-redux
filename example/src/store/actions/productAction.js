@@ -13,6 +13,19 @@ export const fetchProducts = createAsyncAction(
         }
 
     })
+
+export const fetchOrdersAction = createAsyncAction(
+    "fetchOrdersAction",
+    async function (pageNumber) {
+        try {
+            const res = await api.get("/orders?page_number=" + pageNumber)
+            return {data: res?.data ?? [], pageNumber}
+
+        } catch (e) {
+            throw e
+        }
+
+    })
 export const searchProductAction = createAsyncAction(
     "search-products",
     async function (text) {

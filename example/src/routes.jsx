@@ -9,6 +9,7 @@ import ReduxRTK from "./pages/ReduxRTK.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import React from "react";
 import DashboardHome from "./pages/admin/DashboardHome.jsx";
+import CustomerDashboardHome from "./pages/customer/DashboardHome.jsx";
 import AdminLayout from "./layout/AdminLayout.jsx";
 import AddProduct from "./pages/admin/AddProduct.jsx";
 import AddCategory from "./pages/admin/AddCategory.jsx";
@@ -17,6 +18,9 @@ import BrandList from "./pages/admin/BrandList.jsx";
 import CategoryList from "./pages/admin/CategoryList.jsx";
 import AddBrand from "./pages/admin/AddBrand.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import CustomerDashboardLayout from "./layout/CustomerDashboardLayout.jsx";
+import Wishlist from "./pages/Wishlist.jsx";
+import MyOrders from "./pages/customer/MyOrders.jsx";
 
 
 const routes = createBrowserRouter([
@@ -50,6 +54,17 @@ const routes = createBrowserRouter([
             {path: "edit-brand/:brandId", element: <AddBrand/>},
             {path: "add-brand", element: <AddBrand/>},
             {path: "categories", element: <CategoryList/>},
+
+        ]
+    },
+    {
+        path: "/dashboard",
+        element: <CustomerDashboardLayout/>,
+        children: [
+            {path: "", element: <CustomerDashboardHome/>},
+            {path: "orders", element: <MyOrders/>},
+            {path: "carts", element: <Carts/>},
+            {path: "wishlist", element: <Wishlist/>},
 
         ]
     }

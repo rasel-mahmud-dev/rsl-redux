@@ -1,7 +1,6 @@
 import {Link, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useSelector} from "rsl-redux";
+import {useDispatch, useSelector} from "rsl-redux";
 import {logOut, setSidebar} from "../store/slices/authSlice.js";
-import {useDispatch} from "rsl-redux";
 import {BiSearch} from "react-icons/bi";
 import React, {useEffect, useState} from "react";
 import {CiShoppingCart} from "react-icons/ci";
@@ -103,7 +102,7 @@ const Nav = () => {
                                                     className="absolute -top-3 -right-3 bg-white/20 text-white text-xs px-1 py-px rounded-full ">{carts.length}</span>
                                             </div>
 
-                                            <Popup  onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
+                                            <Popup onClose={() => setOpenMenu("")} isOpen={openMenu === "carts"}
                                                    className="top-12 w-[340px] right-0">
                                                 <div className={`select-none cursor-auto `}>
 
@@ -189,9 +188,16 @@ const Nav = () => {
                                             <div className={`select-none cursor-auto text-slate-900 `}>
                                                 <div className="">
                                                     <li>{auth.username}</li>
-                                                    <Link to="/admin">
-                                                        <li>Admin Dashboard</li>
+
+                                                    <Link to="/dashboard">
+                                                        <li>Dashboard</li>
                                                     </Link>
+
+                                                    {auth.role === "admin" && (
+                                                        <Link to="/admin">
+                                                            <li>Admin Dashboard</li>
+                                                        </Link>
+                                                    )}
                                                     <li onClick={handleLogout}>logout</li>
                                                 </div>
                                             </div>
