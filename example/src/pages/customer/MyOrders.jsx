@@ -66,7 +66,7 @@ const MyOrders = () => {
         {
             name: "title", field: "title", render: (_, item) => {
                 return (
-                    <Tooltip tips={item.title || "Product deleted"}>
+                    <Tooltip  tips={item.title || "Product deleted"}>
                         {item.title || "Product deleted"}
                     </Tooltip>
 

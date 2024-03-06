@@ -126,27 +126,6 @@ class OrderStats extends React.Component {
         })
 
         let data = []
-
-        // let totalDays = daysInYear(year)
-        // for (let i = 0; i < totalDays; i++) {
-        //     let n = new Date(year.toString())
-        //     n.setDate(i)
-        //     let dateString = n.toDateString()
-        //
-        //     let dateNumber = new Date(dateString).getTime()
-        //     data.push([
-        //         dateNumber, group[dateString]
-        //     ])
-        // }
-        // this.setState(prev=>({
-        //     ...prev,
-        //
-        //     series: [{
-        //         name: 'series1',
-        //         data: data
-        //     }],
-        // }))
-
         for (let groupKey in group) {
             // let dateNumber = new Date(groupKey).getTime()
             data.push(group[groupKey]
@@ -181,16 +160,10 @@ class OrderStats extends React.Component {
 
     render() {
 
-        let start = "1-1-2018"
-        let d = new Date(start)
-        let now = new Date()
-
-        let totalYear = now.getFullYear() - new Date(start).getFullYear()
-
         return (
             <div className="">
-                <div className="py-5">
-                    <h2 className="text-2xl font-semibold uppercase">Orders</h2>
+                <div className="pt-5">
+                    <h2 className="text-base font-semibold uppercase">{this.props.label ?? "Orders"}</h2>
                     <div className="flex  flex-col-reverse md:flex-row justify-end items-center gap-x-4">
                         {this.state.isFetchingData && <Loader
                             size="small"

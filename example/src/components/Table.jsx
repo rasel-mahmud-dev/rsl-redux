@@ -29,7 +29,7 @@ const CommonTable = (props) => {
                 {data.map((item, index) => (
                     <tr key={index}>
                         {column.map((tr, colIndex) => (
-                            <td key={tr.field} className={`text-center ${tr.tdClass}`}>
+                            <td data-th={tr.name} key={tr.field} className={`text-center ${tr.tdClass}`}>
                                 {tr.render ? tr.render(item[tr.field], item, index, colIndex) : item[tr.field]}
                             </td>
                         ))}

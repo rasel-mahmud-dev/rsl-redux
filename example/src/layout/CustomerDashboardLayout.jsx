@@ -2,11 +2,13 @@ import React from 'react';
 import {Link, Outlet,} from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
 import Nav from "../components/Nav.jsx";
-import {useSelector} from "rsl-redux";
+import {useDispatch, useSelector} from "rsl-redux";
+import {setSidebar} from "../store/slices/authSlice.js";
 
 
 const CustomerDashboardLayout = () => {
-    const {auth} = useSelector(state=>state.authState)
+    const {auth, openSidebar} = useSelector(state=>state.authState)
+    const dispatch = useDispatch()
     return (
         <div>
             {/* You can place common layout elements here */}
@@ -14,8 +16,8 @@ const CustomerDashboardLayout = () => {
             <div className="containers">
                 {/* This will render the children components */}
 
-                <div className="admin-layout">
-                    <Sidebar className="sidebar">
+                <div className={`admin-layout ${openSidebar === "customer_dashboard" ? "mobile-open" : ""}`}>
+                    <Sidebar onClose={()=>  dispatch(setSidebar(""))} isOpen={openSidebar === "customer_dashboard"} className="sidebar">
                         <div className="capitalize font-semibold text-sm text-neutral-800">
                             <li className="uppercase list-none py-2 bg-gray-200/50 hover-list-primary cursor-pointer  my-1 px-2 rounded-lg">
                                 <Link className=" text-neutral-800 font-semibold" to="/dashboard">{auth?.username} Dashboard</Link></li>

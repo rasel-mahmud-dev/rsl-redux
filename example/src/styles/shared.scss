@@ -1,4 +1,4 @@
-
+@tailwind components;
 :root {
   --primary-500: #2c65ec;
   --primary-500-05: rgba(44, 101, 236, 0.19);
@@ -12,9 +12,25 @@
 @import "./switch";
 @import "./modal";
 
+
 @mixin getDown($size) {
   @media screen and (max-width: #{$size}) {
     @content
+  }
+}
+
+@mixin getUp($size) {
+  @media screen and (min-width: #{$size}) {
+    @content
+  }
+}
+
+
+@layer components {
+  .truncate {
+    @include getDown(576px){
+      white-space: pre-line;
+    }
   }
 }
 
@@ -25,6 +41,9 @@
 
   &.btn-outline {
     border: 1px solid var(--primary-500);
+    &:hover{
+      background: var(--primary-500-05);
+    }
   }
 
   &.outline-sm {
@@ -40,6 +59,10 @@
   font-weight: 600;
   text-transform: uppercase;
   background: var(--primary-500);
+}
+
+.border-t-primary-500{
+  border-top-color: var(--primary-500);
 }
 
 
@@ -118,6 +141,10 @@
 .fixed-header-table tbody {
   display: block;
   overflow: auto;
+  @include getDown(576px){
+    overflow: initial !important;
+    display: table;
+  }
 }
 
 .fixed-header-table thead, tbody tr {
@@ -128,6 +155,26 @@
 
 .fixed-header-table thead {
   width: calc(100% - 5px)
+}
+
+.common-table.fixed-header-table{
+  @include getDown(576px){
+    thead tr {
+      display: none;
+    }
+    tbody td {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 13ch auto;
+      padding: 8px 20px;
+    }
+    tbody td::before {
+      content: attr(data-th);
+      display: inline-block;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+  }
 }
 
 
@@ -202,14 +249,57 @@
   --sidebar-width: 300px;
   --header-height: 72px;
 
+  &.mobile-open {
+    .sidebar {
+      display: flex;
+    }
+
+    .content {
+      margin-left: 0;
+    }
+  }
+
+
+  .sidebar-backdrop {
+    background: rgba(82, 82, 82, 0);
+    position: fixed;
+    height: calc(100vh - 72px);
+    width: 100%;
+    z-index: 1000;
+    top: var(--header-height);
+    left: 0;
+    transition: all .4s ease;
+    visibility: hidden;
+    opacity: 0;
+
+
+    &.mobile-open {
+      background: #525252ba;
+      visibility: visible;
+      opacity: 1;
+    }
+
+
+    @include getUp(606px) {
+      display: none;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+  }
+
   .sidebar {
     transition: all .4s ease;
     width: var(--sidebar-width);
     background: #f8f8f8;
     position: fixed;
+    z-index: 1001;
     top: var(--header-height);
     left: 0;
     padding: 5px;
+    @include getDown(576px) {
+      display: none;
+    }
 
     & > div {
       height: calc(100vh - 72px);
@@ -219,7 +309,9 @@
   }
 
   .content {
-    margin-left: var(--sidebar-width);
+    @include getUp(576px) {
+      margin-left: var(--sidebar-width);
+    }
   }
 }
 
@@ -454,6 +546,7 @@
 .navigation {
   background: var(--primary-500-05);
   backdrop-filter: blur(5px);
+  z-index: 1002;
 }
 
 .category-list-item {
@@ -491,12 +584,13 @@
 }
 
 .hover-list-primary:hover {
+  transition: all .3s ease;
   background: var(--primary-500-02);
 }
 
 .circle-pill {
   background: var(--primary-500-02);
-  transition: all .3s ease  ;
+  transition: all .3s ease;
 
   &:hover {
     background: var(--primary-500);
@@ -511,7 +605,6 @@
   }
 
 
-
   //th, tr {
   //  &:not(:first-child) {
   //    padding-right: 0 !important;
@@ -522,15 +615,17 @@
 
 }
 
-.order-status-badge{
+.order-status-badge {
   font-weight: 600;
   text-align: center;
   font-size: 12px;
   padding: 2px 8px;
   border-radius: 6px;
   width: max-content;
+  text-transform: uppercase;
+
   &.status-Pending,
-  &.status-pending{
+  &.status-pending {
     background: var(--primary-500-02);
     color: var(--primary-500);
   }

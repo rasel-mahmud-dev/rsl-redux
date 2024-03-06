@@ -112,7 +112,7 @@ const Carts = () => {
         {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
         {
             name: "Action", field: "quantity", render: (quantity, item) => (
-                <div className="flex justify-center items-center gap-x-3">
+                <div className="flex lg:justify-center items-center gap-x-3 justify-items-start">
                     <div className="flex justify-center items-center gap-x-1">
                         <button className="btn btn-outline outline-sm" onClick={() => handleDecrement(item)}>-</button>
                         <h4 className="px-2">{quantity}</h4>
@@ -133,10 +133,10 @@ const Carts = () => {
 
 
     return (
-        <div className="py-6">
+        <div className="py-6 mb-10">
 
             <h2 className="text-xl font-semibold">My Carts</h2>
-            <CommonTable className="mt-6" column={columns} data={carts ? carts : []}/>
+            <CommonTable className="mt-6 table-start-align" column={columns} data={carts ? carts : []}/>
 
 
             <div className="flex justify-between items-center pt-6">

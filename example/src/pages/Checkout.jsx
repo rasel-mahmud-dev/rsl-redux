@@ -110,7 +110,7 @@ const Checkout = () => {
 
                 <h2 className="text-xl font-semibold">Checkout</h2>
 
-                <CommonTable className="mt-10 checkout-items-table" column={columns}
+                <CommonTable className="mt-10 table-start-align checkout-items-table" column={columns}
                              data={selectedCartItems ? selectedCartItems : []}/>
 
                 <div className="py-6    flex justify-end items-center ">

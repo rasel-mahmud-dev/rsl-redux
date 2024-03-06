@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector, isArray} from "rsl-redux";
+import {isArray, useDispatch, useSelector} from "rsl-redux";
 import Product from "../components/Product.jsx";
 import {fetchProducts} from "../store/actions/productAction.js";
 import HeroBanner from "../components/HeroBanner.jsx";
 import getAssetPath from "../utils/getAssetPath.js";
 import ProductSkeleton from "../components/Product.Skeleton.jsx";
-import Loader from "../components/Loader.jsx";
+import Loader, {Spinner} from "../components/Loader.jsx";
 
 
 const Products = () => {
@@ -66,15 +66,12 @@ const Products = () => {
 
     return (
         <div>
-
-            {isFetching && <Loader className="home-loader" />}
-
             <div className="home-category-list">
                 <div
                     className="flex items-center justify-between max-w-8xl mx-auto  gap-x-2 md:gap-x-4 scroll-x-transparent overflow-x-auto md:overflow-visible ">
                     {showCategories.map((cat) => (
                         <div key={cat._id} className="home-category-list-item">
-                            <div onClick={()=>navigate(`/p/${cat._id}`)}
+                            <div onClick={() => navigate(`/p/${cat._id}`)}
                                  className="flex home-category-list-item-content flex-col items-center  border md:border-none rounded-full md:bg-transparent ">
                                 <img alt={cat.name} className="category-list-item-img" src={getAssetPath(cat.image)}/>
                             </div>
@@ -89,18 +86,22 @@ const Products = () => {
                     <Product key={product.id} {...product} />
                 ))}
 
-                { !isArray(getAllProducts(homeProducts)) || getAllProducts(homeProducts)?.length === 0 && Array.from({length: 20}).fill(1).map(item=>(
-                    <ProductSkeleton key={item} />
+                {!isArray(getAllProducts(homeProducts)) || getAllProducts(homeProducts)?.length === 0 && Array.from({length: 20}).fill(1).map(item => (
+                    <ProductSkeleton key={item}/>
 
                 ))}
 
                 {isArray(products) && products.map(product => (
                     <Product key={product.id} {...product} />
-                )) }
+                ))}
 
             </div>
 
-            <button className="primary-btn mx-auto block w-max my-20" onClick={handleLoadMore}>Load More</button>
+            <div className="mb-20 mt-10 flex flex-col justify-center items-center">
+                {isFetching ? <Spinner title="Loading..." className="w-8 h-8 border-t-primary-500 "/> :
+                    <button className="btn primary-btn mx-auto block w-max " onClick={handleLoadMore}>Load
+                        More</button>}
+            </div>
         </div>
     );
 };

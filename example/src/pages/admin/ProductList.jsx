@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
 import formatPrice from "../../utils/formatPrice.js";
 import CommonTable from "../../components/Table.jsx";
-import {deleteAdminProduct, fetchAdminProducts} from "../../store/actions/adminAction.js";
+import {deleteAdminProduct, fetchAdminDashboardProducts, fetchAdminProducts} from "../../store/actions/adminAction.js";
 import {Link} from "react-router-dom";
 import getAssetPath from "../../utils/getAssetPath.js";
+import {getDateTime} from "../../utils/date.js";
 
 
 const ProductList = () => {
@@ -13,7 +14,7 @@ const ProductList = () => {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch(fetchAdminProducts())
+        dispatch(fetchAdminDashboardProducts())
     }, [])
 
     function handleDeleteItem(id){
@@ -23,6 +24,7 @@ const ProductList = () => {
 
     const columns = [
         {
+
             name: "Image", field: "cover_image", thClass: "!text-start w-20", tdClass: "!text-start w-20", render: (cover_image)=>(
                 <div className="w-10">
                     <img src={getAssetPath(cover_image)} alt=""/>
@@ -35,10 +37,10 @@ const ProductList = () => {
         {name: "Price", field: "price", render: (v) => formatPrice(v)},
         {name: "Stock", field: "stock", render: (v) => formatPrice(v)},
         {name: "Discount", field: "discount"},
-        {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
+        {name: "Added On", field: "createdAt", render: (v) => getDateTime(new Date(v))},
         {
             name: "Action", field: "_id", render: (_id) => (
-                <div className="flex items-center gap-x-5 px-6 justify-center font-medium text-sm break-keep">
+                <div className="flex items-center gap-x-5 px-6 justify-start md:justify-center  font-medium text-sm break-keep">
                     <button
                             className={`border border-blue-600 bg-blue-600/10  text-blue-400   px-5 py-2 rounded-lg hover:text-white hover:bg-blue-600/60`}>
                         <Link to={`/admin/edit-product/${_id}`}>Edit</Link>
@@ -68,7 +70,7 @@ const ProductList = () => {
                 </Link>
             </div>
 
-            <CommonTable className="employee-list-table mt-6" column={columns} data={adminProducts ? adminProducts : []}/>
+            <CommonTable className="table-start-align mt-6" column={columns} data={adminProducts ? adminProducts : []}/>
 
 
         </div>

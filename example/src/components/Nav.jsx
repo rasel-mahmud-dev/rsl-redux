@@ -10,7 +10,7 @@ import getAssetPath from "../utils/getAssetPath.js";
 import MobileNavigation from "./MobileNavigation/MobileNavigation.jsx";
 
 const Nav = () => {
-    const {auth} = useSelector(state => state?.authState)
+    const {auth, openSidebar} = useSelector(state => state?.authState)
 
     const {carts} = useSelector(state => state?.cartState)
 
@@ -35,15 +35,27 @@ const Nav = () => {
 
     function handleSearchProduct(e) {
         const val = e.target.value
-        if (location.pathname.startsWith("/p/")) {
-            navigate(location.pathname + `?search=` + val)
-            return
-        }
-        navigate("/p/?search=" + val)
+        // TODO: uncomment
+        // if (location.pathname.startsWith("/p/")) {
+        //     navigate(location.pathname + `?search=` + val)
+        //     return
+        // }
+        // navigate("/p/?search=" + val)
     }
 
     function handleToggleLeft() {
-        let which = location.pathname.startsWith("/p/") ? "filter" : "home"
+        let which = "home"
+        if (location.pathname.startsWith("/dashboard")) {
+            which = "customer_dashboard"
+        } else if (location.pathname.startsWith("/admin")) {
+            which = "admin_dashboard"
+        } else if (location.pathname.startsWith("/p/")) {
+            which = "filter"
+        }
+
+
+        which = openSidebar === which ? "" : which
+
         dispatch(setSidebar(which))
     }
 
@@ -58,7 +70,7 @@ const Nav = () => {
 
     return (
         <>
-            <div className="navigation fixed w-full left-0 top-0 z-[1000]">
+            <div className="navigation fixed w-full left-0 top-0">
 
                 <div className="mx-auto max-w-5xl">
                     <div className="py-3">

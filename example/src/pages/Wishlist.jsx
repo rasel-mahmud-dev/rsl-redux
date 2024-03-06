@@ -7,6 +7,7 @@ import {BiTrash} from "react-icons/bi";
 import {deleteCartItemAction} from "../store/actions/cartAction.js";
 import toast from "../utils/toast.js";
 import {Link, useNavigate} from "react-router-dom";
+import {getDateTime} from "../utils/date.js";
 
 
 const Wishlist = () => {
@@ -48,12 +49,12 @@ const Wishlist = () => {
 
     const columns = [
         {
-            name: "Image", field: "image", render: (_, item) => {
+            name: "Image", tdClass: "w-32", thClass: "w-32 !px-5", field: "image", render: (_, {product}) => {
                 return (
-                    <div className="w-20 mx-auto">
+                    <div className="w-14">
                         <img onError={handleImgLoadError}
                              className="object-contain aspect-square mx-auto"
-                             src={imagePath(item?.cover_image)}
+                             src={imagePath(product?.cover_image)}
                              alt=""/>
                     </div>
 
@@ -62,25 +63,25 @@ const Wishlist = () => {
         },
 
         {
-            name: "title", field: "title", render: (_, item) => {
+            name: "title", field: "title", render: (_, {product}) => {
                 return (
-                    <div>{item.title || "Product deleted"}</div>
+                    <div>{product?.title || "Product deleted"}</div>
                 )
             }
         },
         {
-            name: "Price", field: "price", render: (_, p) => {
-                return Number(p.price * p.quantity).toFixed(2)
+            name: "Price", field: "price", render: (_, {product}) => {
+                return Number(product.price).toFixed(2)
             }
         },
-        {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
+        {name: "Added On", field: "createdAt", render: (v) => getDateTime(new Date(v))},
         {
-            name: "Action", field: "quantity", render: (quantity, item) => (
-                <div className="flex justify-center items-center gap-x-3">
+            name: "Action", thClass: "!text-center flex justify-start md:justify-center ", field: "quantity", render: (quantity, item) => (
+                <div className="flex justify-start md:justify-center  items-center gap-x-3">
 
-                    <div className="cursor-pointer " onClick={() => handleDeleteCartItem(item._id)}>
+                    <button className="btn btn-outline outline-sm  !py-2 cursor-pointer " onClick={() => handleDeleteCartItem(item._id)}>
                         <BiTrash/>
-                    </div>
+                    </button>
                 </div>
             )
         },
@@ -96,7 +97,7 @@ const Wishlist = () => {
         <div className="py-6">
 
             <h2 className="text-xl font-semibold">My Wishlist</h2>
-            <CommonTable className="mt-6" column={columns} data={wishlist ? wishlist : []}/>
+            <CommonTable className="mt-6 table-start-align" column={columns} data={wishlist ? wishlist : []}/>
 
 
             <div className="flex justify-between items-center">

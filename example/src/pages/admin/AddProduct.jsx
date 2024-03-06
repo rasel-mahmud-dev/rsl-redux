@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "rsl-redux";
-import {attributes, categoryMap} from "../SearchProduct.jsx";
+import {categoryMap} from "../SearchProduct.jsx";
 import {useParams} from "react-router-dom";
 import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
-import getAssetPath from "../../utils/getAssetPath.js";
+import {specs} from "../spec.js";
+import FileUpload from "../../components/FileUpload.jsx";
 
 const AddProduct = () => {
 
@@ -47,8 +48,8 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (product?.category_id) {
-            let cat = categories.find(cat=>cat._id === product.category_id)
-            if(cat){
+            let cat = categories.find(cat => cat._id === product.category_id)
+            if (cat) {
                 let a = categoryMap[cat.slug]
                 handleChange({target: {name: "attributesArray", value: a}})
             }
@@ -56,10 +57,49 @@ const AddProduct = () => {
     }, [product?.category_id, categories]);
 
 
+    useEffect(() => {
+        let localPhoto = localStorage.getItem("upload-temp")
+        if (localPhoto) {
+            localPhoto = JSON.parse(localPhoto) ?? {}
+            setProduct(prev => ({...prev, ...localPhoto}))
+        }
+    }, []);
+
+    console.log(product)
+
     const handleChange = (e) => {
         const {name, value} = e.target;
+        if (name === "cover_image") {
+            return handleUploadImage(name, value)
+        }
         setProduct({...product, [name]: value});
     };
+
+    function handleUploadImage(name, value) {
+
+        if (value.instanceOf === File) {
+            return Toast.openError("Invalid file")
+        }
+
+        if (value.size > 500000) {
+            return Toast.openError("file should be less than 500kb")
+        }
+
+        const formData = new FormData()
+        formData.append(value.name, value)
+        formData.append("fileName", value.name)
+
+        api.post("/files/upload", formData)
+            .then(({data}) => {
+                if (data?.url) {
+                    setProduct(prev => ({...prev, [name]: data.url}));
+                    localStorage.setItem("upload-temp", JSON.stringify({[name]: data.url}))
+                }
+
+            }).catch(ex => {
+            Toast.openError("Image save fail")
+        })
+    }
 
     const handleSubmit = async (e) => {
 
@@ -106,7 +146,7 @@ const AddProduct = () => {
                             <label htmlFor="">Slug:</label>
                             <input className="rs-input" type="text" name="slug" value={product.slug}
                                    onChange={handleChange}/>
-                        </div> }
+                        </div>}
 
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Price:</label>
@@ -127,11 +167,19 @@ const AddProduct = () => {
                         </div>
 
 
-
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Description:</label>
                             <textarea className="rs-input" name="description" value={product.description}
                                       onChange={handleChange}></textarea>
+                        </div>
+
+                        <div className="flex flex-col mb-3">
+                            <label htmlFor="">Cover:</label>
+                            <FileUpload className="rs-input "
+                                        imagePreviewClass="w-24 aspect-square object-contain         "
+                                        name="cover_image"
+                                        value={product.cover_image}
+                                        onChange={handleChange}/>
                         </div>
 
                     </div>
@@ -139,16 +187,15 @@ const AddProduct = () => {
 
                         <div>
 
-                            <div className="flex flex-col mb-3">
-                                <label htmlFor="">Cover Image:</label>
-                                <input className="rs-input" type="text" name="cover_image" value={product?.cover_image}
-                                       onChange={handleChange}/>
-                            </div>
+                            {/*<div className="flex flex-col mb-3">*/}
+                            {/*    <label htmlFor="">Cover Image:</label>*/}
+                            {/*    <input className="rs-input" type="text" name="cover_image" value={product?.cover_image}*/}
+                            {/*           onChange={handleChange}/>*/}
+                            {/*</div>*/}
 
-                            {product?.cover_image && <div className="w-20">
-                                <img src={getAssetPath(product?.cover_image)} alt=""/>
-                            </div> }
-
+                            {/*{product?.cover_image && <div className="w-20">*/}
+                            {/*    <img src={getAssetPath(product?.cover_image)} alt=""/>*/}
+                            {/*</div> }*/}
 
 
                             <div className="flex flex-col mb-3">
@@ -184,11 +231,11 @@ const AddProduct = () => {
                         <div>
                             {product?.attributesArray?.map(attrName => (
                                 <div className="flex flex-col mb-3">
-                                    <label htmlFor="">{attributes?.[attrName]?.label}</label>
+                                    <label htmlFor="">{specs?.[attrName]?.label}</label>
                                     <select className="rs-input" value={product.attributes[attrName]} name={attrName}
                                             onChange={handleChangeAttribute}>
-                                        <option value="">Select {attributes?.[attrName]?.label}</option>
-                                        {attributes?.[attrName]?.options?.map(opt => (
+                                        <option value="">Select {specs?.[attrName]?.label}</option>
+                                        {specs?.[attrName]?.options?.map(opt => (
                                             <option value={opt.value}>{opt.name}</option>
                                         ))}
                                     </select>

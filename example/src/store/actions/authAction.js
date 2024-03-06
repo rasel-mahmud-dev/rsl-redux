@@ -55,13 +55,10 @@ export const fetchOrdersSlatsAction = createAsyncAction(
 
 export const fetchOrdersSlatsSummaryAction = createAsyncAction(
     "fetchOrdersSlatsSummaryAction",
-    async (role) => {
+    async ({role, taskList}) => {
         try {
             const {data} = await api.post("/orders/stats/summary", {
-                role, taskList: [
-                    "totalIncome",
-                    "totalProducts"
-                ]
+                role, taskList
             })
 
             return data

@@ -33,7 +33,7 @@ const ProductList = () => {
         {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
         {
             name: "Action", field: "_id", render: (_id) => (
-                <div className="flex items-center gap-x-5 px-6 justify-center font-medium text-sm break-keep">
+                <div className="flex items-center gap-x-5 px-6 justify-start md:justify-center font-medium text-sm break-keep">
                     <button
                         className={`border border-blue-600 bg-blue-600/10  text-blue-400   px-5 py-2 rounded-lg hover:text-white hover:bg-blue-600/60`}>
                         <Link to={`/admin/edit-category/${_id}`}>Edit</Link>
@@ -62,7 +62,7 @@ const ProductList = () => {
 
 
 
-            <CommonTable className="employee-list-table mt-6" column={columns} data={categories ? categories : []}/>
+            <CommonTable className="table-start-align mt-6" column={columns} data={categories ? categories : []}/>
 
 
         </div>
