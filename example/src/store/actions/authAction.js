@@ -38,6 +38,20 @@ export const authVerifyAction = createAsyncAction(
 
     })
 
+export const fetchDashboardSlatsAction = createAsyncAction(
+    "fetchDashboardSlatsAction",
+    async ({year, role}) => {
+        try {
+            const {data} = await api.post("/slats/admin-dashboard/home", {
+                year,
+                role
+            })
+            return data
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
 export const fetchOrdersSlatsAction = createAsyncAction(
     "fetchOrdersSlatsAction",
     async ({year, role}) => {
@@ -45,6 +59,22 @@ export const fetchOrdersSlatsAction = createAsyncAction(
             const {data} = await api.post("/orders/stats", {
                 year,
                 role
+            })
+            return {items: data, year}
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+export const fetchCategoryWiseOrdersSlatsAction = createAsyncAction(
+    "fetchCategoryWiseOrdersSlatsAction",
+    async ({year, role, type}) => {
+        try {
+            const {data} = await api.post("/orders/stats", {
+                year,
+                role,
+                type
             })
             return {items: data, year}
         } catch (e) {

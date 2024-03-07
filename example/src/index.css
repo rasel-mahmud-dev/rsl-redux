@@ -67,6 +67,16 @@ button:focus-visible {
     background: var(--primary-500);
 }
 
+.bg-primary-500-01{
+    background: var(--primary-500-01);
+}
+
+
+.bg-primary-500-02{
+    background: var(--primary-500-02);
+}
+
+
 .list-item{
     @apply list-none py-2 bg-gray-200/40  cursor-pointer  my-1 px-2 rounded-lg;
     &:hover{

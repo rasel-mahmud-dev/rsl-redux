@@ -77,26 +77,27 @@ class OrderStats extends React.Component {
     }
 
 
-    async componentDidUpdate() {
-
-        this.setState(prev => ({
-            ...prev,
-            isFetchingData: true,
-        }))
-
-
+    async componentDidUpdate(prevProps) {
         const {year, items} = this.props
+        if (prevProps.items !== items) {
 
-        let dataa = this.calculateDate(items, year)
-        this.setState(prev => ({
-            ...prev,
-            isFetchingData: false,
-            series: [{
-                name: 'count',
-                data: dataa
-            }],
-        }))
+            this.setState(prev => ({
+                ...prev,
+                isFetchingData: true,
+            }))
+
+            let dataa = this.calculateDate(items, year)
+            this.setState(prev => ({
+                ...prev,
+                isFetchingData: false,
+                series: [{
+                    name: 'count',
+                    data: dataa
+                }],
+            }))
+        }
     }
+
 
     calculateDate = (items, year) => {
 

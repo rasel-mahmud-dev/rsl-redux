@@ -1,143 +1,190 @@
-import React, {lazy} from 'react';
-import {api} from "../../axios"
+import React, {lazy} from "react";
 import Loader from "../Loader.jsx";
+import formatPrice from "../../utils/formatPrice.js";
 
 const ReactApexChart = lazy(() => import("react-apexcharts"));
 
-class CountChart extends React.Component{
 
-    recentYears = []
-
+class OrderStats extends React.Component {
     constructor(props) {
         super(props);
-
-        let start = "1-1-2021"
-        let d = new Date(start)
-        let now = new Date()
-
-        let totalYear = now.getFullYear() - new Date(start).getFullYear()
-
-        this.recentYears = Array.from({length: totalYear + 1}).map((_, index) => d.getFullYear() + index)
-
+        const type = this.props.type
+        this.calculateDate = this.calculateDate.bind(this)
         this.state = {
-
+            totalVisitor: 0,
+            currentYear: new Date().getFullYear(),
+            startDate: 2022,
+            isFetchingData: false,
             series: [],
             options: {
-                plotOptions: {
-                    pie: {
-                        size: 200
-                    }
-                },
                 chart: {
-                    // width: 180,
-                    type: 'pie',
-                },
-
-                labels: [],
-                legend: {
-                    position: 'top',
-
+                    height: 300,
+                    type: 'area',
+                    toolbar: {
+                        show: false
+                    }
                 },
                 dataLabels: {
-                    formatter(val, opts) {
-                        const name = opts.w.globals.labels[opts.seriesIndex]
-                        let v = opts.w.globals.seriesTotals[opts.seriesIndex] + " hits"
-                        return ""
+                    enabled: true
+                },
+                markers: {
+                    size: 0,
+                    style: 'hollow',
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    type: 'month',
+                    categories: [
+                        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ag", "Sep", "Oct", "Nov", "Dec"
+                    ]
+                },
+                yaxis: {
+                    title: "Total",
+                    type: 'numeric',
+                    decimalsInFloat: type === "quantity",
+                    labels: {
+                        formatter: function (value) {
+                            return type === "quantity"
+                                ? value
+                                : formatPrice(value, 2);
+                        }
+                    },
+                    // categories: [
+                    //     "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ag", "Sep", "Oct", "Nov", "Dec"
+                    // ]
+
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy'
+                    },
+                    y: {
+                        // format: 'count',
+                        formatter: function (value) {
+                            return  type === "quantity"
+                                ? value
+                                : formatPrice(value, 2);;
+                        }
+                    },
+                },
+
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.9,
+                        stops: [0, 100]
                     }
                 },
-                colors: [
-                    '#2c65ec',
-                    '#E91E63',
-                    '#9f89ff', '#b6ff9e',
-                    '#af4242', '#d98e7c',
-                    '#e1b663', '#53235e'
-                ],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
             },
-
-
+            // selection: 'one_year',
         };
     }
 
-    async componentDidMount() {
 
-        api.get("/orders/stats/categories").then(({data, status}) => {
-            if (status === 200) {
-
-                const {categories} = data
-
-
-                let addPopulateDate  = []
-                // for (let datum of data) {
-                //     for (let recentYear of this.recentYears) {
-                //         if(datum._id === recentYear){
-                //             addPopulateDate.push({_id: recentYear, count: datum.count})
-                //         }
-                //     }
-                // }
-                //
-
-                for (let cat of categories) {
-                    if(addPopulateDate.findIndex(el=>el.name == cat.name) === -1){
-                        addPopulateDate.push({_id: cat.name, count: 23})
-                    }
-                }
-
-                // addPopulateDate.sort((a, b)=>a._id > b._id ? 1 : -1)
-
-                this.setState(prev => ({
-                    ...prev,
-                    series: addPopulateDate.map(i=>i.count),
-                    options: {
-                        ...prev.options,
-                        labels: categories.map(cat=>cat.name)
-                    }
-                }))
-            }
-        }).catch(ex => {
+    async componentDidUpdate(prevProps) {
+        const {year, items} = this.props
+        if (prevProps.items !== items) {
             this.setState(prev => ({
                 ...prev,
-                series: [],
+                isFetchingData: true,
             }))
-        })
+
+            let categories = []
+            for (let item of items) {
+                let dataa = this.calculateDate(item.items, year)
+                categories.push({
+                    name: item._id,
+                    data: dataa
+                })
+            }
+
+
+            this.setState(prev => ({
+                ...prev,
+                isFetchingData: false,
+                series: categories,
+            }))
+        }
     }
 
-    getUnique(arr, cb){
-        let items = []
-        for (let arrElement of arr) {
-            if(cb(arrElement, items)){
-                items.push(arrElement)
-            }
+    calculateDate = (items, year) => {
+
+        const {type} = this.props
+        let group = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0,
+            10: 0,
+            11: 0
         }
-        return items
+
+        items?.forEach(item => {
+            const createdAt = new Date(item.createdAt)
+            const date = createdAt.getMonth()
+            let p = 0
+            if(type === "quantity"){
+                p = item.quantity
+            } else {
+                p = Number(item.totalPrice).toFixed(2)
+            }
+
+            if (group[date]) {
+                group[date] += p
+            } else {
+                group[date] = p
+            }
+        })
+
+        let data = []
+        for (let groupKey in group) {
+            // let dateNumber = new Date(groupKey).getTime()
+            data.push(group[groupKey])
+        }
+
+        return data
+
+    }
+
+    handleShowYear = async (year) => {
     }
 
 
     render() {
+
         return (
-                <div id="chart" className="bg-body">
-
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={500}  />
-
-                    {/*{this.state.series.length === 0 ? <Loader*/}
-                    {/*        size="small"*/}
-                    {/*        title="Data fetching"*/}
-                    {/*        className="flex justify-center items-center"*/}
-                    {/*        titleClass="text-xs !font-semibold !mt-2"*/}
-                    {/*/> : <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380}/>}*/}
-
+            <div className="">
+                <div className="pt-5">
+                    <h2 className="text-base font-semibold uppercase">{this.props.label ?? "Orders"}</h2>
+                    <div className="flex  flex-col-reverse md:flex-row justify-end items-center gap-x-4">
+                        {this.state.isFetchingData && <Loader
+                            size="small"
+                            title=""
+                            className="flex justify-center items-center pl-0 md:pl-20 mt-4 md:mt-0"
+                            titleClass="text-xs !font-semibold"
+                        />}
+                    </div>
                 </div>
 
-        )
-    }
+                <div id="chart" className="bg-body">
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={300}/>
+                </div>
 
+
+            </div>
+
+        );
+    }
 }
 
-export default CountChart
+export default OrderStats

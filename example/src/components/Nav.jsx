@@ -228,7 +228,7 @@ const Nav = () => {
             </div>
             <div className="h-[75px]"></div>
 
-            <MobileNavigation/>
+            { !["/admin", "/dashboard"].some(el=>location.pathname.startsWith(el)) && <MobileNavigation/> }
         </>
     );
 };

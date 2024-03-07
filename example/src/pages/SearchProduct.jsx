@@ -46,34 +46,35 @@ const SearchProduct = () => {
         }
     }, [categoryName]);
 
+
     useEffect(() => {
-        let filter = {}
-        if (categoryName) {
-            if (categories?.length) {
-                selectedCategory = categories.find(cat => cat.slug === categoryName)
-                if (selectedCategory) {
-                    filter["categoryIds"] = [selectedCategory._id]
-                }
-            }
-        }
 
-        filter["search"] = text
-        filterObj.current = filter
+        console.log(filterObj.current)
 
-    }, [text, categoryName, categories]);
+        // if (Object.keys(filterObj.current).length > 0) {
+        //     filterProduct(filterObj.current)
+        // }
+    }, [filterObj.current,]);
 
 
     useEffect(() => {
-        if (Object.keys(filterObj.current).length > 0) {
-            filterProduct(filterObj.current)
-        }
-    }, [filterObj.current]);
+
+
+        filterProduct({
+            search: text,
+            categoryIds: [categoryName]
+        })
+
+    }, [categoryName, text])
 
 
     function filterProduct(filter) {
         setSearching(true)
         api.post("/products/filter?page=" + pagination.page, {
-            ...filter
+            search: filter.search ?? "",
+            attributes: filter.attributes ?? {},
+            categoryIds: filter.categoryIds ?? [],
+            brandIds: filter.brandIds ?? []
         }).then(r => {
             setSearchProduct(r.data)
         }).finally(() => {
@@ -194,12 +195,20 @@ const SearchProduct = () => {
                     </div>
                 </div>
 
-                <div
+                { searchProuduct.length &&  <div
                     className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product._id} {...product} />
                     ))}
-                </div>
+                </div> }
+
+
+                {!searchProuduct.length && (
+                    <div className="product-content text-center">
+                        <h2>No products match...</h2>
+                    </div>
+                )}
+
             </div>
         </div>
     );
