@@ -38,6 +38,31 @@ export const authVerifyAction = createAsyncAction(
 
     })
 
+export const fetchAdminCustomersProducts = createAsyncAction(
+    "fetchAdminCustomersProducts",
+    async function () {
+        try {
+            const {data} = await api.get("/auth/customers")
+            return data
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+export const deleteCustomer = createAsyncAction(
+    "deleteCustomer",
+    async function (id) {
+        try {
+            const {data, status} = await api.delete("/auth/customers/" + id)
+            if (status !== 201) throw Error("Delete fail")
+            return id
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
 export const fetchDashboardSlatsAction = createAsyncAction(
     "fetchDashboardSlatsAction",
     async ({year, role}) => {

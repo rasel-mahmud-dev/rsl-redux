@@ -7,6 +7,7 @@ import {
 } from "../../store/actions/authAction.js";
 import {useDispatch, useSelector} from "rsl-redux";
 import BarChart from "../../components/Stats/BarChart.jsx";
+import formatPrice from "../../utils/formatPrice.js";
 const OrderByCategories = lazy(() => import("../../components/Stats/OrderByCategories.jsx"));
 
 const year = new Date().getFullYear()
@@ -63,7 +64,7 @@ const DashboardHome = () => {
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
                     <Suspense fallback={<h1>Loading</h1>}>
                         <BarChart bgColor="bg-blue-500/10"  countProperty="totalSales" label="All Earnings" items={sales}
-                             totalValue={"TK." + totalSales}/>
+                             totalValue={"TK." + formatPrice(totalSales)}/>
                     </Suspense>
                 </div>
 

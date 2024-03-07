@@ -30,6 +30,9 @@ const AdminLayout = () => {
                             <li className="list-none py-2 bg-gray-200/50 hover-list-primary cursor-pointer  my-1 px-2 rounded-lg">
                                 <Link className="text-neutral-800 font-semibold"
                                       to={`/admin/categories`}>Categories</Link></li>
+                            <li className="list-none py-2 bg-gray-200/50 hover-list-primary cursor-pointer  my-1 px-2 rounded-lg">
+                                <Link className="text-neutral-800 font-semibold"
+                                      to={`/admin/customers`}>Users</Link></li>
                         </div>
                     </Sidebar>
 

@@ -22,6 +22,7 @@ import CustomerDashboardLayout from "./layout/CustomerDashboardLayout.jsx";
 import Wishlist from "./pages/Wishlist.jsx";
 import MyOrders from "./pages/customer/MyOrders.jsx";
 import Auth from "./middleware/Auth.jsx";
+import CustomerList from "./pages/admin/Customers/List.jsx";
 
 
 const routes = createBrowserRouter([
@@ -55,6 +56,7 @@ const routes = createBrowserRouter([
             {path: "edit-brand/:brandId", element: <AddBrand/>},
             {path: "add-brand", element: <AddBrand/>},
             {path: "categories", element: <CategoryList/>},
+            {path: "customers", element: <CustomerList/>},
 
         ]
     },
