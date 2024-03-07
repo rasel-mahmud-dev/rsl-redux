@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "rsl-redux";
+import {useDispatch} from "rsl-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {api} from "../../../axios/index.js";
 import Toast from "../../../utils/toast.js";
@@ -84,13 +84,13 @@ const AddUser = () => {
             e.preventDefault();
             if (customerId) {
                 await api.patch("/auth/customers/" + customerId, product)
-                navigate("/admin/customers")
-                return Toast.openSuccess("Account has been updated")
+                Toast.openSuccess("Account has been updated")
+            } else {
+                await api.post("/auth/customers", [product])
+                Toast.openSuccess("Account has been added")
             }
 
-            await api.post("/auth/customers", [product])
-            Toast.openSuccess("Account has been added")
-
+            localStorage.removeItem("upload-temp")
             navigate("/admin/customers")
 
         } catch (ex) {

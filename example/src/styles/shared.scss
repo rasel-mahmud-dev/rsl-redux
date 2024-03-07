@@ -597,10 +597,11 @@
   }
 }
 
+.table-start-align.common-table.fixed-header-table,
 .table-start-align.common-table {
   th, tr,
   td, tr {
-    text-align: start !important;
+    text-align: start;
     padding: 10px 5px;
   }
 

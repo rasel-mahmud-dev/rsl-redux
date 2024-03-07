@@ -50,7 +50,7 @@ const AddProduct = () => {
 
             let cat = categories.find(cat => cat.slug === product.categoryId)
             if (cat) {
-            dispatch(fetchCategoryBrands(product?.categoryId))
+                dispatch(fetchCategoryBrands(product?.categoryId))
                 let a = specsMapping[cat.slug]
                 handleChange({target: {name: "attributesArray", value: a}})
             }
@@ -106,12 +106,14 @@ const AddProduct = () => {
             e.preventDefault();
             if (productId) {
                 await api.patch("/products/" + productId, product)
-                navigate("/admin/products")
-                return Toast.openSuccess("Product has been updated")
+                Toast.openSuccess("Product has been updated")
+            } else {
+                const r = await api.post("/products", [product])
+                if (r.status === 201) return Toast.openSuccess("Product has been added")
+
             }
 
-            const r = await api.post("/products", [product])
-            if (r.status === 201) return Toast.openSuccess("Product has been added")
+            localStorage.removeItem("upload-temp")
             navigate("/admin/products")
 
         } catch (ex) {
@@ -134,7 +136,6 @@ const AddProduct = () => {
     function getCategoryBrands() {
         return categoryBrands[product?.categoryId] ?? []
     }
-
 
 
     return (

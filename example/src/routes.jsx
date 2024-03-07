@@ -24,6 +24,7 @@ import MyOrders from "./pages/customer/MyOrders.jsx";
 import Auth from "./middleware/Auth.jsx";
 import CustomerList from "./pages/admin/Customers/List.jsx";
 import AddUser from "./pages/admin/Customers/AddUser.jsx";
+import OrdersList from "./pages/admin/Orders/List.jsx";
 
 
 const routes = createBrowserRouter([
@@ -57,6 +58,7 @@ const routes = createBrowserRouter([
             {path: "edit-brand/:brandId", element: <AddBrand/>},
             {path: "add-brand", element: <AddBrand/>},
             {path: "categories", element: <CategoryList/>},
+            {path: "orders", element: <OrdersList/>},
             {path: "customers", element: <CustomerList/>},
             {path: "add-customer", element: <AddUser/>},
             {path: "edit-customer/:customerId", element: <AddUser/>},
