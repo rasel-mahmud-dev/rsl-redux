@@ -67,7 +67,13 @@ const ProductList = () => {
         {
             name: "title", field: "title", render: title => <Tooltip tips={title}>{title}</Tooltip>
         },
-        {name: "Price", field: "price", thClass: "w-24", tdClass: "w-24", render: (v) =>  <Tooltip tips={formatPrice(v)}>{formatPrice(v)}</Tooltip> },
+        {
+            name: "Price",
+            field: "price",
+            thClass: "w-24",
+            tdClass: "w-24",
+            render: (v) => <Tooltip tips={formatPrice(v)}>{formatPrice(v)}</Tooltip>
+        },
         {name: "Stock", field: "stock", thClass: "w-20", tdClass: "w-20"},
         {name: "Discount", field: "discount", thClass: "w-20", tdClass: "w-20"},
         {name: "Category", field: "categoryId", render: title => <Tooltip tips={title}>{title}</Tooltip>},

@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {useSelector} from "rsl-redux";
-import {categoryMap} from "../SearchProduct.jsx";
+import {useDispatch, useSelector} from "rsl-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
-import {specs} from "../spec.js";
 import FileUpload from "../../components/FileUpload.jsx";
+import {fetchCategoryBrands} from "../../store/actions/categoryAction.js";
 
 const AddProduct = () => {
 
-    const {categories, brands} = useSelector(state => state.productState)
+    const {categories, brands, categoryBrands, specsMapping, specs} = useSelector(state => state.productState)
 
     const {productId} = useParams()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [product, setProduct] = useState({
         attributesArray: [],
@@ -47,9 +47,11 @@ const AddProduct = () => {
 
     useEffect(() => {
         if (product?.categoryId) {
+
             let cat = categories.find(cat => cat.slug === product.categoryId)
             if (cat) {
-                let a = categoryMap[cat.slug]
+            dispatch(fetchCategoryBrands(product?.categoryId))
+                let a = specsMapping[cat.slug]
                 handleChange({target: {name: "attributesArray", value: a}})
             }
         }
@@ -129,6 +131,12 @@ const AddProduct = () => {
         }));
     }
 
+    function getCategoryBrands() {
+        return categoryBrands[product?.categoryId] ?? []
+    }
+
+
+
     return (
         <div className="py-10 container">
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{productId ? "Update " : "Add "} Product</h2>
@@ -203,7 +211,7 @@ const AddProduct = () => {
                                 <select className="rs-input" name="brandId" id="" value={product.brandId}
                                         onChange={handleChange}>
                                     <option value="">Select Brand</option>
-                                    {brands.map(cat => (
+                                    {getCategoryBrands().map(cat => (
                                         <option value={cat.slug}>{cat.name}</option>
                                     ))}
                                 </select>

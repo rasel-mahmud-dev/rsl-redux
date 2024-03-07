@@ -8,81 +8,8 @@ import {FaAngleRight} from "react-icons/fa";
 import Loader from "../components/Loader.jsx";
 import {HiBars4} from "react-icons/hi2";
 import {setSidebar} from "../store/slices/authSlice.js";
-import {specs} from "./spec.js";
-import {fetchCategoryBrands} from "../store/actions/categoryAction.js";
+import {fetchAttributeSpec, fetchAttributeSpecMapping, fetchCategoryBrands} from "../store/actions/categoryAction.js";
 import Popup from "../components/Popup.jsx";
-
-
-export const categoryMap = {
-    "laptop": [
-        "processor-type",
-        "processor-model",
-        "generation-series",
-        "display-size",
-        "display-type",
-        "ram-size",
-        "ram-type",
-        "hdd",
-        "ssd",
-        "graphics",
-        "operating-system",
-        "laptop-battery"
-    ],
-    "watches": ["battery", "screen", "resulation", "ram", "laptop_storage"],
-    "t-shart": [
-        "gender",
-        "discount",
-        "tshart-size",
-        "fabric",
-        "tshart-pattern",
-        "occasion",
-        "color",
-        "customer-ratings",
-        "tshart-neck-type",
-        "sleeve-type",
-        "tshart-fit",
-        "tshart-pack-of",
-        "offers",
-        "tshart-trends",
-        "tshart-collections",
-        "availability"
-    ],
-    "jeans": [
-        "gender",
-        "jeans-discount",
-        "jeans-size",
-        "jeans-color",
-        "jeans-fade",
-        "jeans-distress",
-        "jeans-fit",
-        "jeans-rise",
-        "customer-ratings",
-        "offers",
-        "jeans-pack-of",
-        "jeans-pattern",
-        "jeans-collections",
-        "availability"
-    ],
-    "headphone": [
-        "headphone-design",
-        "headphone-type",
-        "headphone-connectivity",
-        "headphone-features",
-        "headphone-color",
-        "headphone-compatible-with",
-        "headphone-availability",
-        "headphone-discount"
-    ],
-    "mobile": [
-        "mobile-display-size",
-        "mobile-display-type",
-        "mobile-chipset",
-        "mobile-ram",
-        "mobile-internal-storage",
-        "mobile-battery",
-        "mobile-features"
-    ]
-}
 
 
 const SearchProduct = () => {
@@ -90,7 +17,8 @@ const SearchProduct = () => {
     const {categoryName} = useParams()
     const filterObj = useRef({attributes: {}})
     const {openSidebar} = useSelector(state => state.authState)
-    const {categories, filter, brands, categoryBrands} = useSelector(state => state.productState)
+
+    const {categories, filter, specsMapping, categoryBrands, specs} = useSelector(state => state.productState)
 
     const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
 
@@ -113,6 +41,8 @@ const SearchProduct = () => {
     useEffect(() => {
         if (categoryName) {
             dispatch(fetchCategoryBrands(categoryName))
+            dispatch(fetchAttributeSpec(categoryName))
+            dispatch(fetchAttributeSpecMapping())
         }
     }, [categoryName]);
 
@@ -150,8 +80,6 @@ const SearchProduct = () => {
             setSearching(false)
         })
     }
-
-    let cats = categoryMap?.[categoryName]
 
     function renderOptions(attr, attributeName) {
         return (
@@ -209,6 +137,8 @@ const SearchProduct = () => {
         return categoryBrands[categoryName] ?? []
     }
 
+    const attributeMap = specs?.[categoryName] ?? {}
+
     return (
         <div>
             <div className="bread-fixed">
@@ -245,16 +175,20 @@ const SearchProduct = () => {
                         </div>
 
                         <div className="">
-                            {cats?.map((attributeKey) => (
+                            {/*{specs[categoryName].label}*/}
+
+                            {Object.keys(attributeMap).map(attributeKey => (
                                 <div key={attributeKey} className="">
                                     <div className="flex justify-between items-center py-2 px-2 cursor-pointer"
                                          onClick={() => handleToggleExpand(attributeKey)}>
-                                        <span>{specs[attributeKey].label}</span>
+                                        <span>{attributeMap?.[attributeKey]?.label}</span>
                                         <span><FaAngleRight className="text-xs"/></span>
                                     </div>
-                                    {expandAttributes.includes(attributeKey) && renderOptions(specs[attributeKey], attributeKey)}
+                                    {expandAttributes.includes(attributeKey) && renderOptions(attributeMap[attributeKey], attributeKey)}
                                 </div>
                             ))}
+
+
                         </div>
 
                     </div>
@@ -288,12 +222,13 @@ function Brands({items}) {
                 ))
             }
 
-            <div className="flex items-center gap-x-2 py-1 hover-list-primary rounded px-2" >
-                <label className="text-sm text-neutral-600" onClick={()=>setShowMore(true)}>Show All</label>
+            <div className="flex items-center gap-x-2 py-1 hover-list-primary rounded px-2">
+                <label className="text-sm text-neutral-600" onClick={() => setShowMore(true)}>Show All</label>
             </div>
 
-            {isShowMore && <Popup className="!fixed top-36 max-w-3xl w-full h-60    overflow-x-auto" onClose={() => setShowMore(false)}
-                   isOpen={isShowMore}>
+            {isShowMore && <Popup className="!fixed top-36 max-w-3xl w-full h-60    overflow-x-auto"
+                                  onClose={() => setShowMore(false)}
+                                  isOpen={isShowMore}>
                 <div>
                     <div className="grid grid-cols-6 gap-x-5">
                         {
@@ -308,7 +243,7 @@ function Brands({items}) {
                         }
                     </div>
                 </div>
-            </Popup> }
+            </Popup>}
 
 
         </div>

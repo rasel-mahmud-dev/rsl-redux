@@ -1,6 +1,12 @@
 import {createSlice} from "rsl-redux";
 import {deleteBrand, fetchOrdersAction, fetchProducts} from "../actions/productAction.js";
-import {deleteCategory, fetchBrands, fetchCategories, fetchCategoryBrands} from "../actions/categoryAction.js";
+import {
+    deleteCategory,
+    fetchAttributeSpec, fetchAttributeSpecMapping,
+    fetchBrands,
+    fetchCategories,
+    fetchCategoryBrands
+} from "../actions/categoryAction.js";
 import {deleteAdminProduct, fetchAdminDashboardProducts, fetchAdminProducts} from "../actions/adminAction.js";
 import {fetchWishlists} from "../actions/wishlistAction.js";
 
@@ -72,7 +78,9 @@ const initialState = {
     homeProducts: {},
     products: [],
     brands: [],
+    specsMapping: {},
     categoryBrands: {}, // {catSlug: Brand[]}
+    specs: {}, // {catSlug: Brand[]}
     wishlist: [],
     orders: {}, // {1: {items: Array<>, count: number} }
     adminProducts: [],
@@ -137,6 +145,15 @@ const productSlice = createSlice({
         builder.addCase(fetchCategoryBrands.fulfilled, (state, action) => {
             const {slug, items} = action.payload
             state.categoryBrands[slug] = items
+        })
+
+        builder.addCase(fetchAttributeSpec.fulfilled, (state, action) => {
+            const {slug, items} = action.payload
+            state.specs[slug] = items
+        })
+
+        builder.addCase(fetchAttributeSpecMapping.fulfilled, (state, action) => {
+            state.specsMapping = action.payload
         })
 
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
