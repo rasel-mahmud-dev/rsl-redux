@@ -23,6 +23,7 @@ import Wishlist from "./pages/Wishlist.jsx";
 import MyOrders from "./pages/customer/MyOrders.jsx";
 import Auth from "./middleware/Auth.jsx";
 import CustomerList from "./pages/admin/Customers/List.jsx";
+import AddUser from "./pages/admin/Customers/AddUser.jsx";
 
 
 const routes = createBrowserRouter([
@@ -57,6 +58,8 @@ const routes = createBrowserRouter([
             {path: "add-brand", element: <AddBrand/>},
             {path: "categories", element: <CategoryList/>},
             {path: "customers", element: <CustomerList/>},
+            {path: "add-customer", element: <AddUser/>},
+            {path: "edit-customer/:customerId", element: <AddUser/>},
 
         ]
     },
