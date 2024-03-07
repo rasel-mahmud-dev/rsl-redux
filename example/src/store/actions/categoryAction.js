@@ -6,8 +6,24 @@ export const fetchCategories = createAsyncAction(
     async function () {
         try {
             const res = await api.get("/categories")
-            console.log(res.data)
             return res.data
+
+        } catch (e) {
+            throw e
+        }
+
+    })
+
+export const fetchCategoryBrands = createAsyncAction(
+    "fetchCategoryBrands",
+    async function (catSlug) {
+        try {
+            const res = await api.get("/brands/category/" + catSlug)
+
+            return  {
+                slug: catSlug,
+                items: res.data
+            }
 
         } catch (e) {
             throw e
@@ -20,7 +36,6 @@ export const fetchBrands = createAsyncAction(
     async function () {
         try {
             const res = await api.get("/brands")
-            console.log(res.data)
             return res.data
 
         } catch (e) {

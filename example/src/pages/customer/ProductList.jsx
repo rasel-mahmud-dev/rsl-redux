@@ -23,7 +23,7 @@ const ProductList = () => {
 
     const columns = [
         {
-            name: "Image", field: "cover_image", thClass: "!text-start w-20", tdClass: "!text-start w-20", render: (cover_image)=>(
+            name: "Image", field: "coverImage", thClass: "!text-start w-20", tdClass: "!text-start w-20", render: (cover_image)=>(
                 <div className="w-10">
                     <img src={getAssetPath(cover_image)} alt=""/>
                 </div>

@@ -16,7 +16,7 @@ export function getDateTime(currentDate) {
     let merdian = "AM"
     if (hh === 0) {
         hh = 1
-    } else if (hh > 13) {
+    } else if (hh >= 13) {
         merdian = "PM"
         hh = hh - 12
     }

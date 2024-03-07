@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "rsl-redux";
 import {categoryMap} from "../SearchProduct.jsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
 import {specs} from "../spec.js";
@@ -12,6 +12,7 @@ const AddProduct = () => {
     const {categories, brands} = useSelector(state => state.productState)
 
     const {productId} = useParams()
+    const navigate = useNavigate()
 
     const [product, setProduct] = useState({
         attributesArray: [],
@@ -20,14 +21,13 @@ const AddProduct = () => {
         price: 0,
         stock: 0,
         discount: 0,
-        cover_image: '',
+        coverImage: '',
         images: [],
         description: '',
         attributes: {},
-        category_id: '',
-        brand_id: '',
+        categoryId: '',
+        brandId: '',
     });
-
 
     useEffect(() => {
         if (productId) {
@@ -45,16 +45,15 @@ const AddProduct = () => {
         }
     }, [productId]);
 
-
     useEffect(() => {
-        if (product?.category_id) {
-            let cat = categories.find(cat => cat._id === product.category_id)
+        if (product?.categoryId) {
+            let cat = categories.find(cat => cat.slug === product.categoryId)
             if (cat) {
                 let a = categoryMap[cat.slug]
                 handleChange({target: {name: "attributesArray", value: a}})
             }
         }
-    }, [product?.category_id, categories]);
+    }, [product?.categoryId, categories]);
 
 
     useEffect(() => {
@@ -65,11 +64,9 @@ const AddProduct = () => {
         }
     }, []);
 
-    console.log(product)
-
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if (name === "cover_image") {
+        if (name === "coverImage") {
             return handleUploadImage(name, value)
         }
         setProduct({...product, [name]: value});
@@ -107,11 +104,14 @@ const AddProduct = () => {
             e.preventDefault();
             if (productId) {
                 await api.patch("/products/" + productId, product)
+                navigate("/admin/products")
                 return Toast.openSuccess("Product has been updated")
             }
 
             const r = await api.post("/products", [product])
             if (r.status === 201) return Toast.openSuccess("Product has been added")
+            navigate("/admin/products")
+
         } catch (ex) {
             Toast.openError(ex?.message)
         }
@@ -130,7 +130,7 @@ const AddProduct = () => {
     }
 
     return (
-        <div className="py-10 ">
+        <div className="py-10 container">
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{productId ? "Update " : "Add "} Product</h2>
             <form onSubmit={handleSubmit}>
 
@@ -177,8 +177,8 @@ const AddProduct = () => {
                             <label htmlFor="">Cover:</label>
                             <FileUpload className="rs-input "
                                         imagePreviewClass="w-24 aspect-square object-contain         "
-                                        name="cover_image"
-                                        value={product.cover_image}
+                                        name="coverImage"
+                                        value={product.coverImage}
                                         onChange={handleChange}/>
                         </div>
 
@@ -189,33 +189,33 @@ const AddProduct = () => {
 
                             {/*<div className="flex flex-col mb-3">*/}
                             {/*    <label htmlFor="">Cover Image:</label>*/}
-                            {/*    <input className="rs-input" type="text" name="cover_image" value={product?.cover_image}*/}
+                            {/*    <input className="rs-input" type="text" name="coverImage" value={product?.coverImage}*/}
                             {/*           onChange={handleChange}/>*/}
                             {/*</div>*/}
 
-                            {/*{product?.cover_image && <div className="w-20">*/}
-                            {/*    <img src={getAssetPath(product?.cover_image)} alt=""/>*/}
+                            {/*{product?.coverImage && <div className="w-20">*/}
+                            {/*    <img src={getAssetPath(product?.coverImage)} alt=""/>*/}
                             {/*</div> }*/}
 
 
                             <div className="flex flex-col mb-3">
                                 <label htmlFor="">Brand:</label>
-                                <select className="rs-input" name="brand_id" id="" value={product.brand_id}
+                                <select className="rs-input" name="brandId" id="" value={product.brandId}
                                         onChange={handleChange}>
                                     <option value="">Select Brand</option>
                                     {brands.map(cat => (
-                                        <option value={cat._id}>{cat.name}</option>
+                                        <option value={cat.slug}>{cat.name}</option>
                                     ))}
                                 </select>
                             </div>
 
                             <div className="flex flex-col mb-3">
                                 <label htmlFor="">Category:</label>
-                                <select className="rs-input" name="category_id" id="" value={product.category_id}
+                                <select className="rs-input" name="categoryId" id="" value={product.categoryId}
                                         onChange={handleChange}>
                                     <option value="">Select Category</option>
                                     {categories.map(cat => (
-                                        <option value={cat._id}>{cat.name}</option>
+                                        <option value={cat.slug}>{cat.name}</option>
                                     ))}
                                 </select>
                             </div>
@@ -246,7 +246,7 @@ const AddProduct = () => {
                 </div>
 
 
-                {/* Other input fields for price, stock, discount, cover_image, description, attributes, category_id, brand_id */}
+                {/* Other input fields for price, stock, discount, coverImage, description, attributes, categoryId, brandId */}
                 <button type="submit" className="primary-btn">{productId ? "Update " : "Add "} Product</button>
             </form>
         </div>

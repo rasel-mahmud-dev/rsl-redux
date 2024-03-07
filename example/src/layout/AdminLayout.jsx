@@ -34,7 +34,7 @@ const AdminLayout = () => {
                     </Sidebar>
 
                     <div className="content ">
-                        <div className="container">
+                        <div className="">
                             <Outlet/>
                         </div>
                     </div>

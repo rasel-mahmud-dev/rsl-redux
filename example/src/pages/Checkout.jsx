@@ -80,7 +80,7 @@ const Checkout = () => {
                         <img
                             onError={handleImgLoadError}
                             className="object-contain aspect-square mx-auto"
-                            src={imagePath(item?.cover_image)}
+                            src={imagePath(item?.coverImage)}
                             alt=""/>
                     </div>
 

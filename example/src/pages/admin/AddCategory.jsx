@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {api} from "../../axios/index.js";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Toast from "../../utils/toast.js";
 import {fetchBrands, fetchCategories} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
@@ -10,6 +10,7 @@ import getAssetPath from "../../utils/getAssetPath.js";
 
 const CategoryForm = () => {
     const {categoryId} = useParams()
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -53,6 +54,8 @@ const CategoryForm = () => {
             let r = await api.post("/categories", [category])
             if (r.status === 201) return Toast.openSuccess("Category has been added")
 
+            navigate("/admin/categories")
+
         } catch (ex) {
             Toast.openError(ex?.message)
         }  finally {
@@ -66,7 +69,7 @@ const CategoryForm = () => {
     }
 
     return (
-        <div className="py-10 ">
+        <div className="py-10 container">
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{categoryId ? "Update " : "Add "} Category</h2>
 
 

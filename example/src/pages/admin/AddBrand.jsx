@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {api} from "../../axios/index.js";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Toast from "../../utils/toast.js";
 import {fetchBrands} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
@@ -13,6 +13,7 @@ const BrandForm = () => {
 
     const {brandId} = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [brand, setBrand] = useState({
         name: "",
@@ -52,7 +53,7 @@ const BrandForm = () => {
 
             let r = await api.post("/brands", [brand])
             if (r.status === 201) return Toast.openSuccess("Brand has been added")
-
+            navigate("/admin/brands")
         } catch (ex) {
             Toast.openError(ex?.message)
         } finally {
@@ -62,7 +63,8 @@ const BrandForm = () => {
     };
 
     return (
-        <div className="py-10 ">
+        <div className="py-10 container">
+
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{brandId ? "Update " : "Add "} Brand</h2>
 
 

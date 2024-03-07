@@ -144,7 +144,7 @@ const Nav = () => {
                                                                     <td className="w-10">
                                                                         <img onError={handleImgLoadError}
                                                                              className="object-contain max-w-[50px] max-h-[50px] mx-auto"
-                                                                             src={imagePath(cart?.cover_image)}
+                                                                             src={imagePath(cart?.coverImage)}
                                                                              alt=""/>
                                                                     </td>
 

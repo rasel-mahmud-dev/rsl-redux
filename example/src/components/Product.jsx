@@ -10,7 +10,7 @@ import {addToWishlist, removeFromWishlist} from "../store/slices/productSlice.js
 
 
 const Product = (props) => {
-    const {title, _id, price, cover_image = ""} = props
+    const {title, _id, price, coverImage = ""} = props
     const {auth} = useSelector(state=>state.authState)
     const {wishlist} = useSelector(state=>state.productState)
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Product = (props) => {
             title,
             price,
             product_id: _id,
-            cover_image,
+            coverImage,
             quantity: 1
         })).unwrap().then(() => {
             Toast.openSuccess("Successfully added on the cart")
@@ -78,7 +78,7 @@ const Product = (props) => {
         <div className="bg-white rounded-xl overflow-hidden">
             <div className="product-image relative">
                 <img onError={handleImgLoadError} className="object-contain max-w-[150px] max-h-[150px] mx-auto"
-                     src={imagePath(cover_image)} alt={title}/>
+                     src={imagePath(coverImage)} alt={title}/>
 
                 {isInWishlist ?
                     <AiFillHeart onClick={()=>handleTooggleWishlist(_id)} className="absolute top-3 right-3" />

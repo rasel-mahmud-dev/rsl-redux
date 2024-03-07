@@ -17,7 +17,6 @@ function App() {
     useEffect(() => {
         dispatch(authVerifyAction())
         dispatch(fetchCategories())
-        dispatch(fetchBrands())
         const theme = localStorage.getItem("theme") || ""
         theme && changeThemeColor({color: theme})
     }, [])

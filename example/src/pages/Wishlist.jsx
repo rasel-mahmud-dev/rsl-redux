@@ -54,7 +54,7 @@ const Wishlist = () => {
                     <div className="w-14">
                         <img onError={handleImgLoadError}
                              className="object-contain aspect-square mx-auto"
-                             src={imagePath(product?.cover_image)}
+                             src={imagePath(product?.coverImage)}
                              alt=""/>
                     </div>
 
