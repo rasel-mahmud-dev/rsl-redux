@@ -57,6 +57,10 @@ const RatingReviews = () => {
         return totalAmount;
     }
 
+    function handleSubmitReview(review){
+        console.log(review)
+    }
+
     return (
         <div className="mt-6">
 
@@ -66,7 +70,7 @@ const RatingReviews = () => {
                     className="max-w-2xl w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
                     onClose={() => setOpenAddReviewForm(false)}
                     isOpen={true}>
-                    <ReviewForm/>
+                    <ReviewForm onSubmit={handleSubmitReview}/>
                 </Popup>
             )
             }
