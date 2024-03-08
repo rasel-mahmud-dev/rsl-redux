@@ -16,7 +16,9 @@ const AddressList = ({addresses, onDelete}) => {
                             <button onClick={() => onDelete(address._id)}
                                     className="btn btn-outline outline-sm text-xs">Delete
                             </button>
-                            <button className="btn btn-outline outline-sm text-xs">Edit</button>
+                            <Link to={`/dashboard/address-book/update/${address._id}`}>
+                                <button className="btn btn-outline outline-sm text-xs">Edit</button>
+                            </Link>
                         </div>
                     </div>
                     <div>{address.phone}</div>

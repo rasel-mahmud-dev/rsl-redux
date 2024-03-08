@@ -7,7 +7,7 @@ import Input from "../../../components/Form/Input.jsx";
 
 const CreateAddress = () => {
 
-    const {customerId} = useParams()
+    const {id} = useParams()
     const navigate = useNavigate()
 
     const [address, setAddress] = useState({
@@ -24,8 +24,8 @@ const CreateAddress = () => {
     });
 
     useEffect(() => {
-        if (customerId) {
-            api.get("/auth/customers/" + customerId).then(r => {
+        if (id) {
+            api.get("/shipping-addresses/" + id).then(r => {
                 if (r.data) {
                     let updatedState = {}
                     for (let dataKey in r.data) {
@@ -37,7 +37,7 @@ const CreateAddress = () => {
                 }
             })
         }
-    }, [customerId]);
+    }, [id]);
 
 
     const handleChange = (e) => {
@@ -50,8 +50,8 @@ const CreateAddress = () => {
 
         try {
             e.preventDefault();
-            if (customerId) {
-                await api.patch("/shipping-addresses/" + customerId, address)
+            if (id) {
+                await api.patch("/shipping-addresses/" + id, address)
                 Toast.openSuccess("Address has been updated")
             } else {
                 await api.post("/shipping-addresses", address)
@@ -67,7 +67,7 @@ const CreateAddress = () => {
 
     return (
         <div className="py-10 container">
-            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{customerId ? "Update " : "Add "} Address</h2>
+            <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{id ? "Update " : "Add "} Address</h2>
             <form onSubmit={handleSubmit}>
 
                 <div className="grid grid-cols-2 gap-x-10">
@@ -90,7 +90,7 @@ const CreateAddress = () => {
                     </div>
 
 
-                <button type="submit" className="primary-btn">{customerId ? "Update " : "Add "} Account</button>
+                <button type="submit" className="primary-btn">{id ? "Update " : "Add "} Address</button>
             </form>
         </div>
     );

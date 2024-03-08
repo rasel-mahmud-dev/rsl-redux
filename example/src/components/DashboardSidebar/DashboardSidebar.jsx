@@ -73,14 +73,13 @@ const items = {
     "customer": {
         "Manage My Account": [
 
-            // Address Book
             // My Payment Options
             // Daraz Wallet
             // Vouchers
 
             {
                 displayName: "My Profile",
-                link: "/customer/my-profile",
+                link: "/dashboard/my-profile",
                 icon: ()=><HiCube className="text-md" /> ,
             },
             {
@@ -91,20 +90,16 @@ const items = {
         ],
         "My Orders": [
             {
-                displayName: "Products",
-                link: "/admin/products",
+                displayName: "Orders",
+                link: "/dashboard/orders",
                 icon: ()=><HiCube className="text-md" /> ,
             },
-            {
-                displayName: "New Product",
-                link: "/admin/add-product",
-                icon: ()=><HiCube className="text-md" /> ,
-            },
+
         ],
         "My Reviews": [
             {
-                displayName: "Categories",
-                link: "/admin/categories",
+                displayName: "My Reviews",
+                link: "/dashboard/my-reviews",
                 icon: ()=><HiCube className="text-md" /> ,
             },
             {
