@@ -9,21 +9,9 @@
 }
 
 
+@import "./mixin";
 @import "./switch";
 @import "./modal";
-
-
-@mixin getDown($size) {
-  @media screen and (max-width: #{$size}) {
-    @content
-  }
-}
-
-@mixin getUp($size) {
-  @media screen and (min-width: #{$size}) {
-    @content
-  }
-}
 
 
 @layer components {

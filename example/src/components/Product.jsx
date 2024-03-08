@@ -7,10 +7,11 @@ import Toast from "../utils/toast.js";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import {addToWishlistAction, removeFromWishlistAction} from "../store/actions/wishlistAction.js";
 import {addToWishlist, removeFromWishlist} from "../store/slices/productSlice.js";
+import {Link} from "react-router-dom";
 
 
 const Product = (props) => {
-    const {title, _id, price, coverImage = ""} = props
+    const {title, slug, _id, price, coverImage = ""} = props
     const {auth} = useSelector(state=>state.authState)
     const {wishlist} = useSelector(state=>state.productState)
     const dispatch = useDispatch()
@@ -86,7 +87,9 @@ const Product = (props) => {
                 }
             </div>
             <div className="p-3">
-                <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
+               <Link to={`/${slug}`}>
+                   <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
+               </Link>
                 <p>Tk:{price}</p>
                 <button className="mx-auto block primary-btn py-1 mt-4 text-neutral-100"
                         onClick={handleAddToCart}>Add to Cart

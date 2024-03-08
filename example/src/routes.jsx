@@ -29,6 +29,7 @@ import AddressList from "./pages/customer/Address/Address.List.jsx";
 import AddressCreate from "./pages/customer/Address/Address.Create.jsx";
 import MyReviewList from "./pages/customer/MyReviews/List.jsx";
 import CustomerProfile from "./pages/customer/CustomerProfile/View.jsx";
+import ProductDetail from "./pages/ProductDetail/ProductDetail.jsx";
 
 
 const routes = createBrowserRouter([
@@ -37,6 +38,7 @@ const routes = createBrowserRouter([
         element: <MainLayout/>,
         children: [
             {path: "", element: <Products/>},
+            {path: "/:slug", element: <ProductDetail/>},
             {path: "login", element: <Login/>},
             {path: "search", element: <SearchProduct/>},
             {path: "p/:categoryName", element: <SearchProduct/>},
