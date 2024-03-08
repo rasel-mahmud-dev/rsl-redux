@@ -25,6 +25,8 @@ import Auth from "./middleware/Auth.jsx";
 import CustomerList from "./pages/admin/Customers/List.jsx";
 import AddUser from "./pages/admin/Customers/AddUser.jsx";
 import OrdersList from "./pages/admin/Orders/List.jsx";
+import AddressList from "./pages/customer/Address/Address.List.jsx";
+import AddressCreate from "./pages/customer/Address/Address.Create.jsx";
 
 
 const routes = createBrowserRouter([
@@ -73,6 +75,9 @@ const routes = createBrowserRouter([
             {path: "orders", element: <MyOrders/>},
             {path: "carts", element: <Carts/>},
             {path: "wishlist", element: <Wishlist/>},
+            {path: "address-book", element: <AddressList/>},
+            {path: "address-book/new", element: <AddressCreate/>},
+            {path: "address-book/update/:id", element: <AddressCreate/>},
 
         ]
     }

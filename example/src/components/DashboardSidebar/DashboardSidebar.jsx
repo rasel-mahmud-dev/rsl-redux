@@ -69,6 +69,52 @@ const items = {
             },
         ]
 
+    },
+    "customer": {
+        "Manage My Account": [
+
+            // Address Book
+            // My Payment Options
+            // Daraz Wallet
+            // Vouchers
+
+            {
+                displayName: "My Profile",
+                link: "/customer/my-profile",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+            {
+                displayName: "Address Book",
+                link: "/dashboard/address-book",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+        ],
+        "My Orders": [
+            {
+                displayName: "Products",
+                link: "/admin/products",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+            {
+                displayName: "New Product",
+                link: "/admin/add-product",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+        ],
+        "My Reviews": [
+            {
+                displayName: "Categories",
+                link: "/admin/categories",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+            {
+                displayName: "New Category",
+                link: "/admin/add-category",
+                icon: ()=><HiCube className="text-md" /> ,
+            },
+        ],
+
+
     }
 }
 

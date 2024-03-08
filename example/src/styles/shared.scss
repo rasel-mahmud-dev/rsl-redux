@@ -28,7 +28,7 @@
 
 @layer components {
   .truncate {
-    @include getDown(576px){
+    @include getDown(576px) {
       white-space: pre-line;
     }
   }
@@ -41,7 +41,8 @@
 
   &.btn-outline {
     border: 1px solid var(--primary-500);
-    &:hover{
+
+    &:hover {
       background: var(--primary-500-05);
     }
   }
@@ -61,7 +62,7 @@
   background: var(--primary-500);
 }
 
-.border-t-primary-500{
+.border-t-primary-500 {
   border-top-color: var(--primary-500);
 }
 
@@ -141,7 +142,7 @@
 .fixed-header-table tbody {
   display: block;
   overflow: auto;
-  @include getDown(576px){
+  @include getDown(576px) {
     overflow: initial !important;
     display: table;
   }
@@ -157,8 +158,8 @@
   width: calc(100% - 5px)
 }
 
-.common-table.fixed-header-table{
-  @include getDown(576px){
+.common-table.fixed-header-table {
+  @include getDown(576px) {
     thead tr {
       display: none;
     }
@@ -242,6 +243,28 @@
 
   &:focus {
     border: 1px solid #ff8ea4;
+  }
+}
+
+.rsl-input-group {
+  width: 100%;
+  margin-bottom: 10px;
+  label {
+    display: block;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 4px 10px;
+    min-height: 38px;
+    border: 1px solid pink;
+    border-radius: 16px;
+    background: rgba(255, 224, 230, 0.17);
+    outline: none;
+
+    &:focus {
+      border: 1px solid #ff8ea4;
+    }
   }
 }
 

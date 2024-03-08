@@ -26,6 +26,33 @@ export const createAccountAction = createAsyncAction(
 
     })
 
+
+export const fetchAddresses = createAsyncAction(
+    "fetchAddresses",
+    async function () {
+        try {
+            const {data} = await api.get("/shipping-addresses")
+            return data
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
+export const deleteAddress = createAsyncAction(
+    "deleteAddress",
+    async function (id) {
+        try {
+            const {status} = await api.delete("/shipping-addresses/" + id)
+            if (status !== 200) throw Error("Delete fail")
+            return id
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
 export const authVerifyAction = createAsyncAction(
     "verify_auth_account",
     async function () {

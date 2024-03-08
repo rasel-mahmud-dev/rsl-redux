@@ -1,7 +1,7 @@
 import {createSlice} from "rsl-redux";
 import {
     authVerifyAction,
-    createAccountAction, deleteCustomer, fetchAdminCustomersProducts,
+    createAccountAction, deleteAddress, deleteCustomer, fetchAddresses, fetchAdminCustomersProducts,
     fetchCategoryWiseOrdersSlatsAction,
     fetchDashboardSlatsAction,
     fetchOrdersSlatsAction,
@@ -38,7 +38,8 @@ const initialState = {
         totalCategories: 0
     },
     openSidebar: "",
-    customers: []
+    customers: [],
+    addresses: []
 }
 
 const authSlice = createSlice({
@@ -80,7 +81,7 @@ const authSlice = createSlice({
 
 
         builder.addCase(deleteCustomer.fulfilled, (state, action) => {
-            state.customers = state.customers.filter(cus=>cus._id !== action.payload)
+            state.customers = state.customers.filter(cus => cus._id !== action.payload)
         })
 
 
@@ -94,6 +95,14 @@ const authSlice = createSlice({
             state.dashboardSlats = action.payload
         })
 
+
+        builder.addCase(fetchAddresses.fulfilled, (state, action) => {
+            state.addresses = action.payload
+        })
+
+        builder.addCase(deleteAddress.fulfilled, (state, action) => {
+            state.addresses = state.addresses.filter(ad => ad._id !== action.payload)
+        })
 
         builder.addCase(fetchCategoryWiseOrdersSlatsAction.fulfilled, (state, action) => {
             const {year, items} = action.payload
