@@ -36,11 +36,11 @@ const Nav = () => {
     function handleSearchProduct(e) {
         const val = e.target.value
         // TODO: uncomment
-        // if (location.pathname.startsWith("/p/")) {
-        //     navigate(location.pathname + `?search=` + val)
-        //     return
-        // }
-        // navigate("/p/?search=" + val)
+        if (location.pathname.startsWith("/p/")) {
+            navigate(location.pathname + `?search=` + val)
+            return
+        }
+        navigate("/p/?search=" + val)
     }
 
     function handleToggleLeft() {

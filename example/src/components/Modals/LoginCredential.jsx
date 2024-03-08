@@ -5,15 +5,13 @@ import Popup from "../Popup.jsx";
 const LoginCredential = ({onClose, loginAction}) => {
 
     const users = [
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
-        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "customer"},
+        {  password: "123", email: "rasel.mahmud.dev@gmail.com", role: "admin"},
+        {  password: "123", email: "john@example.com", role: "customer"},
+        {  password: "123", email: "shayer.rabbi@gmail.com", role: "customer"},
+        {  password: "123", email: "amir.hamza@gmail.com", role: "customer"},
+        {  password: "123", email: "mustari.saiky@gmail.com", role: "customer"},
+        {  password: "123", email: "nafiz.mahmood@gmail.com", role: "customer"},
+        {  password: "123", email: "sameen.sayeer@gmail.com", role: "customer"},
     ]
 
 
