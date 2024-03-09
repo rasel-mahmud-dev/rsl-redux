@@ -10,6 +10,7 @@ import {
 import {deleteAdminProduct, fetchAdminDashboardProducts, fetchAdminProducts} from "../actions/adminAction.js";
 import {fetchWishlists} from "../actions/wishlistAction.js";
 import {addReviewAction, fetchReviews, updateReviewAction} from "../actions/reviewAction.js";
+import {addQuestionAnswerAction, fetchQuestionAnswers} from "../actions/questionsAction.js";
 
 const initialState = {
     showCategories: [
@@ -93,6 +94,7 @@ const initialState = {
         pageNumber: 1
     },
     reviews: {}, // key product id
+    questionAnswers: {}, // key product id
 }
 
 const productSlice = createSlice({
@@ -194,6 +196,26 @@ const productSlice = createSlice({
                 state.reviews[productId].push(data)
             }
         })
+
+
+        // Question and answers
+
+
+        builder.addCase(fetchQuestionAnswers.fulfilled, (state, action) => {
+            const {productId, data} = action.payload
+            if (productId) {
+                state.questionAnswers[productId] = data
+            }
+        })
+
+        builder.addCase(addQuestionAnswerAction.fulfilled, (state, action) => {
+            const {productId, data} = action.payload
+            if (productId) {
+                if (!state.questionAnswers[productId]) state.questionAnswers[productId] = []
+                state.questionAnswers[productId].push(data)
+            }
+        })
+
     }
 })
 

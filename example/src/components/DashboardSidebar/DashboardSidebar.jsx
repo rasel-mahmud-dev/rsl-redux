@@ -102,11 +102,7 @@ const items = {
                 link: "/dashboard/my-reviews",
                 icon: ()=><HiCube className="text-md" /> ,
             },
-            {
-                displayName: "New Category",
-                link: "/admin/add-category",
-                icon: ()=><HiCube className="text-md" /> ,
-            },
+
         ],
 
 

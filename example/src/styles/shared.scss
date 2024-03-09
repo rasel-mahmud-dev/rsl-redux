@@ -237,6 +237,7 @@
 .rsl-input-group {
   width: 100%;
   margin-bottom: 10px;
+
   label {
     display: block;
   }
@@ -245,13 +246,22 @@
     width: 100%;
     padding: 4px 10px;
     min-height: 38px;
-    border: 1px solid pink;
+    border: 1px solid var(--primary-500-03);
     border-radius: 16px;
-    background: rgba(255, 224, 230, 0.17);
+    background: var(--primary-500-01);
     outline: none;
 
     &:focus {
-      border: 1px solid #ff8ea4;
+      border: 1px solid var(--primary-500);
+    }
+  }
+
+  &__readonly {
+    cursor: not-allowed;
+    input, select, textarea {
+      &:focus {
+        border: 1px solid var(--primary-500-03);
+      }
     }
   }
 }

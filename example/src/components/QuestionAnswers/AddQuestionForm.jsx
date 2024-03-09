@@ -1,25 +1,25 @@
 import React from 'react';
-import ReviewForm from "./ReviewForm.jsx";
 import Popup from "../Popup.jsx";
 import Toast from "../../utils/toast.js";
 import {addReviewAction, updateReviewAction} from "../../store/actions/reviewAction.js";
 import {useDispatch} from "rsl-redux";
+import QuestionAnswerForm from "./QuestionAnswerForm.jsx";
+import {addQuestionAnswerAction, updateQuestionAnswerAction} from "../../store/actions/questionsAction.js";
 
-const AddReview = ({onClose, productId, updateData}) => {
+const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
 
     const dispatch = useDispatch()
 
-    function handleSubmitReview(review) {
+    function handleSubmit(questionAnswer) {
         if (!productId) return Toast.openError("Product not exist.")
 
         if (updateData) {
-            dispatch(updateReviewAction({
-                ...review,
+            dispatch(updateQuestionAnswerAction({
+                ...questionAnswer,
                 productId,
                 _id: updateData._id
             })).unwrap().then(() => {
-                Toast.openSuccess("Review updated.")
-                localStorage.removeItem("review-temp")
+                Toast.openSuccess("questionAnswer updated.")
                 onClose()
             }).catch(ex => {
                 Toast.openError(ex?.message)
@@ -27,12 +27,11 @@ const AddReview = ({onClose, productId, updateData}) => {
             return
         }
 
-        dispatch(addReviewAction({
-            ...review,
+        dispatch(addQuestionAnswerAction({
+            ...questionAnswer,
             productId,
         })).unwrap().then(() => {
-            Toast.openSuccess("Review added.")
-            localStorage.removeItem("review-temp")
+            Toast.openSuccess("questionAnswer added.")
             onClose()
         }).catch(ex => {
             Toast.openError(ex?.message)
@@ -43,13 +42,13 @@ const AddReview = ({onClose, productId, updateData}) => {
         <div>
             <Popup
                 backdropClass="bg-gray-300"
-                className="max-w-2xl w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
+                className="max-w-md w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
                 onClose={() => onClose()}
                 isOpen={true}>
-                <ReviewForm updateData={updateData} onSubmit={handleSubmitReview}/>
+                <QuestionAnswerForm isQuestion={isQuestion} updateData={updateData} onSubmit={handleSubmit}/>
             </Popup>
         </div>
     );
 };
 
-export default AddReview;
+export default AddQuestionForm;

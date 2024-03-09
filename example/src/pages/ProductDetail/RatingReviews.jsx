@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {BiCheck, BiStar} from "react-icons/bi";
 import getAssetPath from "../../utils/getAssetPath.js";
 import Image from "../../components/Image/Image.jsx";
-import ReviewForm from "./ReviewForm.jsx";
+import ReviewForm from "../../components/Reviews/ReviewForm.jsx";
 import Popup from "../../components/Popup.jsx";
 import {useDispatch, useSelector} from "rsl-redux";
 import {addReviewAction, fetchReviews} from "../../store/actions/reviewAction.js";
@@ -77,7 +77,7 @@ const RatingReviews = ({productId}) => {
             }
 
             <div className="flex items-center justify-between">
-                <h4 className="product_detail_title">Ratings & Reviews</h4>
+                <h1 className="sec_label font-semibold text-2xl">Ratings & Reviews</h1>
                 <button onClick={() => setOpenAddReviewForm(prev => !prev)} className="btn primary-btn">Rate Now
                 </button>
             </div>

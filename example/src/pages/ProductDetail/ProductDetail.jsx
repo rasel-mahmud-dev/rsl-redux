@@ -7,6 +7,7 @@ import {api} from "../../axios/index.js";
 
 import "./ProductDetail.scss"
 import RatingReviews from "./RatingReviews.jsx";
+import QuestionAnswers from "./QuestionAnswers.jsx";
 
 function calculateDiscount(discount, price) {
     let offPrice = ((discount / 100) * price)
@@ -236,7 +237,7 @@ const ProductDetail = () => {
 
                                 {/*<SpecificationDetail specification={productDescription?.specification}/>*/}
                                 <RatingReviews productId={product._id}/>
-                                {/*<Questions/>*/}
+                                <QuestionAnswers productId={product._id}/>
                             </div>
                         </div>
                     ) : null}

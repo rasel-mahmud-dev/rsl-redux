@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Input = ({label, type = "text", value, id, onChange, className, ...attr}) => {
+const Input = ({label, type = "text", value, id, onChange, className, readOnly = false, ...attr}) => {
     return (
-        <div className={`rsl-input-group ${className}`}>
+        <div className={`rsl-input-group ${className} ${readOnly ? "rsl-input-group__readonly": ""}`}>
             {label && <label htmlFor={id}>{label}</label>}
             {type === "textarea" ? (
-                    <textarea value={value} id={id} onChange={onChange} {...attr} />
+                    <textarea readOnly={readOnly} value={value} id={id} onChange={onChange} {...attr} />
                 ) :
-                <input type={type} value={value} id={id} onChange={onChange} {...attr} />
+                <input readOnly={readOnly} type={type} value={value} id={id} onChange={onChange} {...attr} />
             }
         </div>
     );

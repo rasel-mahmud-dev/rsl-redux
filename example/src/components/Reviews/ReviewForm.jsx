@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import Input from "../../components/Form/Input.jsx";
-import RatingChooser from "../../components/RatingChooser/RatingChooser.jsx";
-import MultipleFileChooser from "../../components/Form/MultipleFileChooser/MultipleFileChooser.jsx";
+import Input from "../Form/Input.jsx";
+import RatingChooser from "./RatingChooser.jsx";
+import MultipleFileChooser from "../Form/MultipleFileChooser/MultipleFileChooser.jsx";
 import resizeImage from "../../utils/resizeImage.js";
 import {api} from "../../axios/index.js";
 
