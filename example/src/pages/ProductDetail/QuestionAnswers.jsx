@@ -60,7 +60,8 @@ const Index = ({productId, isProductOwner}) => {
                     isProductOwner={isProductOwner}
                     questionAnswers={productQuestionAnswers}
                 />
-                <button className="btn primary-btn">All questions</button>
+                {productQuestionAnswers?.length ? <button className="btn primary-btn">All questions</button>
+                    : <h3 className="font-semibold">No Questions</h3>}
             </div>
 
 

@@ -5,6 +5,7 @@ import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
 import FileUpload from "../../components/FileUpload.jsx";
 import {fetchCategoryBrands} from "../../store/actions/categoryAction.js";
+import Input from "../../components/Form/Input.jsx";
 
 const AddProduct = () => {
 
@@ -145,51 +146,38 @@ const AddProduct = () => {
 
                 <div className="grid grid-cols-2 gap-x-10">
                     <div>
-                        <h4 className="font-semibold text-slate-900">Common</h4>
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Title:</label>
-                            <input className="rs-input" type="text" name="title" value={product.title}
-                                   onChange={handleChange}/>
-                        </div>
-                        {productId && <div className="flex flex-col mb-3">
-                            <label htmlFor="">Slug:</label>
-                            <input className="rs-input" type="text" name="slug" value={product.slug}
-                                   onChange={handleChange}/>
-                        </div>}
+                        <h4 className="font-semibold text-slate-900 mb-3">Common</h4>
 
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Price:</label>
-                            <input className="rs-input" type="number" name="price" value={product.price}
-                                   onChange={handleChange}/>
-                        </div>
+                        <Input label="Title" value={product.title} name="title" onChange={handleChange}/>
 
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Stock:</label>
-                            <input className="rs-input" type="number" name="stock" value={product.stock}
-                                   onChange={handleChange}/>
-                        </div>
+                        {productId && <Input label="Slug" value={product.slug} name="slug" onChange={handleChange}/>}
 
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Discount:</label>
-                            <input className="rs-input" type="number" name="discount" value={product.discount}
-                                   onChange={handleChange}/>
-                        </div>
+                        <Input label="Price" type="number" value={product.price} name="price" onChange={handleChange}/>
+                        <Input label="Stock" type="number" value={product.stock} name="stock" onChange={handleChange}/>
+                        <Input label="Discount" type="number" value={product.discount} name="discount"
+                               onChange={handleChange}/>
+                        <Input label="Description" type="textarea" value={product.description} name="description"
+                               onChange={handleChange}/>
 
-
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Description:</label>
-                            <textarea className="rs-input" name="description" value={product.description}
-                                      onChange={handleChange}></textarea>
-                        </div>
 
                         <div className="flex flex-col mb-3">
                             <label htmlFor="">Cover:</label>
-                            <FileUpload className="rs-input "
+                            <FileUpload
+                                className="rs-input "
                                         imagePreviewClass="w-24 aspect-square object-contain         "
                                         name="coverImage"
                                         value={product.coverImage}
-                                        onChange={handleChange}/>
+                                        onChange={handleChange}
+                            />
                         </div>
+                        <h4 className="mb-3 font-semibold text-sm">Or</h4>
+                        <Input label="Link"
+                               value={product.coverImage}
+                               name="coverImage"
+                               onChange={(e) => setProduct(p => ({
+                                   ...p, coverImage: e.target.value
+                               }))}
+                        />
 
                     </div>
                     <div className="mt-5">

@@ -28,8 +28,8 @@ const initialState = {
         },
         {
             "_id": "6570c5ae26c947e3c99321f9",
-            "name": "Watches, Bags, Jewellery",
-            "slug": "watches-bags-jewellery",
+            "name": "Watches",
+            "slug": "watches",
             "image": "-original-imaghbkf6jzfxfz55.webp"
         },
 

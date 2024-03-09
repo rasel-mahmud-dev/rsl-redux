@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
 import CommonTable from "../../components/Table.jsx";
 import {Link} from "react-router-dom";
@@ -8,6 +8,7 @@ import FileChooser from "../../components/Modals/FileChooser.jsx";
 import {api} from "../../axios/index.js";
 import Toast from "../../utils/toast.js";
 import downloadJson from "../../utils/downloadJson.js";
+import {fetchBrands} from "../../store/actions/categoryAction.js";
 
 
 const BrandList = () => {
@@ -16,6 +17,11 @@ const BrandList = () => {
     const [isOpenImportModal, setOpenImportModal] = useState(false)
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchBrands())
+    }, []);
+
 
     function handleDeleteItem(id) {
         dispatch(deleteBrand(id))

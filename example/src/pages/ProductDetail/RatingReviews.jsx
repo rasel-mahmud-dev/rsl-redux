@@ -128,9 +128,11 @@ const RatingReviews = ({productId}) => {
                 <Reviews reviews={customerReviews} />
             </div>
 
-            <button className="btn text-primary" type="text">
+            {customerReviews?.length ? <button className="btn primary-btn" type="text">
                 All Review
-            </button>
+            </button> : (
+                <h3 className="font-semibold">No reviews</h3>
+            )}
         </div>
     );
 };

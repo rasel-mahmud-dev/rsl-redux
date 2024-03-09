@@ -7,6 +7,9 @@ import Toast from "../../utils/toast.js";
 import {fetchBrands} from "../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
 import getAssetPath from "../../utils/getAssetPath.js";
+import Input from "../../components/Form/Input.jsx";
+import MultiInput from "../../components/Form/MultiInput.jsx";
+import MultiSelectInput from "../../components/Form/MultiSelect.jsx";
 
 const BrandForm = () => {
 
@@ -18,7 +21,8 @@ const BrandForm = () => {
     const [brand, setBrand] = useState({
         name: "",
         image: "",
-        slug: ""
+        slug: "",
+        categories: []
     });
 
     useEffect(() => {
@@ -72,28 +76,44 @@ const BrandForm = () => {
 
                 <div>
 
-                    <div className="flex flex-col mb-3">
-                        <label htmlFor="">Name:</label>
-                        <input className="rs-input" type="text" name="name" value={brand.name}
-                               onChange={handleChange}/>
-                    </div>
+                    <Input name="name" value={brand.name} onChange={handleChange} label="Name"/>
 
-                    {brandId && (
-                        <div className="flex flex-col mb-3">
-                            <label htmlFor="">Slug:</label>
-                            <input className="rs-input" type="text" name="slug" value={brand.slug}
-                                   onChange={handleChange}/>
-                        </div>
-                    )}
+                    <Input readOnly={!!brandId} name="slug" value={brand.slug} onChange={handleChange} label="Slug"/>
 
                     <div className="flex flex-col mb-3">
                         <label htmlFor="">Image:</label>
                         <input className="rs-input" type="text" name="image" value={brand.image}
                                onChange={handleChange}/>
                     </div>
+
                     {brand?.image && <div className="w-20">
                         <img src={getAssetPath(brand?.image)} alt=""/>
-                    </div> }
+                    </div>}
+
+
+                    {/*<MultiInput*/}
+                    {/*    defaultValues={brand.categories}*/}
+                    {/*    placeholder="categories"*/}
+                    {/*    name="categories"*/}
+                    {/*    label="Categories"*/}
+                    {/*    className="!flex-col"*/}
+                    {/*    inputClass="!text-neutral-500"*/}
+                    {/*    errorMessage=""*/}
+                    {/*    labelClass="!mb-1"*/}
+                    {/*    onChange={handleChange}*/}
+                    {/*/>*/}
+
+                    <MultiSelectInput
+                        defaultValues={brand.categories}
+                        placeholder="categories"
+                        name="categories"
+                        label="Categories"
+                        className="!flex-col"
+                        inputClass="!text-neutral-500"
+                        errorMessage=""
+                        labelClass="!mb-1"
+                        onChange={handleChange}
+                    />
 
                 </div>
 

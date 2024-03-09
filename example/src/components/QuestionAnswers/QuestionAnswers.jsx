@@ -16,7 +16,6 @@ const QuestionAnswers = ({
                              questionAnswers = [],
                              className = "",
                              isProductOwner = false,
-                             isDeleteAble = false,
                              onClickDelete,
                              onEditQuestion,
                              onClickReply
@@ -42,12 +41,12 @@ const QuestionAnswers = ({
                                         {getDateTime(qus.createdAt)}
                                     </div>
                                 </div>
-                                {<button onClick={() => onEditQuestion(qus)}
+                                {onEditQuestion && <button onClick={() => onEditQuestion(qus)}
                                                            className="text-xs h-5 btn btn-outline outline-sm">Update Question</button>}
                             </div>
                         </div>
 
-                        {isDeleteAble &&
+                        {onClickDelete &&
                             <div onClick={() => onClickDelete(qus)} className="circle-pill p-1 rounded-full text-sm">
                                 <BiTrash/>
                             </div>}

@@ -65,7 +65,6 @@ const MyQuestions = () => {
             <div className="mt-5">
                 <h4 className="text-base font-semibold">Questions and Answers</h4>
                 <QuestionAnswers
-                    isDeleteAble={true}
                     onClickDelete={handleDelete}
                     onEditQuestion={handleClickEdit}
                     onClickReply={(data) => setState(prev => ({
@@ -77,9 +76,8 @@ const MyQuestions = () => {
                     isProductOwner={false}
                     questionAnswers={customerQuestions}
                 />
-                <button className="btn primary-btn">All questions</button>
+                {customerQuestions?.length ? <button className="btn primary-btn">All questions</button> : <h3 className="font-semibold">No Questions</h3>}
             </div>
-
 
         </div>
     );

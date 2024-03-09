@@ -44,11 +44,11 @@ const QuestionAnswerForm = ({onSubmit, updateData, isQuestion = true}) => {
                 <div className="">
                     <div className="mt-2"></div>
 
-                    <Input readOnly={!isQuestion} type="textarea" label="Question" name="question" value={questionAnswer.question}
-                           onChange={handleChange}/>
+                    {isQuestion && <Input readOnly={!isQuestion} type="textarea" label="Question" name="question" value={questionAnswer.question}
+                           onChange={handleChange}/> }
 
-                    <Input readOnly={isQuestion} type="textarea" label="Answer" name="answer" value={questionAnswer.answer}
-                           onChange={handleChange}/>
+                    {!isQuestion && <Input  type="textarea" label="Answer" name="answer" value={questionAnswer.answer}
+                           onChange={handleChange}/> }
 
                     <button className="btn primary-btn" type="submit">{updateData ? "Update" : "Submit"}</button>
 
