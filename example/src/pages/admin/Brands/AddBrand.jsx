@@ -1,15 +1,15 @@
 // BrandForm.jsx
 
 import React, {useEffect, useState} from 'react';
-import {api} from "../../axios/index.js";
+import {api} from "../../../axios/index.js";
 import {useNavigate, useParams} from "react-router-dom";
-import Toast from "../../utils/toast.js";
-import {fetchBrands} from "../../store/actions/categoryAction.js";
+import Toast from "../../../utils/toast.js";
+import {fetchBrands} from "../../../store/actions/categoryAction.js";
 import {useDispatch} from "rsl-redux";
-import getAssetPath from "../../utils/getAssetPath.js";
-import Input from "../../components/Form/Input.jsx";
-import MultiInput from "../../components/Form/MultiInput.jsx";
-import MultiSelectInput from "../../components/Form/MultiSelect.jsx";
+import getAssetPath from "../../../utils/getAssetPath.js";
+import Input from "../../../components/Form/Input.jsx";
+import MultiInput from "../../../components/Form/MultiInput.jsx";
+import MultiSelectInput from "../../../components/Form/MultiSelect.jsx";
 
 const BrandForm = () => {
 
@@ -52,12 +52,14 @@ const BrandForm = () => {
             e.preventDefault();
             if (brandId) {
                 let r = await api.patch("/brands/" + brandId, brand)
-                if (r.status === 200) return Toast.openSuccess("Brand has been updated")
+                if (r.status === 200) Toast.openSuccess("Brand has been updated")
+            } else {
+                let r = await api.post("/brands", [brand])
+                if (r.status === 201) Toast.openSuccess("Brand has been added")
             }
 
-            let r = await api.post("/brands", [brand])
-            if (r.status === 201) return Toast.openSuccess("Brand has been added")
             navigate("/admin/brands")
+
         } catch (ex) {
             Toast.openError(ex?.message)
         } finally {

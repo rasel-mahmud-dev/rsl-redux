@@ -1,36 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import CommonTable from "../../components/Table.jsx";
+import CommonTable from "../../../components/Table.jsx";
 import {Link} from "react-router-dom";
-import {deleteBrand} from "../../store/actions/productAction.js";
-import getAssetPath from "../../utils/getAssetPath.js";
-import FileChooser from "../../components/Modals/FileChooser.jsx";
-import {api} from "../../axios/index.js";
-import Toast from "../../utils/toast.js";
-import downloadJson from "../../utils/downloadJson.js";
-import {fetchBrands} from "../../store/actions/categoryAction.js";
+import {deleteCategory} from "../../../store/actions/categoryAction.js";
+import getAssetPath from "../../../utils/getAssetPath.js";
+import {api} from "../../../axios/index.js";
+import Toast from "../../../utils/toast.js";
+import downloadJson from "../../../utils/downloadJson.js";
+import FileChooser from "../../../components/Modals/FileChooser.jsx";
 
 
-const BrandList = () => {
-    const {brands} = useSelector(state => state.productState)
+const ProductList = () => {
 
-    const [isOpenImportModal, setOpenImportModal] = useState(false)
+    const {categories} = useSelector(state => state.productState)
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(fetchBrands())
-    }, []);
-
-
     function handleDeleteItem(id) {
-        dispatch(deleteBrand(id))
+        dispatch(deleteCategory(id))
     }
+
+    const [isOpenImportModal, setOpenImportModal] = useState(false)
+
 
     async function handleImportBulk(content) {
         try {
             if (!content) throw Error("Please choose json file, that has name property")
-            let {data} = await api.post("/brands", JSON.parse(content))
+            let {data} = await api.post("/categories", JSON.parse(content))
 
             Toast.openSuccess(data.message)
         } catch (ex) {
@@ -42,8 +38,8 @@ const BrandList = () => {
 
     async function handleDownloadJson() {
         try {
-            const fileName = "brands.json"
-            await downloadJson(brands, fileName)
+            const fileName = "categories.json"
+            await downloadJson(categories, fileName)
         } catch (ex) {
             Toast.openError("File download fail")
         } finally {
@@ -68,14 +64,14 @@ const BrandList = () => {
         {
             name: "Slug", field: "slug", thClass: "!text-start", tdClass: "!text-start"
         },
-        {name: "Added On", field: "createdAt", render: (v) => new Date(v).toDateString()},
+        {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
         {
             name: "Action", field: "_id", render: (_id) => (
                 <div
-                    className="flex items-center gap-x-5 px-6 justify-start md:justify-center  font-medium text-sm break-keep">
+                    className="flex items-center gap-x-5 px-6 justify-start md:justify-center font-medium text-sm break-keep">
                     <button
                         className={`border border-blue-600 bg-blue-600/10  text-blue-400   px-5 py-2 rounded-lg hover:text-white hover:bg-blue-600/60`}>
-                        <Link to={`/admin/edit-brand/${_id}`}>Edit</Link>
+                        <Link to={`/admin/edit-category/${_id}`}>Edit</Link>
                     </button>
                     <button onClick={() => handleDeleteItem(_id)}
                             className={`border border-orange-600 bg-orange-600/10 text-orange-600 px-5 py-2 rounded-lg hover:bg-orange-600/50`}>
@@ -88,7 +84,6 @@ const BrandList = () => {
 
     return (
         <div className="py-6 container">
-
             {isOpenImportModal && (
                 <FileChooser
                     accept={[".json"]}
@@ -96,12 +91,12 @@ const BrandList = () => {
                     onSubmit={handleImportBulk}/>
             )}
 
-            <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold">Brand List ({brands?.length})</h2>
+            <div className="flex justify-between">
+                <h2 className="text-xl font-semibold">Category List ({categories?.length})</h2>
                 <div className="flex justify-between items-center gap-x-3">
                     <button onClick={handleDownloadJson} className="btn btn-outline">Export</button>
                     <button onClick={() => setOpenImportModal(true)} className="btn btn-outline">Import</button>
-                    <Link to={`/admin/add-brand`}>
+                    <Link to={`/admin/add-category`}>
                         <button
                             className={`btn btn-outline px-5 py-2 `}>
                             Add new
@@ -109,13 +104,18 @@ const BrandList = () => {
                     </Link>
 
                 </div>
+
             </div>
-            <CommonTable className="table-start-align mt-6" column={columns} data={brands ? brands : []}/>
+
+
+            <CommonTable className="table-start-align mt-6" column={columns} data={categories ? categories : []}/>
+
+
         </div>
     );
-}
+};
 
-export default BrandList;
+export default ProductList;
 
 
 

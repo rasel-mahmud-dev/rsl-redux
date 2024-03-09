@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {fetchOrdersAction} from "../../../store/actions/productAction.js";
 import getAssetPath from "../../../utils/getAssetPath.js";
 import OrderStatusBadge from "../../../components/OrderStatusBadge.jsx";
@@ -12,9 +12,7 @@ import Tooltip from "../../../components/Tooltip.jsx";
 
 const OrdersList = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate();
     const {orders} = useSelector(state => state.productState)
-    const [selectedCartItems, setSelectedCartItems] = useState([])
 
     useEffect(() => {
         dispatch(fetchOrdersAction(1))
@@ -91,10 +89,6 @@ const OrdersList = () => {
         },
     ]
 
-    function goCheckout() {
-        localStorage.setItem("selected-carts", JSON.stringify(selectedCartItems))
-        navigate("/checkout")
-    }
 
     const orderItems = useMemo(() => {
         let items = []

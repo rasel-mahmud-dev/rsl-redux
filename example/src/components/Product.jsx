@@ -12,18 +12,18 @@ import {Link} from "react-router-dom";
 
 const Product = (props) => {
     const {title, slug, _id, price, coverImage = ""} = props
-    const {auth} = useSelector(state=>state.authState)
-    const {wishlist} = useSelector(state=>state.productState)
+    const {auth} = useSelector(state => state.authState)
+    const {wishlist} = useSelector(state => state.productState)
     const dispatch = useDispatch()
 
     function handleAddToCart() {
-        if(!auth){
+        if (!auth) {
             return Toast.openError("Need to login for add item in cart.")
         }
         dispatch(addToCartAction({
             title,
             price,
-            product_id: _id,
+            productId: _id,
             coverImage,
             quantity: 1
         })).unwrap().then(() => {
@@ -31,21 +31,21 @@ const Product = (props) => {
         })
     }
 
-    const wishListIndex = wishlist?.findIndex(w=>w.productId === _id)
+    const wishListIndex = wishlist?.findIndex(w => w.productId === _id)
     const isInWishlist = wishListIndex !== -1
 
-    function handleTooggleWishlist(id){
-        if(!auth){
+    function handleTooggleWishlist(id) {
+        if (!auth) {
             return Toast.openError("Need to login for add item in wishlist.")
         }
 
         const item = wishlist[wishListIndex]
 
-        if(isInWishlist){
+        if (isInWishlist) {
             dispatch(removeFromWishlist(id))
-            dispatch(removeFromWishlistAction(id)).unwrap().then(()=>{
+            dispatch(removeFromWishlistAction(id)).unwrap().then(() => {
                 Toast.openSuccess("Product has been successfully removed from wishlist")
-            }).catch(ex=>{
+            }).catch(ex => {
                 // revert to state
                 dispatch(addToWishlist(item))
                 Toast.openError(ex)
@@ -56,9 +56,9 @@ const Product = (props) => {
                 customerId: auth._id,
                 createdAt: new Date()
             }))
-            dispatch(addToWishlistAction(id)).unwrap().then(()=>{
+            dispatch(addToWishlistAction(id)).unwrap().then(() => {
                 Toast.openSuccess("Product has been successfully added in wishlist")
-            }).catch(ex=>{
+            }).catch(ex => {
                 dispatch(removeFromWishlist(id))
                 Toast.openError(ex)
             })
@@ -78,18 +78,19 @@ const Product = (props) => {
     return (
         <div className="bg-white rounded-xl overflow-hidden">
             <div className="product-image relative">
-                <img onError={handleImgLoadError} className="object-contain max-w-[150px] max-h-[150px] mx-auto"
-                     src={imagePath(coverImage)} alt={title}/>
-
+                <Link to={`/${slug}`}><img onError={handleImgLoadError}
+                                           className="object-contain max-w-[150px] max-h-[150px] mx-auto"
+                                           src={imagePath(coverImage)} alt={title}/>
+                </Link>
                 {isInWishlist ?
-                    <AiFillHeart onClick={()=>handleTooggleWishlist(_id)} className="absolute top-3 right-3" />
-                    : <AiOutlineHeart onClick={()=>handleTooggleWishlist(_id)} className="absolute top-3 right-3" />
+                    <AiFillHeart onClick={() => handleTooggleWishlist(_id)} className="absolute top-3 right-3"/>
+                    : <AiOutlineHeart onClick={() => handleTooggleWishlist(_id)} className="absolute top-3 right-3"/>
                 }
             </div>
             <div className="p-3">
-               <Link to={`/${slug}`}>
-                   <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
-               </Link>
+                <Link to={`/${slug}`}>
+                    <h4 className="text-sm font-medium">{subStr(title, 80)}</h4>
+                </Link>
                 <p>Tk:{price}</p>
                 <button className="mx-auto block primary-btn py-1 mt-4 text-neutral-100"
                         onClick={handleAddToCart}>Add to Cart

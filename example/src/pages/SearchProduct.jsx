@@ -10,12 +10,18 @@ import {HiBars4} from "react-icons/hi2";
 import {setSidebar} from "../store/slices/authSlice.js";
 import {fetchAttributeSpec, fetchAttributeSpecMapping, fetchCategoryBrands} from "../store/actions/categoryAction.js";
 import Popup from "../components/Popup.jsx";
+import {setFilter} from "../store/slices/productSlice.js";
 
 
 const SearchProduct = () => {
     const [getQuery] = useSearchParams()
     const {categoryName} = useParams()
-    const filterObj = useRef({attributes: {}})
+
+    const filterObj = useRef({
+        attributes: {}, brandIds: [],
+        categoryIds: []
+
+    })
     const {openSidebar} = useSelector(state => state.authState)
 
     const {categories, filter, specsMapping, categoryBrands, specs} = useSelector(state => state.productState)
@@ -28,7 +34,6 @@ const SearchProduct = () => {
     })
 
     const dispatch = useDispatch()
-
 
     let selectedCategory = categories.find(cat => cat.slug === categoryName)
 
@@ -48,24 +53,16 @@ const SearchProduct = () => {
 
 
     useEffect(() => {
-
-        console.log(filterObj.current)
-
-        // if (Object.keys(filterObj.current).length > 0) {
-        //     filterProduct(filterObj.current)
-        // }
-    }, [filterObj.current,]);
+        dispatch(setFilter({
+            categoryIds: [categoryName],
+            search: text,
+        }))
+    }, [categoryName, text])
 
 
     useEffect(() => {
-
-
-        filterProduct({
-            search: text,
-            categoryIds: [categoryName]
-        })
-
-    }, [categoryName, text])
+        filterProduct(filter)
+    }, [filter.attributes, filter.brandIds])
 
 
     function filterProduct(filter) {
@@ -120,14 +117,26 @@ const SearchProduct = () => {
     }
 
     function handleChooseAttributeValue(attributeName, value) {
-        filterObj.current = {
-            ...filterObj.current,
-            attributes: {
-                ...filterObj.current.attributes,
-                [attributeName]: toggleAttributeValue(filterObj.current.attributes?.[attributeName], value)
-            }
+        let updatedAttributes = {...filter.attributes}
+        updatedAttributes[attributeName] = toggleAttributeValue(updatedAttributes[attributeName], value)
+
+        dispatch(setFilter({
+            attributes: updatedAttributes
+        }))
+    }
+
+    function handleChangeBrand(name, value) {
+        let updatedBrandIds = [...filter.brandIds]
+        let index = updatedBrandIds.indexOf(value)
+        if (index === -1) {
+            updatedBrandIds.push(value)
+        } else {
+            updatedBrandIds.splice(index, 1)
         }
-        filterProduct(filterObj.current)
+
+        dispatch(setFilter({
+            brandIds: updatedBrandIds
+        }))
     }
 
     function handleToggleLeft() {
@@ -172,11 +181,15 @@ const SearchProduct = () => {
                                 <span><FaAngleRight className="text-xs"/></span>
                             </div>
 
-                            {expandAttributes.includes("brand_id") && <Brands items={getCategoryBrands(categoryName)}/>}
+                            {expandAttributes.includes("brand_id") && <Brands
+                                selectedBrands={filter.brandIds}
+                                onChange={handleChangeBrand}
+                                items={getCategoryBrands(categoryName)}/>
+                            }
                         </div>
 
-                        <div className="">
-                            {/*{specs[categoryName].label}*/}
+                        <div className="mt-5">
+                            <h4 className="text-base font-semibold px-2 ">Attribute Filter</h4>
 
                             {Object.keys(attributeMap).map(attributeKey => (
                                 <div key={attributeKey} className="">
@@ -195,12 +208,12 @@ const SearchProduct = () => {
                     </div>
                 </div>
 
-                { searchProuduct.length &&  <div
+                {searchProuduct.length && <div
                     className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product._id} {...product} />
                     ))}
-                </div> }
+                </div>}
 
 
                 {!searchProuduct.length && (
@@ -215,7 +228,7 @@ const SearchProduct = () => {
 };
 export default SearchProduct;
 
-function Brands({items}) {
+function Brands({items, onChange, name, selectedBrands = []}) {
 
     const [isShowMore, setShowMore] = useState(false)
 
@@ -224,7 +237,12 @@ function Brands({items}) {
             {
                 items.slice(0, 16).map(brand => (
                     <div className="flex items-center gap-x-2 py-1 hover-list-primary rounded px-2" key={brand._id}>
-                        <input type="checkbox" id={brand.slug}/>
+                        <input
+                            onChange={() => onChange(name, brand.slug)}
+                            checked={selectedBrands.includes(brand.slug)}
+                            type="checkbox"
+                            id={brand.slug}
+                        />
                         <label className="text-sm text-neutral-600"
                                htmlFor={brand.slug}>{brand.name}</label>
                     </div>

@@ -7,6 +7,7 @@ import {BiTrash} from "react-icons/bi";
 import {deleteCartItemAction} from "../store/actions/cartAction.js";
 import toast from "../utils/toast.js";
 import {Link, useNavigate} from "react-router-dom";
+import formatPrice from "../utils/formatPrice.js";
 
 
 const Carts = () => {
@@ -105,11 +106,11 @@ const Carts = () => {
         },
         {
             name: "Price", field: "price", render: (_, p) => {
-                return Number(p.price * p.quantity).toFixed(2)
+                return formatPrice(p.price * p.quantity)
             }
         },
         {name: "Quantity", field: "quantity"},
-        {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
+        {name: "Added On", field: "createdAt", render: (v) => new Date(v).toDateString()},
         {
             name: "Action", field: "quantity", render: (quantity, item) => (
                 <div className="flex lg:justify-center items-center gap-x-3 justify-items-start">
@@ -128,7 +129,7 @@ const Carts = () => {
 
     function goCheckout() {
         localStorage.setItem("selected-carts", JSON.stringify(selectedCartItems))
-        navigate("/checkout")
+        navigate("/checkout", {state: location.pathname})
     }
 
 

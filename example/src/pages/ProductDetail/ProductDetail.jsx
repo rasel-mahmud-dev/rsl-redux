@@ -8,7 +8,10 @@ import {api} from "../../axios/index.js";
 import "./ProductDetail.scss"
 import RatingReviews from "./RatingReviews.jsx";
 import QuestionAnswers from "./QuestionAnswers.jsx";
-import {useSelector} from "rsl-redux";
+import {useDispatch, useSelector} from "rsl-redux";
+import Toast from "../../utils/toast.js";
+import {addToCartAction, deleteCartItemAction} from "../../store/actions/cartAction.js";
+import toast from "../../utils/toast.js";
 
 function calculateDiscount(discount, price) {
     let offPrice = ((discount / 100) * price)
@@ -20,14 +23,16 @@ const ProductDetail = () => {
     const {slug} = useParams();
     const navigate = useNavigate();
 
+    const dispatch = useDispatch()
+
     const {auth} = useSelector(state => state.authState)
+    const {carts} = useSelector(state => state.cartState)
 
     const [isShowImage, setShowImage] = React.useState(0);
     const [product, setProduct] = React.useState(null);
     const [productDescription, setProductDescription] = React.useState({});
     const [sellerInfo, setSellerInfo] = React.useState({});
-    const productImageListRef = React.useRef < HTMLDivElement > (null);
-
+    const productImageListRef = React.useRef(null);
 
     const rating = [
         {rating: 1, amount: 20},
@@ -36,14 +41,14 @@ const ProductDetail = () => {
         {rating: 4, amount: 20},
         {rating: 5, amount: 10},
     ];
+    
     const highlight = (productDescription && productDescription?.highlight) ? productDescription.highlight : [
         "Tur non nulla sit amet nisl tempus convallis quis ac lectus.",
         "Quisque velit nist tortor eget felis porttitor volutpat",
         " Pellentesque in ip nisl tempus convallis quis ac lectus.",
         "tur non nulla sit amet nisl tempus convallis quis ac lectus."
     ]
-
-
+    
     function calculateRate() {
         let subTotalRate = 0;
         let totalAmount = 0;
@@ -54,22 +59,30 @@ const ProductDetail = () => {
         return (subTotalRate / totalAmount).toFixed(1);
     }
 
-    function totalRating() {
-        let totalAmount = 0;
-        rating.map((rate) => {
-            totalAmount += rate.amount;
-        });
-        return totalAmount;
+    function handleAddToCart({title, price, _id, coverImage}) {
+        if (!auth) {
+            return Toast.openError("Need to login for add item in cart.")
+        }
+        const cart = inCart(_id)
+        if (cart?._id) {
+            dispatch(deleteCartItemAction(cart._id)).unwrap().then(() => {
+                Toast.openSuccess("Successfully removed from cart")
+            }).catch(msg => {
+                toast.openError(msg)
+            })
+        } else {
+            dispatch(addToCartAction({
+                title,
+                price,
+                productId: _id,
+                coverImage,
+                quantity: 1
+            })).unwrap().then(() => {
+                Toast.openSuccess("Successfully added on the cart")
+            })
+        }
     }
 
-    function scrollDownHandler() {
-        let s = productImageListRef.current
-        s.scrollTop = s.scrollTop + 45;
-    }
-
-    function addToCartHandler(product) {
-
-    }
 
     useEffect(() => {
         if (!slug) return;
@@ -80,12 +93,25 @@ const ProductDetail = () => {
         })
     }, [slug]);
 
-    console.log(product)
+    function inCart(productId) {
+        return carts?.find(el => el.productId === productId)
+    }
+
+    function goCheckout() {
+        localStorage.setItem("selected-products-for-checkout", JSON.stringify({
+            title: product.title,
+            price: product.price,
+            productId: product._id,
+            coverImage: product.coverImage,
+            quantity: 1,
+            createdAt: new Date()
+        }))
+        navigate("/checkout?t=product", {state: location.pathname})
+    }
 
     return (
         <div>
             <div className="">
-
 
                 <div className="mt-4 container-1920">
                     {product ? (
@@ -94,32 +120,11 @@ const ProductDetail = () => {
                                 className="description-sidebar dashboard-card !shadow-xxs  col-span-3 custom_scrollbar">
                                 <div className="">
                                     <div className="flex flex-col product-sidebar-image-div">
-                                        <div className="product-photo--sidebar">
-                                            {/*<BiHeart className="text-2xl" />*/}
+                                        <div className="text-center font-semibold">
+                                            {product.stock > 0
+                                                ? `${product.stock} items in Stock`
+                                                : "Outof Stock" }
 
-                                            <div>
-                                                <div className="image_list">
-                                                    {Array.from({length: 10}).map((item) => (
-                                                        <div className="image_list_item">
-                                                            <img src={getAssetPath(product?.coverImage)}/>
-                                                        </div>
-                                                    ))}
-                                                    {/*{product.images &&*/}
-                                                    {/*    product.images.map((g, i) => (*/}
-                                                    {/*        <div*/}
-                                                    {/*            onClick={() => setShowImage(i + 1)}*/}
-                                                    {/*            className={[isShowImage == i ? "active_image" : "", "image_list_each-div"].join(" ")}*/}
-                                                    {/*        >*/}
-                                                    {/*            <img src={fullLink(g)} alt="" />*/}
-                                                    {/*        </div>*/}
-                                                    {/*    ))}*/}
-                                                </div>
-                                            </div>
-
-                                            <div onClick={scrollDownHandler}
-                                                 className="image_list_each-div bb text-center">
-                                                <FaAngleDown/>
-                                            </div>
                                         </div>
 
                                         <div className="product_image_view-col--full-image">
@@ -134,12 +139,13 @@ const ProductDetail = () => {
                                         </div>
                                     </div>
 
-                                    <div className="mt-5 flex gap-x-4 w-full">
+                                    <div className="mt-5 flex gap-x-2 w-full">
                                         <button
-                                            className="btn btn-primary w-full"
-                                            onClick={() => addToCartHandler(product)}>Add To Cart
+                                            className="btn primary-btn w-full"
+                                            onClick={() => handleAddToCart(product)}>
+                                            {inCart(product._id) ? "Remove from Cart" : "Add To Cart"}
                                         </button>
-                                        <button className="btn btn-primary w-full">Buy Now</button>
+                                        <button onClick={goCheckout} className="btn primary-btn w-full">Buy Now</button>
                                     </div>
                                     {/********* relevant brand **********/}
                                     <div className="mt-5">
@@ -229,13 +235,9 @@ const ProductDetail = () => {
 
                                     <div className="mt-5">
                                         <div className="description_key">
-                                            <h4 className="section_title">Description</h4>
+                                            <h4 className="sec_label font-semibold text-2xl mb-3">Description</h4>
                                         </div>
-                                        <p className="p-theme">{productDescription.summary || `Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Nulla porttitor accumsan tincidunt.
-
-                                                Proin eget tortor risus. Donec rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla quis lorem ut libero malesuada feugiat.
-
-                                            Donec sollicitudin molestie malesuada. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.`}</p>
+                                        <p className="p-theme">{product.description}</p>
                                     </div>
                                 </div>
 

@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "rsl-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {api} from "../../axios/index.js";
-import Toast from "../../utils/toast.js";
-import FileUpload from "../../components/FileUpload.jsx";
-import {fetchCategoryBrands} from "../../store/actions/categoryAction.js";
-import Input from "../../components/Form/Input.jsx";
+import {api} from "../../../axios/index.js";
+import Toast from "../../../utils/toast.js";
+import FileUpload from "../../../components/FileUpload.jsx";
+import {
+    fetchAttributeSpec, fetchAttributeSpecMapping, fetchCategoryBrands
+} from "../../../store/actions/categoryAction.js";
+import Input from "../../../components/Form/Input.jsx";
+import config from "../../../config/index.js";
 
 const AddProduct = () => {
 
-    const {categories, brands, categoryBrands, specsMapping, specs} = useSelector(state => state.productState)
+    const {categories, categoryBrands, specsMapping, specs} = useSelector(state => state.productState)
 
     const {productId} = useParams()
     const navigate = useNavigate()
@@ -30,6 +33,7 @@ const AddProduct = () => {
         brandId: '',
     });
 
+
     useEffect(() => {
         if (productId) {
             api.get("/products/single?_id=" + productId).then(r => {
@@ -47,19 +51,27 @@ const AddProduct = () => {
     }, [productId]);
 
     useEffect(() => {
-        if (product?.categoryId) {
-
-            let cat = categories.find(cat => cat.slug === product.categoryId)
-            if (cat) {
-                dispatch(fetchCategoryBrands(product?.categoryId))
-                let a = specsMapping[cat.slug]
-                handleChange({target: {name: "attributesArray", value: a}})
-            }
+        const catSlug = product?.categoryId
+        if (catSlug) {
+            dispatch(fetchCategoryBrands(catSlug))
+            dispatch(fetchAttributeSpec(catSlug))
         }
-    }, [product?.categoryId, categories]);
+    }, [product?.categoryId]);
 
 
     useEffect(() => {
+        const catSlug = product?.categoryId
+        if (catSlug) {
+            let specs = specsMapping[catSlug]
+            if (specs) {
+                handleChange({target: {name: "attributesArray", value: specs}})
+            }
+        }
+    }, [product?.categoryId, specsMapping]);
+
+
+    useEffect(() => {
+        dispatch(fetchAttributeSpecMapping())
         let localPhoto = localStorage.getItem("upload-temp")
         if (localPhoto) {
             localPhoto = JSON.parse(localPhoto) ?? {}
@@ -96,13 +108,12 @@ const AddProduct = () => {
                     localStorage.setItem("upload-temp", JSON.stringify({[name]: data.url}))
                 }
 
-            }).catch(ex => {
+            }).catch(_ => {
             Toast.openError("Image save fail")
         })
     }
 
     const handleSubmit = async (e) => {
-
         try {
             e.preventDefault();
             if (productId) {
@@ -110,37 +121,32 @@ const AddProduct = () => {
                 Toast.openSuccess("Product has been updated")
             } else {
                 const r = await api.post("/products", [product])
-                if (r.status === 201) return Toast.openSuccess("Product has been added")
-
+                if (r.status === 201) Toast.openSuccess("Product has been added")
             }
 
             localStorage.removeItem("upload-temp")
-            navigate("/admin/products")
+            config.PROD && navigate("/admin/products")
 
         } catch (ex) {
             Toast.openError(ex?.message)
         }
-
     };
+
+    const categorySpecs = specs[product.categoryId] || {}
 
     function handleChangeAttribute(e) {
         const {name, value} = e.target
         setProduct(prev => ({
-            ...prev,
-            attributes: {
-                ...prev.attributes,
-                [name]: value
+            ...prev, attributes: {
+                ...prev.attributes, [name]: value
             }
         }));
     }
 
-    function getCategoryBrands() {
-        return categoryBrands[product?.categoryId] ?? []
-    }
+    const categoryBrandsLists = categoryBrands[product?.categoryId] ?? []
 
 
-    return (
-        <div className="py-10 container">
+    return (<div className="py-10 container">
             <h2 className="font-bold uppercase text-slate-900 text-xl mb-6">{productId ? "Update " : "Add "} Product</h2>
             <form onSubmit={handleSubmit}>
 
@@ -156,6 +162,7 @@ const AddProduct = () => {
                         <Input label="Stock" type="number" value={product.stock} name="stock" onChange={handleChange}/>
                         <Input label="Discount" type="number" value={product.discount} name="discount"
                                onChange={handleChange}/>
+
                         <Input label="Description" type="textarea" value={product.description} name="description"
                                onChange={handleChange}/>
 
@@ -164,10 +171,10 @@ const AddProduct = () => {
                             <label htmlFor="">Cover:</label>
                             <FileUpload
                                 className="rs-input "
-                                        imagePreviewClass="w-24 aspect-square object-contain         "
-                                        name="coverImage"
-                                        value={product.coverImage}
-                                        onChange={handleChange}
+                                imagePreviewClass="w-24 aspect-square object-contain         "
+                                name="coverImage"
+                                value={product.coverImage}
+                                onChange={handleChange}
                             />
                         </div>
                         <h4 className="mb-3 font-semibold text-sm">Or</h4>
@@ -196,13 +203,14 @@ const AddProduct = () => {
 
 
                             <div className="flex flex-col mb-3">
-                                <label htmlFor="">Brand:</label>
-                                <select className="rs-input" name="brandId" id="" value={product.brandId}
+                                <label htmlFor="brandId">Brand:</label>
+                                <select className="rs-input" name="brandId" id="brandId" value={product.brandId}
                                         onChange={handleChange}>
+
                                     <option value="">Select Brand</option>
-                                    {getCategoryBrands().map(cat => (
-                                        <option value={cat.slug}>{cat.name}</option>
-                                    ))}
+
+                                    {categoryBrandsLists?.map(cat => (<option value={cat.slug}>{cat.name}</option>))}
+
                                 </select>
                             </div>
 
@@ -211,33 +219,26 @@ const AddProduct = () => {
                                 <select className="rs-input" name="categoryId" id="" value={product.categoryId}
                                         onChange={handleChange}>
                                     <option value="">Select Category</option>
-                                    {categories.map(cat => (
-                                        <option value={cat.slug}>{cat.name}</option>
-                                    ))}
+                                    {categories?.map(cat => (<option value={cat.slug}>{cat.name}</option>))}
                                 </select>
                             </div>
                         </div>
 
 
                         <h4 className="font-semibold text-slate-900">Attributes</h4>
-                        {!product?.attributesArray?.length && (
-                            <div>
+                        {!product?.attributesArray?.length && (<div>
                                 Please select a category
-                            </div>
-                        )}
+                            </div>)}
                         <div>
-                            {product?.attributesArray?.map(attrName => (
-                                <div className="flex flex-col mb-3">
-                                    <label htmlFor="">{specs?.[attrName]?.label}</label>
+                            {product?.attributesArray?.map(attrName => (<div className="flex flex-col mb-3">
+                                    <label htmlFor="">{categorySpecs?.[attrName]?.label}</label>
                                     <select className="rs-input" value={product.attributes[attrName]} name={attrName}
                                             onChange={handleChangeAttribute}>
-                                        <option value="">Select {specs?.[attrName]?.label}</option>
-                                        {specs?.[attrName]?.options?.map(opt => (
-                                            <option value={opt.value}>{opt.name}</option>
-                                        ))}
+                                        <option value="">Select {categorySpecs?.[attrName]?.label}</option>
+                                        {categorySpecs?.[attrName]?.options?.map(opt => (
+                                            <option value={opt.value}>{opt.name}</option>))}
                                     </select>
-                                </div>
-                            ))}
+                                </div>))}
                         </div>
                     </div>
                 </div>
@@ -246,8 +247,7 @@ const AddProduct = () => {
                 {/* Other input fields for price, stock, discount, coverImage, description, attributes, categoryId, brandId */}
                 <button type="submit" className="primary-btn">{productId ? "Update " : "Add "} Product</button>
             </form>
-        </div>
-    );
+        </div>);
 };
 
 export default AddProduct;

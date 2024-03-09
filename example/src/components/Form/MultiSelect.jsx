@@ -3,8 +3,6 @@ import {BiTrash} from "react-icons/bi";
 import {api} from "../../axios/index.js";
 import useDebounce from "../../hooks/useDebounce.jsx";
 
-
-
 const MultiSelectInput = ({defaultValues, name, label, labelClass, className, placeholder, onChange}) => {
     const [values, setValues] = useState([]);
     const [value, setValue] = useState("");
@@ -21,7 +19,7 @@ const MultiSelectInput = ({defaultValues, name, label, labelClass, className, pl
 
     async function fetchSuggestions(inputValue){
         try {
-            const {data} = await api.get(`/brands/search?name=${inputValue}`);
+            const {data} = await api.get(`/categories/search?name=${inputValue}`);
             if (data) {
                 setSuggestions(data);
             }
@@ -42,7 +40,7 @@ const MultiSelectInput = ({defaultValues, name, label, labelClass, className, pl
     const handleOptionClick = (option) => {
         const updatedValues = [...values, option];
         setValues(updatedValues);
-        onChange && onChange({target: {values: updatedValues, name: name}});
+        onChange && onChange({target: {value: updatedValues, name: name}});
         setValue("");
         // setSuggestions([]);
     };
@@ -50,7 +48,7 @@ const MultiSelectInput = ({defaultValues, name, label, labelClass, className, pl
     const deleteSelectedInput = (text) => {
         const updatedValues = values.filter(v => v !== text);
         setValues(updatedValues);
-        onChange && onChange({target: {values: updatedValues, name: name}});
+        onChange && onChange({target: {value: updatedValues, name: name}});
     };
 
     const handleEnter = (e) => {

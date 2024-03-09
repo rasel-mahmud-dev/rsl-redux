@@ -9,68 +9,58 @@ import {
 } from "../actions/categoryAction.js";
 import {deleteAdminProduct, fetchAdminDashboardProducts, fetchAdminProducts} from "../actions/adminAction.js";
 import {fetchWishlists} from "../actions/wishlistAction.js";
-import {addReviewAction, fetchReviews, updateReviewAction} from "../actions/reviewAction.js";
+import {addReviewAction, fetchReviews} from "../actions/reviewAction.js";
 import {addQuestionAnswerAction, fetchQuestionAnswers} from "../actions/questionsAction.js";
 
 const initialState = {
     showCategories: [
         {
-            "_id": "6570c5ae26c947e3c99321f7",
             "name": "Laptop",
             "slug": "laptop",
             "image": "-original-imaguyhz7cyftguh.webp"
         },
         {
-            "_id": "6570c5ae26c947e3c99321f8",
             "name": "Health & Beauty",
             "slug": "health-beauty",
             "image": "-original-imagnrmsyuhjce9a.webp"
         },
         {
-            "_id": "6570c5ae26c947e3c99321f9",
             "name": "Watches",
             "slug": "watches",
             "image": "-original-imaghbkf6jzfxfz55.webp"
         },
 
-
         {
-            "_id": "6570c5ae26c947e3c99321fd",
-            "name": "TV & Home Appliances",
-            "slug": "tv-home-appliances",
-            "image": "telev3.webp"
+            "name": "Groceries",
+            "slug": "groceries",
+            "image": "https://rukminim2.flixcart.com/image/612/612/xif0q/nut-dry-fruit/m/0/b/500-popular-california-1-pouch-farmley-original-imagvy272uh8fkt2.jpeg?q=70"
         },
 
         {
-            "_id": "65736c291959c8d6cfec1e0d",
             "created_at": "2023-12-08T19:19:05.643Z",
             "name": "Mobile",
             "slug": "mobile",
             "image": "-original-imaghx9q5rvcdghy.webp"
         },
         {
-            "_id": "657489ecf06523a9349cdd92",
             "created_at": "2023-12-09T15:38:20.286Z",
             "name": "Watches",
             "slug": "watches",
             "image": "-original-imagg8d9hbkhfffg.webp"
         },
         {
-            "_id": "65748d86f06523a9349cdd93",
             "created_at": "2023-12-09T15:53:42.942Z",
             "name": "T-shart",
             "slug": "t-shart",
             "image": "s-cmb-po2-dab-wynk-smartees-original-imagm5vhumtz8epz.webp"
         },
         {
-            "_id": "657492f54b5b3e0607eeb3ae",
             "created_at": "2023-12-09T16:16:53.216Z",
             "name": "Jeans",
             "slug": "jeans",
             "image": "32-pm206796a083-pepe-jeans-original-imagqhmbzgxx3yhz.webp"
         },
         {
-            "_id": "658118609414196f798f2f86",
             "created_at": "2023-12-19T04:13:20.261Z",
             "name": "Televisions",
             "slug": "televisions",
@@ -91,7 +81,8 @@ const initialState = {
         search: "",
         categoryIds: [],
         brandIds: [],
-        pageNumber: 1
+        pageNumber: 1,
+        attributes: {}
     },
     reviews: {}, // key product id
     questionAnswers: {}, // key product id

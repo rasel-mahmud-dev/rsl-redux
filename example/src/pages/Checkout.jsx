@@ -1,23 +1,40 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "rsl-redux";
 import {orderCartProductsAction} from "../store/actions/cartAction.js";
 import Toast from "../utils/toast.js";
 import getAssetPath from "../utils/getAssetPath.js";
 import CommonTable from "../components/Table.jsx";
+import formatPrice from "../utils/formatPrice.js";
 
 const Checkout = () => {
     const [selectedCartItems, setSelectedCartItems] = useState([])
-    const [fetchedLocalStorage, setFetchLocalStorage] = useState(false)
     const {carts} = useSelector(state => state.cartState)
+
+    const [searParams] = useSearchParams()
+    let tab = searParams.get("t")
+    const location = useLocation()
 
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
+
+    function clearLocalStorage() {
+        localStorage.removeItem("selected-products-for-checkout")
+        localStorage.removeItem("selected-carts")
+    }
+
+
     useEffect(() => {
-        try {
+        if (tab === "product") {
+            let lp = localStorage.getItem("selected-products-for-checkout")
+            if (lp) {
+                let p = JSON.parse(lp)
+                setSelectedCartItems([p])
+            }
+        } else {
             const items = localStorage.getItem("selected-carts")
             if (items) {
                 const el = JSON.parse(items)
@@ -26,21 +43,11 @@ const Checkout = () => {
                     setSelectedCartItems(cartProducts)
                 }
             }
-            setFetchLocalStorage(true)
-        } catch (ex) {
-
         }
 
-    }, [])
+        return () => clearLocalStorage()
 
-
-    useEffect(() => {
-        if (fetchedLocalStorage) {
-            if (selectedCartItems.length === 0) {
-                navigate('/carts')
-            }
-        }
-    }, [fetchedLocalStorage, selectedCartItems.length])
+    }, [tab, carts?.length])
 
 
     const totalAmount = useMemo(() => {
@@ -54,8 +61,9 @@ const Checkout = () => {
         }
         dispatch(orderCartProductsAction(selectedCartItems)).unwrap().then(() => {
             Toast.openSuccess("Your order has been placed")
-            localStorage.removeItem("selected-carts")
             setSelectedCartItems([])
+            clearLocalStorage()
+            navigate(location.state || "/")
         }).catch(ex => {
             Toast.openError(ex)
         })
@@ -97,11 +105,11 @@ const Checkout = () => {
         },
         {
             name: "Price", field: "price", render: (_, p) => {
-                return p.price * p.quantity
+                return formatPrice(p.price * p.quantity)
             }
         },
         {name: "Quantity", field: "quantity"},
-        {name: "Added On", field: "created_at", render: (v) => new Date(v).toDateString()},
+        {name: "Added On", field: "createdAt", render: (v) => new Date(v).toDateString()},
     ]
 
     return (
@@ -110,17 +118,19 @@ const Checkout = () => {
 
                 <h2 className="text-xl font-semibold">Checkout</h2>
 
-                <CommonTable className="mt-10 table-start-align checkout-items-table" column={columns}
-                             data={selectedCartItems ? selectedCartItems : []}/>
+                <CommonTable className="mt-10 table-start-align checkout-items-table"
+                             column={columns}
+                             data={selectedCartItems}/>
 
                 <div className="py-6    flex justify-end items-center ">
-                    <h2 className="font-semibold">Total Amount: {totalAmount} Tk</h2>
+                    <h2 className="font-semibold">Total Amount: {formatPrice(totalAmount)} Tk</h2>
                 </div>
 
                 <div className="flex pt-10 justify-between items-center">
-                    <Link to="/carts" className="text-neutral-800">
-                        <button className="primary-btn">Back to Cart</button>
-                    </Link>
+                    <a className="text-neutral-800">
+                        <button onClick={() => navigate(location.state || "/")} className="primary-btn">Back
+                        </button>
+                    </a>
                     <button onClick={orderNow}
                             className="w-[240px] hover:bg-pink-400 primary-btn bg-pink-500/10 font-medium ">Confirm
                         Order

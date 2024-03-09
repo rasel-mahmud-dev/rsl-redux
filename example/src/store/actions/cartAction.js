@@ -22,7 +22,6 @@ export const addToCartAction = createAsyncAction(
         try {
             const res = await api.post("/carts", cart)
             return res.data
-
         } catch (e) {
             throw catchErrorMessage(e)
         }
