@@ -30,6 +30,7 @@ import AddressCreate from "./pages/customer/Address/Address.Create.jsx";
 import MyReviewList from "./pages/customer/MyReviews/List.jsx";
 import CustomerProfile from "./pages/customer/CustomerProfile/View.jsx";
 import ProductDetail from "./pages/ProductDetail/ProductDetail.jsx";
+import MyQuestions from "./pages/customer/MyQuestions/MyQuestions.jsx";
 
 
 const routes = createBrowserRouter([
@@ -84,6 +85,7 @@ const routes = createBrowserRouter([
             {path: "address-book/update/:id", element: <AddressCreate/>},
             {path: "my-reviews", element: <MyReviewList/>},
             {path: "my-profile", element: <CustomerProfile/>},
+            {path: "my-questions", element: <MyQuestions/>},
 
         ]
     }

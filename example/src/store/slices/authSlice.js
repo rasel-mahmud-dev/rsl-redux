@@ -9,6 +9,11 @@ import {
     loginAction
 } from "../actions/authAction.js";
 import {fetchCustomerReviews, updateReviewAction} from "../actions/reviewAction.js";
+import {
+    deleteQuestionAnswer,
+    fetchCustomerQuestionAnswers,
+    updateQuestionAnswerAction
+} from "../actions/questionsAction.js";
 
 const initialState = {
     auth: null,
@@ -41,7 +46,8 @@ const initialState = {
     openSidebar: "",
     customers: [],
     addresses: [],
-    customerReviews: []
+    customerReviews: [],
+    customerQuestions: []
 }
 
 const authSlice = createSlice({
@@ -151,6 +157,32 @@ const authSlice = createSlice({
                 state.customerReviews = customerReviews
             }
         })
+
+        // question and answers
+
+        // reviews
+        builder.addCase(fetchCustomerQuestionAnswers.fulfilled, (state, action) => {
+            state.customerQuestions = action.payload
+        })
+
+        builder.addCase(updateQuestionAnswerAction.fulfilled, (state, action) => {
+            const {_id, data} = action.payload
+            let customerQuestions = [...state.customerQuestions]
+            let index = customerQuestions.findIndex(r => r._id === _id)
+            if (index !== -1) {
+                customerQuestions[index] = {
+                    ...customerQuestions[index],
+                    ...data
+                }
+                state.customerQuestions = customerQuestions
+            }
+        })
+
+        builder.addCase(deleteQuestionAnswer.fulfilled, (state, action) => {
+            let customerQuestions = [...state.customerQuestions]
+            state.customerQuestions = customerQuestions.filter(r => r._id !== action.payload)
+        })
+
     }
 })
 

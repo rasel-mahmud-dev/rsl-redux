@@ -72,7 +72,7 @@ const RatingReviews = ({productId}) => {
         <div className="mt-6">
 
             {openAddReviewForm && (
-                <AddReview onClose={()=>setOpenAddReviewForm(false)} />
+                <AddReview productId={productId} onClose={()=>setOpenAddReviewForm(false)} />
             )
             }
 

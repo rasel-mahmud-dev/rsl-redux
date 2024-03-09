@@ -26,7 +26,7 @@ const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDel
 
                     <p className="text-sm text-neutral-600 mt-2">{review.summary}</p>
 
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 mt-4">
                         {review?.images?.map(img => (
                             <Image imgClass="object-cover w-20 h-20 !rounded" className=" " key={img}
                                    src={getAssetPath(img)}/>

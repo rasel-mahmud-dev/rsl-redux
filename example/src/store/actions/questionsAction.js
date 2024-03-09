@@ -53,6 +53,29 @@ export const updateQuestionAnswerAction = createAsyncAction(
     })
 
 
+export const updateAnswerAction = createAsyncAction(
+    "updateAnswerAction",
+    async function ({
+                        _id,
+                        answer,
+                        productId
+                    }) {
+        try {
+            const {status} = await api.put("/question-answers/answer/" + _id, {
+                answer,
+                productId
+            })
+            if (status === 201) {
+                return {_id, productId,  answer}
+            }
+
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
 export const fetchQuestionAnswers = createAsyncAction(
     "fetchQuestionAnswers",
     async function (productId) {

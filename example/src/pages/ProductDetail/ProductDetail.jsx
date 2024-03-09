@@ -8,6 +8,7 @@ import {api} from "../../axios/index.js";
 import "./ProductDetail.scss"
 import RatingReviews from "./RatingReviews.jsx";
 import QuestionAnswers from "./QuestionAnswers.jsx";
+import {useSelector} from "rsl-redux";
 
 function calculateDiscount(discount, price) {
     let offPrice = ((discount / 100) * price)
@@ -18,6 +19,8 @@ const ProductDetail = () => {
 
     const {slug} = useParams();
     const navigate = useNavigate();
+
+    const {auth} = useSelector(state => state.authState)
 
     const [isShowImage, setShowImage] = React.useState(0);
     const [product, setProduct] = React.useState(null);
@@ -77,6 +80,7 @@ const ProductDetail = () => {
         })
     }, [slug]);
 
+    console.log(product)
 
     return (
         <div>
@@ -237,7 +241,10 @@ const ProductDetail = () => {
 
                                 {/*<SpecificationDetail specification={productDescription?.specification}/>*/}
                                 <RatingReviews productId={product._id}/>
-                                <QuestionAnswers productId={product._id}/>
+                                <QuestionAnswers
+                                    isProductOwner={auth?.role === "admin"}
+                                    // isProductOwner={auth?._id === product?.sellerId}
+                                    productId={product._id}/>
                             </div>
                         </div>
                     ) : null}

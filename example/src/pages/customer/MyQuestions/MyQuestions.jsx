@@ -1,34 +1,48 @@
 import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "rsl-redux";
+import {deleteQuestionAnswer, fetchCustomerQuestionAnswers} from "../../../store/actions/questionsAction.js";
+import QuestionAnswers from "../../../components/QuestionAnswers/QuestionAnswers.jsx";
+import Toast from "../../../utils/toast.js";
+import AddQuestionForm from "../../../components/QuestionAnswers/AddQuestionForm.jsx";
 
-import QuestionAnswers from "../../components/QuestionAnswers/QuestionAnswers.jsx";
-import {fetchQuestionAnswers} from "../../store/actions/questionsAction.js";
-import AddQuestionForm from "../../components/QuestionAnswers/AddQuestionForm.jsx";
 
-
-const Index = ({productId, isProductOwner}) => {
+const MyQuestions = () => {
     const dispatch = useDispatch()
-    const {questionAnswers} = useSelector(state => state.productState)
+    const {customerQuestions} = useSelector(state => state.authState)
 
-    let productQuestionAnswers = questionAnswers?.[productId] || []
 
     let init = {questionAnswer: null, isQuestion: true, isOpen: false}
     const [state, setState] = useState(init)
 
-
     useEffect(() => {
-        productId && dispatch(fetchQuestionAnswers(productId))
-    }, [productId])
+        dispatch(fetchCustomerQuestionAnswers())
+    }, [])
+
+    function handleDelete(item) {
+        dispatch(deleteQuestionAnswer(item._id)).unwrap().then(() => {
+            Toast.openSuccess("Question deleted.")
+        }).catch(ex => {
+            Toast.openError(ex?.message)
+        })
+    }
+
+    function handleClickEdit(questionAnswer) {
+        setState(prev => ({
+            ...prev,
+            isOpen: true,
+            questionAnswer
+        }))
+    }
 
 
     return (
         <div className="mt-6 pb-10">
 
-            {state.isOpen && (
+            {(state.isOpen && state?.questionAnswer?.productId) && (
                 <AddQuestionForm
                     isQuestion={state.isQuestion}
-                    productId={productId}
+                    productId={state.questionAnswer.productId}
                     updateData={state.questionAnswer}
                     onClose={() => setState(init)}
                 />
@@ -51,14 +65,17 @@ const Index = ({productId, isProductOwner}) => {
             <div className="mt-5">
                 <h4 className="text-base font-semibold">Questions and Answers</h4>
                 <QuestionAnswers
+                    isDeleteAble={true}
+                    onClickDelete={handleDelete}
+                    onEditQuestion={handleClickEdit}
                     onClickReply={(data) => setState(prev => ({
                         ...prev,
                         questionAnswer: data,
                         isOpen: true,
                         isQuestion: false
                     }))}
-                    isProductOwner={isProductOwner}
-                    questionAnswers={productQuestionAnswers}
+                    isProductOwner={false}
+                    questionAnswers={customerQuestions}
                 />
                 <button className="btn primary-btn">All questions</button>
             </div>
@@ -68,4 +85,4 @@ const Index = ({productId, isProductOwner}) => {
     );
 };
 
-export default Index;
+export default MyQuestions;
