@@ -10,7 +10,6 @@ const ReviewForm = ({onSubmit}) => {
     const [review, setReview] = useState({
         title: "",
         rate: 0,
-        productId: 0,
         summary: "",
         images: []
     });
@@ -19,7 +18,11 @@ const ReviewForm = ({onSubmit}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(review);
+        let images = []
+        for (let uploadedImagesKey in uploadedImages) {
+            images.push(uploadedImages[uploadedImagesKey].url)
+        }
+        onSubmit({...review, images: images});
     };
 
     function getFromLocalStorage() {

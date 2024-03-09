@@ -235,7 +235,7 @@ const ProductDetail = () => {
                                 </div>
 
                                 {/*<SpecificationDetail specification={productDescription?.specification}/>*/}
-                                <RatingReviews/>
+                                <RatingReviews productId={product._id}/>
                                 {/*<Questions/>*/}
                             </div>
                         </div>

@@ -15,7 +15,7 @@ function chooseFirstLetter(name) {
 
 
 
-const Image= ({className = "", imgClass = "", username, src, ...attr}) => {
+const Image= ({className = "", imgClass = "", username =  "", src, ...attr}) => {
     let letter = chooseFirstLetter(username)
 
     function handleErrorImage(e) {

@@ -1,35 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {BiCheck, BiStar} from "react-icons/bi";
 import getAssetPath from "../../utils/getAssetPath.js";
 import Image from "../../components/Image/Image.jsx";
 import ReviewForm from "./ReviewForm.jsx";
 import Popup from "../../components/Popup.jsx";
+import {useDispatch, useSelector} from "rsl-redux";
+import {addReviewAction, fetchReviews} from "../../store/actions/reviewAction.js";
+import Toast from "../../utils/toast.js";
 
 let image2 = `c20-rmx3063-realme-original-imagfxfzjrkqtbhe.jpeg`;
 
-const RatingReviews = () => {
+const RatingReviews = ({productId}) => {
+    const dispatch = useDispatch()
+    const {reviews} = useSelector(state => state.productState)
+
+    let customerReviews = reviews?.[productId] || []
 
     const [openAddReviewForm, setOpenAddReviewForm] = useState(false)
 
+    useEffect(() => {
+        productId && dispatch(fetchReviews(productId))
+    }, [productId])
 
-    const reviews = [
-        {
-            ratings: 5,
-            title: "day to day king",
-            desc: "This is such a budget friendly Product.It also makes a good first impression as the overall look of the device is really impressive. The device also provides a decent display and camera with a storage space of 32 GB.",
-            username: "Rasel Mahmud",
-            customer_photos: [],
-            created_at: new Date(),
-        },
-        {
-            ratings: 5,
-            title: "day to day king",
-            desc: "This is such a budget friendly Product.It also makes a good first impression as the overall look of the device is really impressive. The device also provides a decent display and camera with a storage space of 32 GB.",
-            username: "Rasel Mahmud",
-            customer_photos: [],
-            created_at: new Date(),
-        },
-    ];
 
     function calculateRate() {
         let subTotalRate = 0;
@@ -57,9 +49,38 @@ const RatingReviews = () => {
         return totalAmount;
     }
 
-    function handleSubmitReview(review){
-        console.log(review)
+    function handleSubmitReview(review) {
+        if (!productId) return Toast.openError("Product not exist.")
+
+        dispatch(addReviewAction({
+            ...review,
+            productId,
+        })).unwrap().then(() => {
+            Toast.openSuccess("Review added.")
+
+        }).catch(ex => {
+            Toast.openError(ex?.message)
+        }).finally(() => {
+            // localStorage.removeItem("review-temp")
+
+        })
     }
+
+    const customerGallery = useMemo(() => {
+        let items = []
+        if (!Array.isArray(customerReviews)) return []
+        for (const review of customerReviews) {
+            if (items.length < 30) {
+                if (review?.images?.length) {
+                    items.push(...review.images)
+                }
+            } else {
+                break;
+            }
+        }
+        return items
+    }, [customerReviews?.length]);
+
 
     return (
         <div className="mt-6">
@@ -111,40 +132,59 @@ const RatingReviews = () => {
                 </div>
 
                 <div className="mt-5">
-                    <h4 className="heading-5">Customer Gallery</h4>
-                    <div className="customer_gallery flex-wrap">
-                        {new Array(30).fill("", 1, 30).map(() => (
-                            <div className="w-10">
-                                <Image imgClass="rounded-none" className="m-2" src={getAssetPath(image2)}/>
-                            </div>
+                    <h4 className="text-base font-semibold">Customer Gallery</h4>
+                    <div className="flex gap-1 mt-2">
+                        {customerGallery?.map(img => (
+                            <Image imgClass="object-cover w-10 h-10 !rounded" className=" " key={img}
+                                   src={getAssetPath(img)}/>
                         ))}
                     </div>
+
                 </div>
             </div>
 
             <div className="mt-5">
-                {reviews.map((review) => (
-                    <div className="rating">
-                        <div className="flex items-center">
-                            <div className="rating_badge">
-                                <span>{review.ratings}</span>
-                                <BiStar/>
+                <h4 className="text-base font-semibold">Customer Reviews</h4>
+                <div className="mt-2">
+                    {customerReviews.map((review) => (
+                        <div className="rating bg-white p-4 rounded-lg my-2">
+                            <div className="flex items-center">
+                                <div className="rating_badge">
+                                    <span>{review.rate}</span>
+                                    <BiStar/>
+                                </div>
+                                <h4 className="ml-2">{review.title}</h4>
                             </div>
-                            <h4 className="ml-2">{review.title}</h4>
-                        </div>
-                        <h4>{review.desc}</h4>
-                        <Image className="mt-5 mb-2" src={image2}/>
+                            <p className="text-sm text-neutral-600 mt-2">{review.summary}</p>
 
-                        <div>
-                            <h4 className="mr-40">{review.username}</h4>
-                            <h5 className="flex items-center ">
-                                <BiCheck/>
-                                Certified Buyer
-                            </h5>
-                            <h4 className="ml-2 date">{new Date(review.created_at).toDateString()}</h4>
+                            <div className="flex gap-1">
+                                {review?.images?.map(img => (
+                                    <Image imgClass="object-cover w-20 h-20 !rounded" className=" " key={img}
+                                           src={getAssetPath(img)}/>
+                                ))}
+                            </div>
+
+
+                            <div className="mt-3">
+                                <div className="flex justify-between items-center text-sm">
+
+                                    <div className="flex  items-center text-sm gap-x-4">
+                                        <div className="flex items-center text-sm font-semibold text-neutral-700  ">
+                                            <Image src={getAssetPath(review.customer?.avatar)}/>
+                                            <h4>{review.customer?.username}</h4>
+                                        </div>
+                                        <div className="text-neutral-500 flex items-center text-sm"><BiCheck/> Certified
+                                            Buyer
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="text-neutral-500 text-xs ml-2 date">{new Date(review.createdAt).toDateString()}</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             <button className="btn text-primary" type="text">
