@@ -5,7 +5,7 @@ import MultipleFileChooser from "../../components/Form/MultipleFileChooser/Multi
 import resizeImage from "../../utils/resizeImage.js";
 import {api} from "../../axios/index.js";
 
-const ReviewForm = ({onSubmit}) => {
+const ReviewForm = ({onSubmit, updateData}) => {
 
     const [review, setReview] = useState({
         title: "",
@@ -16,11 +16,39 @@ const ReviewForm = ({onSubmit}) => {
 
     const [uploadedImages, setUploadedImages] = useState({})
 
+    useEffect(() => {
+        if (updateData) {
+            let updateState = {...review}
+            let updateUploadedImages = {...uploadedImages}
+            for (let reviewKey in updateState) {
+                if (updateData[reviewKey]) {
+
+                    if (reviewKey === "images") {
+
+                        updateData[reviewKey]?.forEach((el, index) => {
+                            updateUploadedImages[index] = {url: el}
+                        })
+
+                    } else {
+                        updateState[reviewKey] = updateData[reviewKey]
+                    }
+
+                }
+            }
+
+            setReview(updateState)
+            setUploadedImages(updateUploadedImages)
+        }
+    }, [updateData]);
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let images = []
         for (let uploadedImagesKey in uploadedImages) {
-            images.push(uploadedImages[uploadedImagesKey].url)
+            if(uploadedImages[uploadedImagesKey].url){
+                images.push(uploadedImages[uploadedImagesKey].url)
+            }
         }
         onSubmit({...review, images: images});
     };
@@ -35,7 +63,7 @@ const ReviewForm = ({onSubmit}) => {
     }
 
     useEffect(() => {
-        setUploadedImages(getFromLocalStorage())
+        setUploadedImages(prev => ({...prev, ...getFromLocalStorage()}))
     }, []);
 
     useEffect(() => {
@@ -68,7 +96,7 @@ const ReviewForm = ({onSubmit}) => {
                 }
             }
             localStorage.setItem("review-temp", JSON.stringify(updatedState))
-            setUploadedImages(updatedState)
+            setUploadedImages(p => ({...p, ...updatedState}))
         }())
 
     }, [review?.images]);
@@ -119,7 +147,7 @@ const ReviewForm = ({onSubmit}) => {
 
     return (
         <div>
-            <h2 className="text-2xl font-semibold">Submit Review</h2>
+            <h2 className="text-2xl font-semibold">{updateData ? "Update" : "Submit"} Review</h2>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-4">
                 <div className="">
@@ -129,7 +157,7 @@ const ReviewForm = ({onSubmit}) => {
                     <Input type="textarea" label="Summary" name="summary" value={review.summary}
                            onChange={handleChange}/>
 
-                    <button className="btn primary-btn" type="submit">Submit Review</button>
+                    <button className="btn primary-btn" type="submit">{updateData ? "Update" : "Submit"} Review</button>
 
                 </div>
                 <div>
@@ -138,6 +166,7 @@ const ReviewForm = ({onSubmit}) => {
                         name="images"
                         fileHandler={fileCompress}
                         multiple={true}
+                        uploadedImages={uploadedImages}
                         label="Images"
                         inputClass="bg-input-group"
                         onChange={handleChange}

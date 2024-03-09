@@ -17,13 +17,13 @@ import blobToBase64 from "../../../utils/blobToBase64.js";
 
 
 const MultipleFileChooser = (props) => {
-
     const {
         name,
         label,
         labelAddition,
         labelClass,
         defaultValue,
+        uploadedImages,
         required,
         multiple = false,
         fileHandler,
@@ -44,7 +44,7 @@ const MultipleFileChooser = (props) => {
             }))
             setState(v)
         }
-    }, [])
+    }, [defaultValue])
 
 
     function handleChooseFile() {
@@ -101,6 +101,12 @@ const MultipleFileChooser = (props) => {
                 {state && state.length > 0 && state.map((item, idx) => (
                     <div className="item-image" key={idx}>
                         <img className="" src={item.base64 ? item.base64 : item.url} alt=""/>
+                    </div>
+                ))}
+
+                {uploadedImages && Object.values(uploadedImages).map(({url}) => (
+                    <div className="item-image" key={url}>
+                        <img className="" src={getAssetPath(url)} alt=""/>
                     </div>
                 ))}
 

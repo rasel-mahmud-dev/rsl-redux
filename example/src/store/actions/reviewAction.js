@@ -32,12 +32,57 @@ export const addReviewAction = createAsyncAction(
 
 
 
+
+export const updateReviewAction = createAsyncAction(
+    "updateReviewAction",
+    async function ({
+                        _id,
+                        title,
+                        rate,
+                        productId,
+                        summary,
+                        images
+                    }) {
+        try {
+            const {status, data} = await api.patch("/reviews/" + _id, {
+                title,
+                rate,
+                productId,
+                summary,
+                images
+            })
+            if (status === 201) {
+                return {_id, data}
+            }
+
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
+
 export const fetchReviews = createAsyncAction(
     "fetchReviews",
     async function (productId) {
         try {
             const {data} = await api.get("/reviews/" + productId)
             return {productId, data}
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+
+
+
+export const fetchCustomerReviews = createAsyncAction(
+    "fetchCustomerReviews",
+    async function () {
+        try {
+            const {data} = await api.get("/reviews/all")
+            return data
         } catch (e) {
             throw catchErrorMessage(e)
         }

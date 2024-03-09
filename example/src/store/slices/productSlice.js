@@ -9,7 +9,7 @@ import {
 } from "../actions/categoryAction.js";
 import {deleteAdminProduct, fetchAdminDashboardProducts, fetchAdminProducts} from "../actions/adminAction.js";
 import {fetchWishlists} from "../actions/wishlistAction.js";
-import {addReviewAction, fetchReviews} from "../actions/reviewAction.js";
+import {addReviewAction, fetchReviews, updateReviewAction} from "../actions/reviewAction.js";
 
 const initialState = {
     showCategories: [
@@ -194,7 +194,6 @@ const productSlice = createSlice({
                 state.reviews[productId].push(data)
             }
         })
-
     }
 })
 

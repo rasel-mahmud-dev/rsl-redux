@@ -8,6 +8,7 @@ import {
     fetchOrdersSlatsSummaryAction,
     loginAction
 } from "../actions/authAction.js";
+import {fetchCustomerReviews, updateReviewAction} from "../actions/reviewAction.js";
 
 const initialState = {
     auth: null,
@@ -39,7 +40,8 @@ const initialState = {
     },
     openSidebar: "",
     customers: [],
-    addresses: []
+    addresses: [],
+    customerReviews: []
 }
 
 const authSlice = createSlice({
@@ -129,6 +131,25 @@ const authSlice = createSlice({
         builder.addCase(authVerifyAction.rejected, (state) => {
             state.auth = null
             state.authLoaded = true
+        })
+
+
+        // reviews
+        builder.addCase(fetchCustomerReviews.fulfilled, (state, action) => {
+            state.customerReviews = action.payload
+        })
+
+        builder.addCase(updateReviewAction.fulfilled, (state, action) => {
+            const {_id, data} = action.payload
+            let customerReviews = [...state.customerReviews]
+            let index = customerReviews.findIndex(r => r._id === _id)
+            if (index !== -1) {
+                customerReviews[index] = {
+                    ...customerReviews[index],
+                    ...data
+                }
+                state.customerReviews = customerReviews
+            }
         })
     }
 })

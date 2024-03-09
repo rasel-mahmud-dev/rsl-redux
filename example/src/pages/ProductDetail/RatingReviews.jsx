@@ -7,6 +7,8 @@ import Popup from "../../components/Popup.jsx";
 import {useDispatch, useSelector} from "rsl-redux";
 import {addReviewAction, fetchReviews} from "../../store/actions/reviewAction.js";
 import Toast from "../../utils/toast.js";
+import Reviews from "../../components/Reviews/Reviews.jsx";
+import AddReview from "../../components/Reviews/AddReview.jsx";
 
 let image2 = `c20-rmx3063-realme-original-imagfxfzjrkqtbhe.jpeg`;
 
@@ -49,22 +51,6 @@ const RatingReviews = ({productId}) => {
         return totalAmount;
     }
 
-    function handleSubmitReview(review) {
-        if (!productId) return Toast.openError("Product not exist.")
-
-        dispatch(addReviewAction({
-            ...review,
-            productId,
-        })).unwrap().then(() => {
-            Toast.openSuccess("Review added.")
-
-        }).catch(ex => {
-            Toast.openError(ex?.message)
-        }).finally(() => {
-            // localStorage.removeItem("review-temp")
-
-        })
-    }
 
     const customerGallery = useMemo(() => {
         let items = []
@@ -86,13 +72,7 @@ const RatingReviews = ({productId}) => {
         <div className="mt-6">
 
             {openAddReviewForm && (
-                <Popup
-                    backdropClass="bg-gray-300"
-                    className="max-w-2xl w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
-                    onClose={() => setOpenAddReviewForm(false)}
-                    isOpen={true}>
-                    <ReviewForm onSubmit={handleSubmitReview}/>
-                </Popup>
+                <AddReview onClose={()=>setOpenAddReviewForm(false)} />
             )
             }
 
@@ -145,46 +125,7 @@ const RatingReviews = ({productId}) => {
 
             <div className="mt-5">
                 <h4 className="text-base font-semibold">Customer Reviews</h4>
-                <div className="mt-2">
-                    {customerReviews.map((review) => (
-                        <div className="rating bg-white p-4 rounded-lg my-2">
-                            <div className="flex items-center">
-                                <div className="rating_badge">
-                                    <span>{review.rate}</span>
-                                    <BiStar/>
-                                </div>
-                                <h4 className="ml-2">{review.title}</h4>
-                            </div>
-                            <p className="text-sm text-neutral-600 mt-2">{review.summary}</p>
-
-                            <div className="flex gap-1">
-                                {review?.images?.map(img => (
-                                    <Image imgClass="object-cover w-20 h-20 !rounded" className=" " key={img}
-                                           src={getAssetPath(img)}/>
-                                ))}
-                            </div>
-
-
-                            <div className="mt-3">
-                                <div className="flex justify-between items-center text-sm">
-
-                                    <div className="flex  items-center text-sm gap-x-4">
-                                        <div className="flex items-center text-sm font-semibold text-neutral-700  ">
-                                            <Image src={getAssetPath(review.customer?.avatar)}/>
-                                            <h4>{review.customer?.username}</h4>
-                                        </div>
-                                        <div className="text-neutral-500 flex items-center text-sm"><BiCheck/> Certified
-                                            Buyer
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        className="text-neutral-500 text-xs ml-2 date">{new Date(review.createdAt).toDateString()}</div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <Reviews reviews={customerReviews} />
             </div>
 
             <button className="btn text-primary" type="text">
