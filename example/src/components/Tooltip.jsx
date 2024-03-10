@@ -8,7 +8,7 @@ import React from 'react';
 // }
 
 const Tooltip = (props) => {
-    const {children, contentClass= "truncate", className = "", tips} = props
+    const {children, contentClass= "truncate-break-sm", className = "", tips} = props
     return (
         <a
             className={className}

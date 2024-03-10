@@ -113,7 +113,6 @@ const SearchProduct = () => {
         }
 
         return obj
-
     }
 
     function handleChooseAttributeValue(attributeName, value) {

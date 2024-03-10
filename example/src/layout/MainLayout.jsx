@@ -1,7 +1,7 @@
 import React from 'react';
 import {Outlet} from "react-router-dom";
 import Nav from "../components/Nav.jsx";
-import SettingDrawer from "../components/Settings/SettingDrawer.jsx";
+import Carts from "../components/MobileNavigation/Carts.jsx";
 import {useDispatch, useSelector} from "rsl-redux"
 import {setSidebar} from "../store/slices/authSlice.js";
 import WishlistDrawer from "../components/MobileNavigation/Wishlist.jsx";
@@ -27,8 +27,8 @@ const MainLayout = () => {
 
 
 
-            <SettingDrawer onClose={() => setSidebarVal("")}
-                          isOpen={openSidebar === "cart"}
+            <Carts onClose={() => setSidebarVal("")}
+                   isOpen={openSidebar === "cart"}
             />
 
 
