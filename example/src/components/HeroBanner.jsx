@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CategoryList from "./CategoryList/CategoryList.jsx";
+import CategoryHeroList from "./CategoryList/CategoryHeroList.jsx";
 
 const HeroBanner = ({showCategories}) => {
 
@@ -27,7 +27,7 @@ const HeroBanner = ({showCategories}) => {
     return (
         <div className="mt-4 home-wrapper">
             <div className="sidebar-home">
-                <CategoryList categories={showCategories} />
+                <CategoryHeroList categories={showCategories} />
             </div>
 
             <div className="w-full slider-root">

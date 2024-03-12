@@ -5,7 +5,7 @@ import Carts from "../components/MobileNavigation/Carts.jsx";
 import {useDispatch, useSelector} from "rsl-redux"
 import {setSidebar} from "../store/slices/authSlice.js";
 import WishlistDrawer from "../components/MobileNavigation/Wishlist.jsx";
-import ThemeChoose from "../components/ThemeChoose/ThemeChoose.jsx";
+import CategoryDrawer from "../components/MobileNavigation/CategoryDrawer.jsx";
 
 const MainLayout = () => {
 
@@ -34,6 +34,11 @@ const MainLayout = () => {
 
             <WishlistDrawer onClose={() => setSidebarVal("")}
                           isOpen={openSidebar === "wishlist"}
+            />
+
+
+            <CategoryDrawer onClose={() => setSidebarVal("")}
+                          isOpen={openSidebar === "category"}
             />
 
 

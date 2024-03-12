@@ -6,10 +6,13 @@ import {CgList} from "react-icons/cg";
 import {PiBrandy} from "react-icons/pi";
 import {setSidebar} from "../../store/slices/authSlice.js";
 import {useDispatch} from "rsl-redux"
+import {useNavigate} from "react-router-dom";
 
 const MobileNavigation = () => {
 
-    const dispatch  = useDispatch()
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     function handleOpenDrawer(val) {
         dispatch(setSidebar(val))
@@ -18,21 +21,21 @@ const MobileNavigation = () => {
     return (
         <div className="mobile-navigation">
 
-            <div className="m-item active">
+            <div className="m-item active" onClick={() => navigate("/")}>
                 <BiHome/>
             </div>
-            <div className="m-item">
+            <div className="m-item" onClick={() => handleOpenDrawer("category")}>
                 <PiBrandy/>
             </div>
-            <div className="m-item">
+            <div className="m-item" onClick={() => handleOpenDrawer("category")}>
                 <CgList/>
             </div>
 
-            <div className="m-item" onClick={()=>handleOpenDrawer("wishlist")}>
+            <div className="m-item" onClick={() => handleOpenDrawer("wishlist")}>
                 <AiFillHeart/>
             </div>
 
-            <div className="m-item" onClick={()=>handleOpenDrawer("cart")}>
+            <div className="m-item" onClick={() => handleOpenDrawer("cart")}>
                 <FaCartShopping/>
             </div>
 

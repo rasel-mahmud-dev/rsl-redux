@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "rsl-redux";
 import Toast from "../../utils/toast.js";
 import {addToCartAction, deleteCartItemAction} from "../../store/actions/cartAction.js";
 import toast from "../../utils/toast.js";
+import inCart from "../../utils/inCart.js";
 
 function calculateDiscount(discount, price) {
     let offPrice = ((discount / 100) * price)
@@ -63,7 +64,7 @@ const ProductDetail = () => {
         if (!auth) {
             return Toast.openError("Need to login for add item in cart.")
         }
-        const cart = inCart(_id)
+        const cart = inCart(carts, _id)
         if (cart?._id) {
             dispatch(deleteCartItemAction(cart._id)).unwrap().then(() => {
                 Toast.openSuccess("Successfully removed from cart")
@@ -93,9 +94,6 @@ const ProductDetail = () => {
         })
     }, [slug]);
 
-    function inCart(productId) {
-        return carts?.find(el => el.productId === productId)
-    }
 
     function goCheckout() {
         localStorage.setItem("selected-products-for-checkout", JSON.stringify({
@@ -143,7 +141,7 @@ const ProductDetail = () => {
                                         <button
                                             className="btn primary-btn w-full"
                                             onClick={() => handleAddToCart(product)}>
-                                            {inCart(product._id) ? "Remove from Cart" : "Add To Cart"}
+                                            {inCart(carts, product._id) ? "Remove from Cart" : "Add To Cart"}
                                         </button>
                                         <button onClick={goCheckout} className="btn primary-btn w-full">Buy Now</button>
                                     </div>

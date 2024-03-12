@@ -26,10 +26,10 @@ const Carts = ({isOpen, onClose}) => {
                             <div className="grid grid-cols-3 md:grid-cols-6 gap-2 justify-between">
                                 {carts?.map(item=>(
                                     <div className="border   rounded p-1">
-                                        <div className="w-">
-                                            <Image imgClass="  object-contain" src={getAssetPath(item.coverImage)} alt={item.title} />
-                                        </div>
                                         <div className="">
+                                            <Image imgClass="w-20 h-20 !rounded object-contain" src={getAssetPath(item.coverImage)} alt={item.title} />
+                                        </div>
+                                        <div className="!text-sm font-medium mt-2">
                                             <Tooltip contentClass="truncate" tips={item.title}>
                                                 {item.title}
                                             </Tooltip>

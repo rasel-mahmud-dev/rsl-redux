@@ -14,30 +14,34 @@ function chooseFirstLetter(name) {
 }
 
 
+const Image = ({className = "", imgClass = "", fallbackLetter = false, username = "", src, ...attr}) => {
+        let letter = chooseFirstLetter(username)
 
-const Image= ({className = "", imgClass = "", username =  "", src, ...attr}) => {
-    let letter = chooseFirstLetter(username)
-
-    function handleErrorImage(e) {
-
-        let avatarRoot = (e.target?.parentNode )
-        avatarRoot.innerHTML = `
+        function handleErrorImage(e) {
+            if (!fallbackLetter) {
+                e.target.src = "/images/no-product.png"
+            } else {
+                let avatarRoot = (e.target?.parentNode)
+                avatarRoot.innerHTML = `
 			<span class="rounded-full bg-dark-5/50 w-9 h-9 flex items-center text-sm font-medium justify-center uppercase">${chooseFirstLetter(username)}</span>
 		`
-    }
-
-    return (
-        <div className={className} {...attr}>
-            {src
-                ? <div className="avatar-root">
-                    <img onError={handleErrorImage} src={src} alt="avatar"
-                         className={`rounded-full w-full ${imgClass}`}/>
-                </div>
-                : <div
-                    className={`rounded-full bg-dark-100 flex text-base items-center justify-center uppercase ${imgClass}`}>{letter}</div>
             }
-        </div>
-    );
-};
+        }
+
+        return (
+            <div className={className} {...attr}>
+                {src
+                    ? <div className="avatar-root">
+                        <img onError={handleErrorImage} src={src} alt="avatar"
+                             className={`rounded-full w-full ${imgClass}`}/>
+                    </div>
+                    :
+                    <div
+                        className={`rounded-full bg-dark-100 flex text-base items-center justify-center uppercase ${imgClass}`}>{letter}</div>
+                }
+            </div>
+        );
+    }
+;
 
 export default Image;

@@ -7,7 +7,6 @@ import {Navigate} from "react-router-dom";
 function AccessDenied(){
     return (
         <div>
-
             <h2>Access Denied111111111111111</h2>
         </div>
     )
@@ -15,7 +14,6 @@ function AccessDenied(){
 
 const Auth = ({accessRoles, children}) => {
     const {auth, authLoaded} = useSelector(state => state.authState)
-    console.log(auth)
     if (!authLoaded && !auth) {
         return (
             <div>

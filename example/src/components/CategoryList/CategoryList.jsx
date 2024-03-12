@@ -1,6 +1,7 @@
 import React from 'react';
 import CategoryItem from "./CategoryItem.jsx";
-import {isArray} from "rsl-redux";
+import {isArray, useSelector} from "rsl-redux";
+
 
 function renderSkeleton() {
     return (
@@ -12,21 +13,27 @@ function renderSkeleton() {
     )
 }
 
-const CategoryList = ({categories}) => {
+
+const CategoryList = ({onClose}) => {
+
+    const {categories} = useSelector(state=>state.productState)
+
+
     return (
         <div>
-            <div className="col-span-3 bg-white rounded-2xl py-2 px-2">
+            <div>
+                <div className="col-span-3 bg-white rounded-2xl py-2 px-2">
+                    {(!isArray(categories) || categories?.length === 0) ? Array.from({length: 15}).fill(1).map(_ => (
+                        renderSkeleton()
+                    )) : (
+                        categories.map(item => (
+                            <CategoryItem  {...item} onClick={()=>onClose()}  />
+                        ))
+                    )}
 
-                {(!isArray(categories) || categories?.length === 0) ? Array.from({length: 15}).fill(1).map(_ => (
-                    renderSkeleton()
-                )) : (
-                    categories.map(item => (
-                        <CategoryItem  {...item}/>
-                    ))
-                )}
+                </div>
 
             </div>
-
         </div>
     );
 };

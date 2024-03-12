@@ -8,7 +8,7 @@ import {
     fetchOrdersSlatsSummaryAction,
     loginAction
 } from "../actions/authAction.js";
-import {fetchCustomerReviews, updateReviewAction} from "../actions/reviewAction.js";
+import {deleteReview, fetchCustomerReviews, updateReviewAction} from "../actions/reviewAction.js";
 import {
     deleteQuestionAnswer,
     fetchCustomerQuestionAnswers,
@@ -158,9 +158,14 @@ const authSlice = createSlice({
             }
         })
 
+        builder.addCase(deleteReview.fulfilled, (state, action) => {
+            let customerReviews = [...state.customerReviews]
+            state.customerReviews = customerReviews.filter(r => r._id !== action.payload)
+        })
+
+
         // question and answers
 
-        // reviews
         builder.addCase(fetchCustomerQuestionAnswers.fulfilled, (state, action) => {
             state.customerQuestions = action.payload
         })

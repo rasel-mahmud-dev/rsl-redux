@@ -5,11 +5,13 @@ import {fetchProducts} from "../store/actions/productAction.js";
 import HeroBanner from "../components/HeroBanner.jsx";
 import getAssetPath from "../utils/getAssetPath.js";
 import ProductSkeleton from "../components/Product.Skeleton.jsx";
-import Loader, {Spinner} from "../components/Loader.jsx";
+import {Spinner} from "../components/Loader.jsx";
+import inCart from "../utils/inCart.js";
 
 
 const Products = () => {
     const {products, showCategories, homeProducts} = useSelector((state) => state.productState)
+    const {carts} = useSelector((state) => state.cartState)
 
     const [pageNumber, setPageNumber] = useState(1); // Height of the content
     const [isEmpty, setEmpty] = useState(false); // Height of the content
@@ -83,16 +85,11 @@ const Products = () => {
             <HeroBanner showCategories={showCategories}/>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3 lg:gap-6 mt-4">
                 {getAllProducts(homeProducts).map(product => (
-                    <Product key={product.id} {...product} />
+                    <Product cartId={inCart(carts, product._id)?._id} key={product._id} {...product} />
                 ))}
 
                 {!isArray(getAllProducts(homeProducts)) || getAllProducts(homeProducts)?.length === 0 && Array.from({length: 20}).fill(1).map(item => (
                     <ProductSkeleton key={item}/>
-
-                ))}
-
-                {isArray(products) && products.map(product => (
-                    <Product key={product.id} {...product} />
                 ))}
 
             </div>

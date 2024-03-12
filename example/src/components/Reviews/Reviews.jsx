@@ -39,7 +39,7 @@ const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDel
 
                             <div className="flex  items-center text-sm gap-x-4">
                                 <div className="flex items-center text-sm font-semibold text-neutral-700  ">
-                                    <Image src={getAssetPath(review.customer?.avatar)}/>
+                                    <Image fallbackLetter={true} src={getAssetPath(review.customer?.avatar)}/>
                                     <h4>{review.customer?.username}</h4>
                                 </div>
                                 <div className="text-neutral-500 flex items-center text-sm"><BiCheck/> Certified
