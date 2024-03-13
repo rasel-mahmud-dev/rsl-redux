@@ -13,6 +13,7 @@ import Toast from "../../utils/toast.js";
 import {addToCartAction, deleteCartItemAction} from "../../store/actions/cartAction.js";
 import toast from "../../utils/toast.js";
 import inCart from "../../utils/inCart.js";
+import formatPrice from "../../utils/formatPrice.js";
 
 function calculateDiscount(discount, price) {
     let offPrice = ((discount / 100) * price)
@@ -30,10 +31,20 @@ const ProductDetail = () => {
     const {carts} = useSelector(state => state.cartState)
 
     const [isShowImage, setShowImage] = React.useState(0);
+
+    /**
+     * Represents product information including average ratings, total ratings, and total reviews.
+     * @typedef {Object} product
+     * @property {number} ratingsAvg - The average ratings of the product.
+     * @property {number} totalRatings - The total number of ratings received by the product.
+     * @property {number} totalReviews - The total number of reviews received by the product.
+     * @propert { _id: number, count: number }[] ratingGroupCount
+     */
     const [product, setProduct] = React.useState(null);
+
+
     const [productDescription, setProductDescription] = React.useState({});
     const [sellerInfo, setSellerInfo] = React.useState({});
-    const productImageListRef = React.useRef(null);
 
     const rating = [
         {rating: 1, amount: 20},
@@ -42,14 +53,14 @@ const ProductDetail = () => {
         {rating: 4, amount: 20},
         {rating: 5, amount: 10},
     ];
-    
+
     const highlight = (productDescription && productDescription?.highlight) ? productDescription.highlight : [
         "Tur non nulla sit amet nisl tempus convallis quis ac lectus.",
         "Quisque velit nist tortor eget felis porttitor volutpat",
         " Pellentesque in ip nisl tempus convallis quis ac lectus.",
         "tur non nulla sit amet nisl tempus convallis quis ac lectus."
     ]
-    
+
     function calculateRate() {
         let subTotalRate = 0;
         let totalAmount = 0;
@@ -87,7 +98,7 @@ const ProductDetail = () => {
 
     useEffect(() => {
         if (!slug) return;
-        api.get("/products/single?slug=" + slug).then(r => {
+        api.get("/products/detail?slug=" + slug).then(r => {
             if (r.data) {
                 setProduct(r.data);
             }
@@ -121,7 +132,7 @@ const ProductDetail = () => {
                                         <div className="text-center font-semibold">
                                             {product.stock > 0
                                                 ? `${product.stock} items in Stock`
-                                                : "Outof Stock" }
+                                                : "Outof Stock"}
 
                                         </div>
 
@@ -154,24 +165,23 @@ const ProductDetail = () => {
                                         {/*}} slug={params.slug}*/}
                                         {/*/>*/}
                                     </div>
-
-
                                 </div>
                             </div>
                             <div className="dashboard-card p-4 !shadow-xxs col-span-9">
-                                <h4 className="text-lg heading-4 font-medium mb-2">{product.title}</h4>
+                                <h4 className="text-2xl heading-4 font-semibold mb-2">{product.title}</h4>
                                 <div className="flex items-center gap-x-1">
                                     <div
-                                        className="flex items-center gap-x-1 bg-primary-600 px-2 py-1 text-white rounded-md w-max">
-                                        <span>{calculateRate()}</span>
-                                        <BiStar/>
+                                        className="text-white flex items-center gap-x-1 bg-primary-500 px-4 py-1  rounded-md w-max">
+                                        <span>{product.ratingsAvg}</span>
+                                        <BiStar className="text-white"/>
                                     </div>
-                                    <h5 className="ml-2 text-sm"> 1,50,723 Ratings & 7,095 Reviews</h5>
+                                    <h5 className="ml-2 text-sm"> {formatPrice(product.totalRatings, 0)} Ratings
+                                        & {product.totalReviews} Reviews</h5>
                                 </div>
-                                <div className="pt-3 flex items-center">
-                                    <h4 className="text-lg font-bold">TK {calculateDiscount(product.discount || 0, product.price || 0)}</h4>
-                                    <h5 className="off-div flex items-center ml-3 ">
-                                        <span>TK{product.price}</span>
+                                <div className="pt-3 flex items-center gap-x-4">
+                                    <h4 className="text-lg font-bold">TK {calculateDiscount(product.discount || 0, product.price || 0).toFixed(2)}</h4>
+                                    <h5 className="off-div flex items-center gap-x-2 ">
+                                        <span className="line-through">TK{product.price}</span>
                                         <span>{product.discount}% off</span>
                                     </h5>
                                 </div>
@@ -240,7 +250,12 @@ const ProductDetail = () => {
                                 </div>
 
                                 {/*<SpecificationDetail specification={productDescription?.specification}/>*/}
-                                <RatingReviews productId={product._id}/>
+                                <RatingReviews
+                                    totalRatings={product.totalRatings}
+                                    totalReviews={product.totalReviews}
+                                    ratingsAvg={product.ratingsAvg}
+                                    ratingGroupCount={product.ratingGroupCount}
+                                    productId={product._id}/>
                                 <QuestionAnswers
                                     isProductOwner={auth?.role === "admin"}
                                     // isProductOwner={auth?._id === product?.sellerId}

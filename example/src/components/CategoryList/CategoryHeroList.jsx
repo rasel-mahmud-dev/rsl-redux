@@ -33,7 +33,7 @@ const CategoryHeroList = ({categories}) => {
                     <div className="">
                         <img className="w-6 h-6 object-contain flex" src={getAssetPath("image")} alt=""/>
                     </div>
-                    <h4>Show More</h4>
+                    <h4 className="text-primary-500">Show All</h4>
                 </div>
 
             </div>

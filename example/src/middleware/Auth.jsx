@@ -7,7 +7,7 @@ import {Navigate} from "react-router-dom";
 function AccessDenied(){
     return (
         <div>
-            <h2>Access Denied111111111111111</h2>
+            <h2>Access Denied</h2>
         </div>
     )
 }

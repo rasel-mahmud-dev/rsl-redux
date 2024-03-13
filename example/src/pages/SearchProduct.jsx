@@ -54,16 +54,14 @@ const SearchProduct = () => {
 
     useEffect(() => {
         dispatch(setFilter({
-            categoryIds: [categoryName],
+            categoryIds: categoryName ? [categoryName] : [],
             search: text,
         }))
     }, [categoryName, text])
 
-
     useEffect(() => {
         filterProduct(filter)
-    }, [filter.attributes, filter.brandIds])
-
+    }, [filter.attributes, filter.brandIds, filter.search])
 
     function filterProduct(filter) {
         setSearching(true)

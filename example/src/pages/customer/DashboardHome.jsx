@@ -9,6 +9,7 @@ import {
 import {useDispatch, useSelector} from "rsl-redux";
 import BarChart from "../../components/Stats/BarChart.jsx";
 import formatPrice from "../../utils/formatPrice.js";
+import ChartLoading from "../../components/Stats/ChartLoading.jsx";
 
 const OrderStats = lazy(() => import("../../components/Stats/OrderStats"));
 const OrderByCategories = lazy(() => import("../../components/Stats/OrderByCategories.jsx"));
@@ -19,7 +20,7 @@ const year = new Date().getFullYear()
 
 const DashboardHome = () => {
 
-    const {orderCategoryWiseSlats, auth, dashboardSlats}  = useSelector(state=>state.authState)
+    const {orderCategoryWiseSlats, auth, dashboardSlats} = useSelector(state => state.authState)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -56,21 +57,21 @@ const DashboardHome = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full">
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
-                    <Suspense fallback={<h1>Loading</h1>}>
+                    <Suspense fallback={<ChartLoading/>}>
                         <BarChart bgColor="bg-blue-500/10" countProperty="totalSales" label="All Earnings" items={sales}
                                   totalValue={"TK." + formatPrice(totalSales)}/>
                     </Suspense>
                 </div>
 
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
-                    <Suspense fallback={<h1>Loading</h1>}>
+                    <Suspense fallback={<ChartLoading/>}>
                         <BarChart bgColor="bg-orange-500/10" countProperty="count" items={users}
                                   totalValue={totalCustomer} label="Customers"/>
                     </Suspense>
                 </div>
 
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
-                    <Suspense fallback={<h1>Loading</h1>}>
+                    <Suspense fallback={<ChartLoading/>}>
                         <BarChart bgColor="bg-green-500/10" countProperty="count" items={sales} totalValue={totalOrders}
                                   label="Orders"/>
                     </Suspense>
@@ -79,13 +80,13 @@ const DashboardHome = () => {
 
 
             <div className="card bg-white mt-4 rounded-lg px-4">
-                <Suspense fallback={<h1>Loading</h1>}>
+                <Suspense fallback={<ChartLoading/>}>
                     <OrderByCategories label="Orders" year={year} items={orderCategoryWiseSlats[year]}/>
                 </Suspense>
             </div>
 
             <div className="card bg-white mt-2 md:mt-4 rounded-lg px-4">
-                <Suspense fallback={<h1>Loading</h1>}>
+                <Suspense fallback={<ChartLoading/>}>
                     <OrderByCategories label="Orders Count" type="quantity" year={year}
                                        items={orderCategoryWiseSlats[year]}/>
                     {/*<OrderStats label="Sales Count" year={year} items={orderSlats[year]}/>*/}

@@ -71,6 +71,13 @@ const items = {
 
     },
     "customer": {
+        "DASHBOARD": [
+            {
+                displayName: "DASHBOARD",
+                link: "/dashboard",
+                icon: () => <HiCube className="text-md"/>,
+            },
+        ],
         "Manage My Account": [
 
             // My Payment Options

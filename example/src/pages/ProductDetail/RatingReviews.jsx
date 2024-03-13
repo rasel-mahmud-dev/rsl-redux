@@ -12,7 +12,7 @@ import AddReview from "../../components/Reviews/AddReview.jsx";
 
 let image2 = `c20-rmx3063-realme-original-imagfxfzjrkqtbhe.jpeg`;
 
-const RatingReviews = ({productId}) => {
+const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews, ratingsAvg}) => {
     const dispatch = useDispatch()
     const {reviews} = useSelector(state => state.productState)
 
@@ -24,33 +24,33 @@ const RatingReviews = ({productId}) => {
         productId && dispatch(fetchReviews(productId))
     }, [productId])
 
+    const [rating, setRating] = useState({
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+    });
 
-    function calculateRate() {
-        let subTotalRate = 0;
-        let totalAmount = 0;
-        rating.map((rate) => {
-            subTotalRate += rate.rating * rate.amount;
-            totalAmount += rate.amount;
-        });
-        return (subTotalRate / totalAmount).toFixed(1);
-    }
+    useEffect(() => {
+        if (ratingGroupCount) {
+            let updateRating = {...rating}
+            for (let ratingGroupCountElement of ratingGroupCount) {
+                const {_id, count} = ratingGroupCountElement
+                updateRating[_id] = count
+            }
+            setRating(updateRating)
+        }
+    }, [ratingGroupCount]);
 
-    const rating = [
-        {rating: 1, amount: 20},
-        {rating: 2, amount: 30},
-        {rating: 3, amount: 10},
-        {rating: 4, amount: 20},
-        {rating: 5, amount: 10},
-    ];
 
     function totalRating() {
         let totalAmount = 0;
-        rating.map((rate) => {
-            totalAmount += rate.amount;
-        });
+        for (const rate in rating) {
+            totalAmount += rating[rate];
+        }
         return totalAmount;
     }
-
 
     const customerGallery = useMemo(() => {
         let items = []
@@ -72,7 +72,7 @@ const RatingReviews = ({productId}) => {
         <div className="mt-6">
 
             {openAddReviewForm && (
-                <AddReview productId={productId} onClose={()=>setOpenAddReviewForm(false)} />
+                <AddReview productId={productId} onClose={() => setOpenAddReviewForm(false)}/>
             )
             }
 
@@ -87,27 +87,31 @@ const RatingReviews = ({productId}) => {
                 <div className="flex mt-5 justify-between">
                     <div className="px-10">
                         <div className=" flex items-center font-bold text-4xl">
-                            <span className="block font-bold text-5xl">{calculateRate()}</span>
+                            <span className="block font-bold text-5xl">{ratingsAvg}</span>
                             <BiStar/>
                         </div>
-                        <h4 className="text-grey fs-14 mt-5"> {totalRating()} Total Ratings</h4>
-                        <h4 className="text-grey fs-14 text-center">&</h4>
-                        <h4 className="text-grey fs-14"> {reviews.length} Total Ratings</h4>
+                        <div className="flex flex-col justify-center items-center text-center">
+                            <h4 className="text-grey fs-14 mt-5 flex"> {totalRatings} Ratings</h4>
+                            <h4 className="text-grey fs-14 text-center">&</h4>
+                            <h4 className="text-grey fs-14 flex"> {totalReviews} Ratings</h4>
+                        </div>
                     </div>
                     <div className="ml-10 w-full">
-                        {rating.map((rat) => (
-                            <div className="rate w-full">
+
+                        {Object.keys(rating).map(rate => (
+                            <div className="rate w-full" key={rate}>
                                 <div className="flex items-center bg-transparent rating-star ">
-                                    <span className="w-3">{rat.rating}</span>
+                                    <span className="w-3">{rate}</span>
                                     <BiStar/>
                                 </div>
                                 <span className="user_rate-wrapper">
-                                    <div style={{width: (rat.amount * 100) / totalRating() + "%"}}
+                                    <div style={{width: (rating[rate] * 100) / totalRating() + "%"}}
                                          className="user_rate"/>
                                 </span>
-                                <span className="rate-amount text-grey fs-14 ml-5">{rat.amount}</span>
+                                <span className="rate-amount text-grey fs-14 ml-5">{rating[rate]}</span>
                             </div>
                         ))}
+
                     </div>
                 </div>
 
@@ -125,7 +129,7 @@ const RatingReviews = ({productId}) => {
 
             <div className="mt-5">
                 <h4 className="text-base font-semibold">Customer Reviews</h4>
-                <Reviews reviews={customerReviews} />
+                <Reviews reviews={customerReviews}/>
             </div>
 
             {customerReviews?.length ? <button className="btn primary-btn" type="text">
