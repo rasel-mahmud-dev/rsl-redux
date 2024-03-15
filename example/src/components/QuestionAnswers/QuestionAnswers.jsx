@@ -1,5 +1,7 @@
 // type = {
 //     question: string,
+//     author?: {username: string},
+//     customer?: {username: string},
 //     answer?: string,
 //     selletId?: string
 //     customerId?: string
@@ -37,7 +39,7 @@ const QuestionAnswers = ({
                                         <label htmlFor="">{qus.question}</label>
                                     </p>
                                     <div className="flex items-center gap-x-2 text-xs text-neutral-600 ">
-                                        <p>RaseL</p>
+                                        <p className="font-semibold">{qus?.customer?.username || "Unknown"}</p>
                                         {getDateTime(qus.createdAt)}
                                     </div>
                                 </div>
@@ -61,7 +63,7 @@ const QuestionAnswers = ({
                                     <label htmlFor="">{qus.answer}</label>
                                 </p>
                                 <div className="flex items-center gap-x-2 text-xs text-neutral-600 ">
-                                    <p>RaseL</p>
+                                    <p className="font-semibold">{qus?.author?.username || "Unknown"}</p>
                                     {getDateTime(qus.answeredAt)}
                                 </div>
                             </div>}

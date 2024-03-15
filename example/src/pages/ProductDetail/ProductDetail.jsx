@@ -122,9 +122,9 @@ const ProductDetail = () => {
         <div>
             <div className="">
 
-                <div className="mt-4 container-1920">
+                <div className="mt-4 container-1920 ">
                     {product ? (
-                        <div className="block lg:grid lg:grid-cols-12 gap-x-6">
+                        <div className="block lg:grid lg:grid-cols-12 gap-x-6 px-0 md:px-4 ">
                             <div
                                 className="description-sidebar dashboard-card !shadow-xxs  col-span-3 custom_scrollbar">
                                 <div className="">
@@ -167,7 +167,7 @@ const ProductDetail = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="dashboard-card p-4 !shadow-xxs col-span-9">
+                            <div className="dashboard-card  !shadow-xxs col-span-9">
                                 <h4 className="text-2xl heading-4 font-semibold mb-2">{product.title}</h4>
                                 <div className="flex items-center gap-x-1">
                                     <div
@@ -175,8 +175,7 @@ const ProductDetail = () => {
                                         <span>{Number(product.ratingsAvg).toFixed(1)}</span>
                                         <BiStar className="text-white"/>
                                     </div>
-                                    <h5 className="ml-2 text-sm"> {formatPrice(product.totalRatings, 0)} Ratings
-                                        & {product.totalReviews} Reviews</h5>
+                                    <h5 className="ml-2 text-sm"> {formatPrice(product.totalRatings, 0)} Ratings & Reviews</h5>
                                 </div>
                                 <div className="pt-3 flex items-center gap-x-4">
                                     <h4 className="text-lg font-bold">TK {calculateDiscount(product.discount || 0, product.price || 0).toFixed(2)}</h4>
@@ -251,12 +250,14 @@ const ProductDetail = () => {
 
                                 {/*<SpecificationDetail specification={productDescription?.specification}/>*/}
                                 <RatingReviews
+                                    authId={auth?._id}
                                     totalRatings={product.totalRatings}
                                     totalReviews={product.totalReviews}
                                     ratingsAvg={product.ratingsAvg}
                                     ratingGroupCount={product.ratingGroupCount}
                                     productId={product._id}/>
                                 <QuestionAnswers
+                                    authId={auth?._id}
                                     isProductOwner={auth?.role === "admin"}
                                     // isProductOwner={auth?._id === product?.sellerId}
                                     productId={product._id}/>

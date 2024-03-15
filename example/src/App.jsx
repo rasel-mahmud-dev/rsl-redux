@@ -20,6 +20,7 @@ function App() {
         dispatch(fetchCategories())
         const theme = localStorage.getItem("theme") || ""
         theme && changeThemeColor({color: theme})
+
     }, [])
 
 

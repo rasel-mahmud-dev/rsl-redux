@@ -190,7 +190,7 @@ const Nav = () => {
 
                                             <div
                                                 className="w-9 h-9 circle-pill rounded-full flex items-center justify-center">
-                                                {auth.avatar ? (<img src={getAssetPath(auth.avatar)} alt=""/>) : <span
+                                                {auth.avatar ? (<img className="aspect-square object-cover rounded-full" src={getAssetPath(auth.avatar)} alt=""/>) : <span
                                                     className="uppercase font-semibold">{auth?.username.slice(0, 1)}</span>}
                                             </div>
 

@@ -12,7 +12,7 @@ import AddReview from "../../components/Reviews/AddReview.jsx";
 
 let image2 = `c20-rmx3063-realme-original-imagfxfzjrkqtbhe.jpeg`;
 
-const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews, ratingsAvg}) => {
+const RatingReviews = ({productId, totalRatings, authId, ratingGroupCount, totalReviews, ratingsAvg}) => {
     const dispatch = useDispatch()
     const {reviews} = useSelector(state => state.productState)
 
@@ -72,7 +72,7 @@ const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews,
         <div className="mt-6">
 
             {openAddReviewForm && (
-                <AddReview productId={productId} onClose={() => setOpenAddReviewForm(false)}/>
+                <AddReview authId={authId} productId={productId} onClose={() => setOpenAddReviewForm(false)}/>
             )
             }
 
@@ -85,7 +85,7 @@ const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews,
 
             <div>
                 <div className="flex mt-5 justify-between">
-                    <div className="px-10">
+                    <div className="px-1 md:px-1">
                         <div className=" flex items-center font-bold text-4xl">
                             <span className="block font-bold text-5xl">{Number(ratingsAvg).toFixed(1)}</span>
                             <BiStar/>
@@ -93,16 +93,16 @@ const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews,
                         <div className="flex flex-col justify-center items-center text-center">
                             <h4 className="text-grey fs-14 mt-5 flex"> {totalRatings} Ratings</h4>
                             <h4 className="text-grey fs-14 text-center">&</h4>
-                            <h4 className="text-grey fs-14 flex"> {totalReviews} Reviews</h4>
+                            <h4 className="text-grey fs-14 flex">Reviews</h4>
                         </div>
                     </div>
-                    <div className="ml-10 w-full">
+                    <div className="ml-1 md:ml-10 w-full">
 
                         {Object.keys(rating).map(rate => (
                             <div className="rate w-full" key={rate}>
                                 <div className="flex items-center bg-transparent rating-star ">
                                     <span className="w-3">{rate}</span>
-                                    <BiStar/>
+                                    <BiStar title=""/>
                                 </div>
                                 <span className="user_rate-wrapper">
                                     <div style={{width: (rating[rate] * 100) / totalRating() + "%"}}

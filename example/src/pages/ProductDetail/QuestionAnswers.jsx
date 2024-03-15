@@ -7,7 +7,7 @@ import {fetchQuestionAnswers} from "../../store/actions/questionsAction.js";
 import AddQuestionForm from "../../components/QuestionAnswers/AddQuestionForm.jsx";
 
 
-const Index = ({productId, isProductOwner}) => {
+const Index = ({productId, isProductOwner, authId}) => {
     const dispatch = useDispatch()
     const {questionAnswers} = useSelector(state => state.productState)
 
@@ -27,6 +27,7 @@ const Index = ({productId, isProductOwner}) => {
 
             {state.isOpen && (
                 <AddQuestionForm
+                    authId={authId}
                     isQuestion={state.isQuestion}
                     productId={productId}
                     updateData={state.questionAnswer}

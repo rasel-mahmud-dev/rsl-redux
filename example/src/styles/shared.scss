@@ -671,6 +671,11 @@
   &:hover {
     background: var(--primary-500);
   }
+
+  img{
+    //border-radius: 100%;
+    //object-fit: contain;
+  }
 }
 
 .table-start-align.common-table.fixed-header-table,

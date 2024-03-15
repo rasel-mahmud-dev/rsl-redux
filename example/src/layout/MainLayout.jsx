@@ -22,7 +22,10 @@ const MainLayout = () => {
         <div>
             <Nav/>
             <div className="container">
+                <div className="mb-10 md:mb-0">
+
                 <Outlet />
+                </div>
             </div>
 
 

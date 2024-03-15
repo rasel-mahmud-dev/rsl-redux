@@ -18,6 +18,9 @@ function changeThemeColor(theme) {
             colors[colorsKey]
         )
     }
+
+    const tag = document.documentElement.querySelector("#theme-color")
+    tag.setAttribute("content", colors["primary-500"])
 }
 
 export default changeThemeColor

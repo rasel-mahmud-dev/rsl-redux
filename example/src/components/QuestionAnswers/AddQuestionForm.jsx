@@ -9,11 +9,12 @@ import {
     updateQuestionAnswerAction
 } from "../../store/actions/questionsAction.js";
 
-const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
+const AddQuestionForm = ({onClose, productId, updateData, authId, isQuestion}) => {
 
         const dispatch = useDispatch()
 
         function handleSubmit(questionAnswer) {
+            if (!authId) return Toast.openError("Need to login.")
             if (!productId) return Toast.openError("Product not exist.")
 
             if (!isQuestion) {
@@ -22,10 +23,11 @@ const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
                     productId,
                     _id: updateData._id
                 })).unwrap().then(() => {
+
                     Toast.openSuccess("Answer updated.")
                     onClose()
                 }).catch(ex => {
-                    Toast.openError(ex?.message)
+                    Toast.openError(ex)
                 })
                 return;
             }
@@ -39,7 +41,7 @@ const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
                     Toast.openSuccess("questionAnswer updated.")
                     onClose()
                 }).catch(ex => {
-                    Toast.openError(ex?.message)
+                    Toast.openError(ex)
                 })
                 return
             }
@@ -51,7 +53,7 @@ const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
                 Toast.openSuccess("questionAnswer added.")
                 onClose()
             }).catch(ex => {
-                Toast.openError(ex?.message)
+                Toast.openError(ex)
             })
 
         }
@@ -60,7 +62,7 @@ const AddQuestionForm = ({onClose, productId, updateData, isQuestion}) => {
             <div>
                 <Popup
                     backdropClass="bg-gray-300"
-                    className="max-w-md w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
+                    className="max-w-md  w-[95%] !fixed top-1/4 left-1/2 !-translate-x-1/2"
                     onClose={() => onClose()}
                     isOpen={true}>
                     <QuestionAnswerForm isQuestion={isQuestion} updateData={updateData} onSubmit={handleSubmit}/>

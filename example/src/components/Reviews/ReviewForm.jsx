@@ -167,36 +167,41 @@ const ReviewForm = ({onSubmit, updateData}) => {
         <div>
             <h2 className="text-2xl font-semibold">{updateData ? "Update" : "Submit"} Review</h2>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-4">
-                <div className="">
-                    <div className="mt-2"></div>
-                    <RatingChooser label="Rate" name="rate" onChange={handleChange} total={5}/>
-                    <Input label="Title" name="title" value={review.title} onChange={handleChange}/>
-                    <Input type="textarea" label="Summary" name="summary" value={review.summary}
-                           onChange={handleChange}/>
+            <form onSubmit={handleSubmit} className="">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
 
-                    <button className="btn primary-btn" type="submit">{updateData ? "Update" : "Submit"} Review</button>
+                    <div className="">
+                        <div className="mt-2"></div>
+                        <RatingChooser label="Rate" name="rate" onChange={handleChange} total={5}/>
+                        <Input label="Title" name="title" value={review.title} onChange={handleChange}/>
+                        <Input type="textarea" label="Summary" name="summary" value={review.summary}
+                               onChange={handleChange}/>
+
+                    </div>
+                    <div className="">
+                        <MultipleFileChooser
+                            required={true}
+                            name="images"
+                            fileHandler={fileCompress}
+                            multiple={true}
+                            uploadedImages={uploadedImages}
+                            label="Images"
+                            inputClass="bg-input-group"
+                            onChange={handleChange}
+                            labelClass="dark:text-white !mb-2"
+                            className={"mt-4"}
+                        />
+                        <div>
+                            <h4 className="text-xs font-semibold">Or</h4>
+                            <Input placeholder="comma seperate link" type="textarea" label="Link" name="linkImages" value={review.linkImages}
+                                   onChange={handleChange}/>
+                        </div>
+                    </div>
+
 
                 </div>
-                <div className="">
-                    <MultipleFileChooser
-                        required={true}
-                        name="images"
-                        fileHandler={fileCompress}
-                        multiple={true}
-                        uploadedImages={uploadedImages}
-                        label="Images"
-                        inputClass="bg-input-group"
-                        onChange={handleChange}
-                        labelClass="dark:text-white !mb-2"
-                        className={"mt-4"}
-                    />
-
-                    <div>
-                        <h4 className="text-xs font-semibold">Or</h4>
-                        <Input type="textarea" label="Link" name="linkImages" value={review.linkImages}
-                               onChange={handleChange}/>
-                    </div>
+                <div>
+                    <button className="btn primary-btn" type="submit">{updateData ? "Update" : "Submit"} Review</button>
                 </div>
             </form>
         </div>

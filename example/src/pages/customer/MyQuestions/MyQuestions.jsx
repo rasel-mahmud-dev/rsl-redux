@@ -9,7 +9,7 @@ import AddQuestionForm from "../../../components/QuestionAnswers/AddQuestionForm
 
 const MyQuestions = () => {
     const dispatch = useDispatch()
-    const {customerQuestions} = useSelector(state => state.authState)
+    const {customerQuestions, auth} = useSelector(state => state.authState)
 
 
     let init = {questionAnswer: null, isQuestion: true, isOpen: false}
@@ -41,6 +41,7 @@ const MyQuestions = () => {
 
             {(state.isOpen && state?.questionAnswer?.productId) && (
                 <AddQuestionForm
+                    authId={auth?._id}
                     isQuestion={state.isQuestion}
                     productId={state.questionAnswer.productId}
                     updateData={state.questionAnswer}

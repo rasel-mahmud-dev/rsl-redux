@@ -6,7 +6,7 @@ import AddReview from "../../../components/Reviews/AddReview.jsx";
 
 const List = () => {
 
-    const {customerReviews} = useSelector(state => state.authState)
+    const {customerReviews, auth} = useSelector(state => state.authState)
     const dispatch = useDispatch()
 
     const init = {
@@ -41,7 +41,10 @@ const List = () => {
         <div className="py-6 px-2 md:px-4">
 
             {state.isOpen && state.review?.productId && (
-                <AddReview updateData={state.review} productId={state.review?.productId} onClose={onClose}/>
+                <AddReview authId={auth?._id}
+                           updateData={state.review}
+                           productId={state.review?.productId}
+                           onClose={onClose}/>
             )
             }
 

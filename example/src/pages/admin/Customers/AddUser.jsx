@@ -4,6 +4,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {api} from "../../../axios/index.js";
 import Toast from "../../../utils/toast.js";
 import FileUpload from "../../../components/FileUpload.jsx";
+import resizeImage from "../../../utils/resizeImage.js";
+import blobToBase64 from "../../../utils/blobToBase64.js";
 
 
 const AddUser = () => {
@@ -52,18 +54,23 @@ const AddUser = () => {
         setProduct({...product, [name]: value});
     };
 
-    function handleUploadImage(name, value) {
+    async function handleUploadImage(name, value) {
 
         if (value.instanceOf === File) {
             return Toast.openError("Invalid file")
         }
 
-        if (value.size > 500000) {
-            return Toast.openError("file should be less than 500kb")
-        }
+        let originalBase64 = await blobToBase64(value)
+
+        let {blob} = await resizeImage({
+            maxWidth: 250,
+            maxHeight: 250,
+            src: originalBase64,
+            quality: 0.9,
+        })
 
         const formData = new FormData()
-        formData.append(value.name, value)
+        formData.append(value.name, blob)
         formData.append("fileName", value.name)
 
         api.post("/files/upload", formData)
