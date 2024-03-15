@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, Outlet,} from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
-import Nav from "../components/Nav.jsx";
+import Nav from "../components/Navigation/Nav.jsx";
 import {setSidebar} from "../store/slices/authSlice.js";
 import {useDispatch, useSelector} from "rsl-redux";
 import DashboardSidebar from "../components/DashboardSidebar/DashboardSidebar.jsx";

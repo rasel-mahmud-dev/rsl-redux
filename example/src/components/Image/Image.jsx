@@ -23,7 +23,7 @@ const Image = ({className = "", imgClass = "", fallbackLetter = false, username 
             } else {
                 let avatarRoot = (e.target?.parentNode)
                 avatarRoot.innerHTML = `
-			<span class="rounded-full bg-dark-5/50 w-9 h-9 flex items-center text-sm font-medium justify-center uppercase">${chooseFirstLetter(username)}</span>
+			<span class="rounded-full bg-gray-200 w-9 h-9 flex items-center text-sm font-medium justify-center uppercase">${chooseFirstLetter(username)}</span>
 		`
             }
         }
@@ -37,7 +37,7 @@ const Image = ({className = "", imgClass = "", fallbackLetter = false, username 
                     </div>
                     :
                     <div
-                        className={`rounded-full bg-dark-100 flex text-base items-center justify-center uppercase ${imgClass}`}>{letter}</div>
+                        className={`rounded-full bg-gray-50/50 flex text-base items-center justify-center uppercase ${imgClass}`}>{letter}</div>
                 }
             </div>
         );

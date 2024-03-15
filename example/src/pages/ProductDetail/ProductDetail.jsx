@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import getAssetPath from "../../utils/getAssetPath.js";
-import {FaAngleDown} from "react-icons/fa";
 import {BiStar} from "react-icons/bi";
 import {api} from "../../axios/index.js";
 

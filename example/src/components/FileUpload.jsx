@@ -1,58 +1,75 @@
 import React from 'react'
 import getAssetPath from "../utils/getAssetPath.js";
+import blobToBase64 from "../utils/blobToBase64.js";
+import resizeImage from "../utils/resizeImage.js";
+import chooseFile from "../utils/chooseFile.js";
 
-function FileUpload({name, label, preview=true, value, errorMessage, imagePreviewClass="", placeholder, onChange, className}) {
+function FileUpload({
+                        name,
+                        label,
+                        mimeType = [],
+                        preview = true,
+                        value,
+                        errorMessage,
+                        imagePreviewClass = "",
+                        placeholder,
+                        onChange,
+                        inputClass,
+                        className,
+                        resize
+                    }) {
 
-    const [base64, setBase64] = React.useState("")
+    const [file, setFile] = React.useState({
+        name: "",
+        size: 0,
+        base64: ""
+    })
 
 
-    function handleChange(e){
-        let file = e.target.files[0];
-
-        let reader = new FileReader()
-        reader.onload = function(event){
-            setBase64(event.target.result);
-            onChange({target: { name, value: file, base64: event.target.result }});
+    async function handleChooseImage() {
+        try {
+            const files = await chooseFile(mimeType)
+            let file = files[0];
+            let base64Org = await blobToBase64(file)
+            if (resize && resize.maxWidth && resize.maxHeight) {
+                const {blob, base64} = await resizeImage({
+                    src: base64Org,
+                    ...resize
+                })
+                setFile({base64, name: file.name, size: blob.size});
+                onChange({target: {name, value: blob, base64: base64}});
+            } else {
+                setFile({base64: base64Org, name: file.name, size: file.size});
+                onChange({target: {name, value: file, base64: base64Org}});
+            }
+        } catch (ex) {
+            // handler eror
+            console.log(ex)
         }
-        reader.readAsDataURL(file)
     }
-
-    function handleCompress(e) {
-
-    }
-
 
     return (
-        <div>
-            <div className={["mt-4 flex items-start flex-col md:flex-row", className].join(" ")} >
-                <label htmlFor={name}  className="block w-40 font-medium text-gray-200 mb-2 md:mb-0" >{label}</label>
 
-                <div className="w-full">
-                    <input
-                        name={name}
-                        type="file"
-                        id={name}
-                        placeholder={placeholder}
-                        onChange={handleChange}
-                        className="input input-bordered input-primary w-full text-gray-300"
-                    />
-                    <div className="mt-1">
-                        {errorMessage && <span className="rounded-md text-error">{errorMessage}</span> }
-                    </div>
+        <div className={`rsl-input-group ${className}`}>
+            <label htmlFor={name}>{label}</label>
 
-                    { preview && base64 && (
-                        <img onLoad={handleCompress} src={base64} className={imagePreviewClass}  alt="" />
-                    ) }
-                    { value && typeof value === "string" && !base64 && (
-                        <img src={getAssetPath(value)} className={imagePreviewClass} />
-                    ) }
+            <div className="w-full">
+                <div onClick={handleChooseImage} className={`rs-input cursor-pointer ${inputClass}`}>{file.name ? <span>
+                    {file.name} {Number(file.size / 1024).toFixed(2)}KB
+                </span> : placeholder}</div>
 
+                <div className="mt-1">
+                    {errorMessage && <span className="rounded-md text-error">{errorMessage}</span>}
                 </div>
+
+                {preview && file.base64 && (
+                    <img  src={file.base64} className={imagePreviewClass} alt=""/>
+                )}
+                {value && typeof value === "string" && !file.base64 && (
+                    <img src={getAssetPath(value)} className={imagePreviewClass}/>
+                )}
+
             </div>
-
-
-
-
         </div>
     )
 }

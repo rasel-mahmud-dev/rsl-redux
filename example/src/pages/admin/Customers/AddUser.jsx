@@ -6,6 +6,7 @@ import Toast from "../../../utils/toast.js";
 import FileUpload from "../../../components/FileUpload.jsx";
 import resizeImage from "../../../utils/resizeImage.js";
 import blobToBase64 from "../../../utils/blobToBase64.js";
+import {imageExtensions} from "../../../utils/constant/extension.js";
 
 
 const AddUser = () => {
@@ -60,17 +61,8 @@ const AddUser = () => {
             return Toast.openError("Invalid file")
         }
 
-        let originalBase64 = await blobToBase64(value)
-
-        let {blob} = await resizeImage({
-            maxWidth: 250,
-            maxHeight: 250,
-            src: originalBase64,
-            quality: 0.9,
-        })
-
         const formData = new FormData()
-        formData.append(value.name, blob)
+        formData.append(value.name, value)
         formData.append("fileName", value.name)
 
         api.post("/files/upload", formData)
@@ -134,8 +126,16 @@ const AddUser = () => {
 
 
                         <div className="flex flex-col mb-3">
-                            <label htmlFor="">Cover:</label>
-                            <FileUpload className="rs-input"
+                            <FileUpload className=""
+                                        label="Cover:"
+                                        mimeType={imageExtensions}
+                                        resize={{
+                                            maxWidth: 250,
+                                            maxHeight: 250,
+                                            quality: 0.9,
+                                        }}
+                                        placeholder="Choose avatar"
+                                        inputClass="text-gray-500 "
                                         imagePreviewClass="w-24 aspect-square object-contain         "
                                         name="avatar"
                                         value={product.avatar}

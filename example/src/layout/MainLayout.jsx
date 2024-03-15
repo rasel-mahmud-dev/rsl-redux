@@ -1,6 +1,6 @@
 import React from 'react';
 import {Outlet} from "react-router-dom";
-import Nav from "../components/Nav.jsx";
+import Nav from "../components/Navigation/Nav.jsx";
 import Carts from "../components/MobileNavigation/Carts.jsx";
 import {useDispatch, useSelector} from "rsl-redux"
 import {setSidebar} from "../store/slices/authSlice.js";

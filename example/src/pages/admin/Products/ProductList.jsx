@@ -25,7 +25,11 @@ const ProductList = () => {
     }, [])
 
     function handleDeleteItem(id) {
-        dispatch(deleteAdminProduct(id))
+        dispatch(deleteAdminProduct(id)).unwrap().then(_ => {
+            Toast.openSuccess("Product has been deleted!")
+        }).catch(ex => {
+            Toast.openError(ex)
+        })
     }
 
     async function handleImportBulk(content) {

@@ -9,6 +9,7 @@ import {
 } from "../../../store/actions/categoryAction.js";
 import Input from "../../../components/Form/Input.jsx";
 import config from "../../../config/index.js";
+import {imageExtensions} from "../../../utils/constant/extension.js";
 
 const AddProduct = () => {
 
@@ -168,9 +169,16 @@ const AddProduct = () => {
 
 
                         <div className="flex flex-col mb-3">
-                            <label htmlFor="">Cover:</label>
                             <FileUpload
-                                className="rs-input "
+                                label="Cover:"
+                                mimeType={imageExtensions}
+                                resize={{
+                                    maxWidth: 250,
+                                    maxHeight: 250,
+                                    quality: 0.9,
+                                }}
+                                placeholder="Choose cover photo"
+                                inputClass="text-gray-500 "
                                 imagePreviewClass="w-24 aspect-square object-contain         "
                                 name="coverImage"
                                 value={product.coverImage}

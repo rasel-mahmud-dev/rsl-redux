@@ -17,7 +17,10 @@ const ProductList = () => {
     const dispatch = useDispatch()
 
     function handleDeleteItem(id) {
-        dispatch(deleteCategory(id))
+        dispatch(deleteCategory(id)).unwrap().then()
+            .catch(ex=>{
+            Toast.openError(ex)
+        })
     }
 
     const [isOpenImportModal, setOpenImportModal] = useState(false)

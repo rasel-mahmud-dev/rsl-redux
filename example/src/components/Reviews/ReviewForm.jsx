@@ -4,6 +4,7 @@ import RatingChooser from "./RatingChooser.jsx";
 import MultipleFileChooser from "../Form/MultipleFileChooser/MultipleFileChooser.jsx";
 import resizeImage from "../../utils/resizeImage.js";
 import {api} from "../../axios/index.js";
+import {imageExtensions} from "../../utils/constant/extension.js";
 
 const ReviewForm = ({onSubmit, updateData}) => {
 
@@ -181,6 +182,7 @@ const ReviewForm = ({onSubmit, updateData}) => {
                     <div className="">
                         <MultipleFileChooser
                             required={true}
+                            mimeType={imageExtensions}
                             name="images"
                             fileHandler={fileCompress}
                             multiple={true}

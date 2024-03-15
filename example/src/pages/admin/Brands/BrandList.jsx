@@ -24,7 +24,10 @@ const BrandList = () => {
 
 
     function handleDeleteItem(id) {
-        dispatch(deleteBrand(id))
+        dispatch(deleteBrand(id)).unwrap().then()
+            .catch(ex=>{
+                Toast.openError(ex)
+            })
     }
 
     async function handleImportBulk(content) {

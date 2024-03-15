@@ -24,10 +24,10 @@ const List = () => {
     }, [])
 
     function handleDeleteItem(id) {
-        dispatch(deleteCustomer(id)).unwrap().then(res => {
+        dispatch(deleteCustomer(id)).unwrap().then(_ => {
             Toast.openSuccess("Customer has been deleted!")
         }).catch(ex => {
-            Toast.openError(ex?.message)
+            Toast.openError(ex)
         })
     }
 

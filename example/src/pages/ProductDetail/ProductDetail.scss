@@ -112,17 +112,18 @@
 
 }
 
-.product-sidebar-image-div{
+.product-sidebar-image-div {
   flex-direction: column-reverse !important;
 
-  .image_list{
+  .image_list {
     //height: 100px;
     background: #2d2d2d;
     display: flex;
     flex-wrap: nowrap;
     padding: 10px;
     overflow-x: auto;
-    .image_list_item{
+
+    .image_list_item {
       width: 100px;
       //height: 100px;
       //img{

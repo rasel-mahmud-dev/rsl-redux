@@ -3,6 +3,8 @@ import {BiCheck, BiStar} from "react-icons/bi";
 import Image from "../Image/Image.jsx";
 import getAssetPath from "../../utils/getAssetPath.js";
 
+import "../../pages/ProductDetail/ProductDetail.scss"
+
 const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDelete}) => {
     return (
         <div className={className}>
