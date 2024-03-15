@@ -10,6 +10,7 @@ import changeThemeColor from "./utils/changeThemeColor.js";
 import {Tooltip} from "react-tooltip";
 import ThemeChoose from "./components/ThemeChoose/ThemeChoose.jsx";
 import Loader from "./components/Loader.jsx";
+import countHits from "./utils/countHits.js";
 
 function App() {
     const {auth} = useSelector(state => state.authState)
@@ -20,6 +21,8 @@ function App() {
         dispatch(fetchCategories())
         const theme = localStorage.getItem("theme") || ""
         theme && changeThemeColor({color: theme})
+
+        countHits()
 
     }, [])
 

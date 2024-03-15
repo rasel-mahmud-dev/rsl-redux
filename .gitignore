@@ -12,3 +12,4 @@ node_modules
 # Local Netlify folder
 .netlify
 /example/src/pages/spec.js
+/example/src/utils/tracking.js
