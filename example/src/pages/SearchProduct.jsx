@@ -251,7 +251,7 @@ function Brands({items, onChange, name, selectedBrands = []}) {
                 <label className="text-sm text-neutral-600" onClick={() => setShowMore(true)}>Show All</label>
             </div>
 
-            {isShowMore && <Popup className="!fixed top-36 max-w-3xl w-full h-60    overflow-x-auto"
+            {isShowMore && <Popup className="!fixed top-36 max-w-3xl w-full h-60  z-[10034540] bg-white   overflow-x-auto"
                                   onClose={() => setShowMore(false)}
                                   isOpen={isShowMore}>
                 <div>
@@ -260,7 +260,11 @@ function Brands({items, onChange, name, selectedBrands = []}) {
                             items.map(brand => (
                                 <div className=" flex  items-center gap-x-2 py-1 hover-list-primary rounded px-2"
                                      key={brand._id}>
-                                    <input type="checkbox" id={brand.slug}/>
+                                    <input            onChange={() => onChange(name, brand.slug)}
+                                                      checked={selectedBrands.includes(brand.slug)}
+
+
+                                                      type="checkbox" id={brand.slug}/>
                                     <label className="text-sm text-neutral-600"
                                            htmlFor={brand.slug}>{brand.name}</label>
                                 </div>

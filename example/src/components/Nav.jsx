@@ -8,6 +8,7 @@ import Popup from "./Popup.jsx";
 import {HiBars4} from "react-icons/hi2";
 import getAssetPath from "../utils/getAssetPath.js";
 import MobileNavigation from "./MobileNavigation/MobileNavigation.jsx";
+import {FaSignInAlt} from "react-icons/fa";
 
 const Nav = () => {
     const {auth, openSidebar} = useSelector(state => state?.authState)
@@ -74,7 +75,7 @@ const Nav = () => {
 
                 <div className="mx-auto max-w-5xl">
                     <div className="py-3">
-                        <div className="w-full flex justify-between gap-x-2  rounded-3xl py-2 px-4">
+                        <div className="w-full flex justify-between gap-x-2 items-center rounded-3xl py-2 px-4">
                             <div className="flex items-center gap-x-6 w-full max-w-sm">
 
                                 <li className="text-sm font-medium list-none flex items-center gap-x-2 ">
@@ -218,7 +219,13 @@ const Nav = () => {
                                 </div>
                             ) : (
                                 <li className="text-sm font-medium list-none">
-                                    <NavLink className="text-white" to="/login">Login</NavLink>
+                                    <NavLink className="text-white flex items-center gap-x-1" to="/login">
+                                        <FaSignInAlt />
+                                    <span>
+                                        Login
+
+                                    </span>
+                                    </NavLink>
                                 </li>
                             )}
 

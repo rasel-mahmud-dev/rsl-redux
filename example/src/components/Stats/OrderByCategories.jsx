@@ -87,7 +87,7 @@ class OrderStats extends React.Component {
 
     componentDidMount() {
         const { items} = this.props
-        if(items.length){
+        if(items?.length){
             this.calc(items)
         }
     }
