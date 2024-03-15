@@ -172,7 +172,7 @@ const ProductDetail = () => {
                                 <div className="flex items-center gap-x-1">
                                     <div
                                         className="text-white flex items-center gap-x-1 bg-primary-500 px-4 py-1  rounded-md w-max">
-                                        <span>{product.ratingsAvg}</span>
+                                        <span>{Number(product.ratingsAvg).toFixed(1)}</span>
                                         <BiStar className="text-white"/>
                                     </div>
                                     <h5 className="ml-2 text-sm"> {formatPrice(product.totalRatings, 0)} Ratings

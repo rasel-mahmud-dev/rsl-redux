@@ -6,7 +6,6 @@ import getAssetPath from "../../utils/getAssetPath.js";
 const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDelete}) => {
     return (
         <div className={className}>
-
             {reviews.map((review) => (
                 <div className="rating bg-white p-4 rounded-lg my-2">
 
@@ -26,8 +25,8 @@ const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDel
 
                     <p className="text-sm text-neutral-600 mt-2">{review.summary}</p>
 
-                    <div className="flex gap-1 mt-4">
-                        {review?.images?.map(img => (
+                    <div className="flex gap-1 mt-4 flex-wrap">
+                        {review?.images?.map(img =>   (
                             <Image imgClass="object-cover w-20 h-20 !rounded" className=" " key={img}
                                    src={getAssetPath(img)}/>
                         ))}
@@ -38,8 +37,8 @@ const Reviews = ({reviews, className, isModAble = false, onClickEdit, onClickDel
                         <div className="flex justify-between items-center text-sm">
 
                             <div className="flex  items-center text-sm gap-x-4">
-                                <div className="flex items-center text-sm font-semibold text-neutral-700  ">
-                                    <Image fallbackLetter={true} src={getAssetPath(review.customer?.avatar)}/>
+                                <div className="flex items-center text-sm font-semibold text-neutral-700 gap-x-1  ">
+                                    <Image imgClass="w-6 h-6 border" fallbackLetter={true} src={getAssetPath(review.customer?.avatar)}/>
                                     <h4>{review.customer?.username}</h4>
                                 </div>
                                 <div className="text-neutral-500 flex items-center text-sm"><BiCheck/> Certified

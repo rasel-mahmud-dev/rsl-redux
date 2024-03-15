@@ -87,13 +87,13 @@ const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews,
                 <div className="flex mt-5 justify-between">
                     <div className="px-10">
                         <div className=" flex items-center font-bold text-4xl">
-                            <span className="block font-bold text-5xl">{ratingsAvg}</span>
+                            <span className="block font-bold text-5xl">{Number(ratingsAvg).toFixed(1)}</span>
                             <BiStar/>
                         </div>
                         <div className="flex flex-col justify-center items-center text-center">
                             <h4 className="text-grey fs-14 mt-5 flex"> {totalRatings} Ratings</h4>
                             <h4 className="text-grey fs-14 text-center">&</h4>
-                            <h4 className="text-grey fs-14 flex"> {totalReviews} Ratings</h4>
+                            <h4 className="text-grey fs-14 flex"> {totalReviews} Reviews</h4>
                         </div>
                     </div>
                     <div className="ml-10 w-full">
@@ -117,7 +117,7 @@ const RatingReviews = ({productId, totalRatings, ratingGroupCount, totalReviews,
 
                 <div className="mt-5">
                     <h4 className="text-base font-semibold">Customer Gallery</h4>
-                    <div className="flex gap-1 mt-2">
+                    <div className="flex flex-wrap gap-1 mt-2">
                         {customerGallery?.map(img => (
                             <Image imgClass="object-cover w-10 h-10 !rounded" className=" " key={img}
                                    src={getAssetPath(img)}/>

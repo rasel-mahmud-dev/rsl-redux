@@ -46,7 +46,7 @@ const ReviewForm = ({onSubmit, updateData}) => {
         e.preventDefault();
         let images = []
         for (let uploadedImagesKey in uploadedImages) {
-            if(uploadedImages[uploadedImagesKey].url){
+            if (uploadedImages[uploadedImagesKey].url) {
                 images.push(uploadedImages[uploadedImagesKey].url)
             }
         }
@@ -104,11 +104,29 @@ const ReviewForm = ({onSubmit, updateData}) => {
 
     const handleChange = async (e) => {
         const {name, value} = e.target;
-        setReview(prevReview => ({
-            ...prevReview,
-            [name]: value
-        }));
+
+        if (name === "linkImages") {
+            const links = value?.split(",")
+            if (links.length) {
+                let updateUploadedImages = {...uploadedImages}
+                links.forEach(link => {
+                    let withoutQuery = link.split("?")?.[0]?.trim()
+                    if (withoutQuery) {
+                        updateUploadedImages[withoutQuery] = {url: withoutQuery}
+                    }
+                })
+                setUploadedImages(updateUploadedImages)
+            }
+        } else {
+            setReview(prevReview => ({
+                ...prevReview,
+                [name]: value
+            }));
+
+        }
     };
+
+    console.log(review)
 
     function handleUploadImage(name, value, dir) {
         // eslint-disable-next-line no-async-promise-executor
@@ -160,7 +178,7 @@ const ReviewForm = ({onSubmit, updateData}) => {
                     <button className="btn primary-btn" type="submit">{updateData ? "Update" : "Submit"} Review</button>
 
                 </div>
-                <div>
+                <div className="">
                     <MultipleFileChooser
                         required={true}
                         name="images"
@@ -173,6 +191,12 @@ const ReviewForm = ({onSubmit, updateData}) => {
                         labelClass="dark:text-white !mb-2"
                         className={"mt-4"}
                     />
+
+                    <div>
+                        <h4 className="text-xs font-semibold">Or</h4>
+                        <Input type="textarea" label="Link" name="linkImages" value={review.linkImages}
+                               onChange={handleChange}/>
+                    </div>
                 </div>
             </form>
         </div>

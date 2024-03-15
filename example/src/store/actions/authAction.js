@@ -92,11 +92,12 @@ export const deleteCustomer = createAsyncAction(
 
 export const fetchDashboardSlatsAction = createAsyncAction(
     "fetchDashboardSlatsAction",
-    async ({year, role}) => {
+    async ({year, role, taskList = []}) => {
         try {
             const {data} = await api.post("/slats/admin-dashboard/home", {
                 year,
-                role
+                role,
+                taskList
             })
             return data
         } catch (e) {
@@ -111,6 +112,21 @@ export const fetchOrdersSlatsAction = createAsyncAction(
             const {data} = await api.post("/orders/stats", {
                 year,
                 role
+            })
+            return {items: data, year}
+        } catch (e) {
+            throw catchErrorMessage(e)
+        }
+
+    })
+export const fetchCartsSlatsAction = createAsyncAction(
+    "fetchCartsSlatsAction",
+    async ({year, role, taskList = []}) => {
+        try {
+            const {data} = await api.post("/orders/stats", {
+                year,
+                role,
+                taskList
             })
             return {items: data, year}
         } catch (e) {

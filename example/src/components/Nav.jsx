@@ -201,14 +201,14 @@ const Nav = () => {
                                                 <div className="">
                                                     <li className="list-item">{auth.username}</li>
 
-                                                    <Link to="/dashboard">
-                                                        <li className="list-item">Dashboard</li>
-                                                    </Link>
+                                                    <a href="/dashboard">
+                                                        <li className="list-item">Customer Dashboard</li>
+                                                    </a>
 
                                                     {auth.role === "admin" && (
-                                                        <Link to="/admin">
+                                                        <a href="/admin">
                                                             <li className="list-item">Admin Dashboard</li>
-                                                        </Link>
+                                                        </a>
                                                     )}
                                                     <li className="list-item " onClick={handleLogout}>logout</li>
                                                 </div>

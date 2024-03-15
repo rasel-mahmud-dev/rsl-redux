@@ -7,11 +7,13 @@ import getAssetPath from "../utils/getAssetPath.js";
 import ProductSkeleton from "../components/Product.Skeleton.jsx";
 import {Spinner} from "../components/Loader.jsx";
 import inCart from "../utils/inCart.js";
+import {useNavigate} from "react-router-dom";
 
 
 const Products = () => {
     const {products, showCategories, homeProducts} = useSelector((state) => state.productState)
     const {carts} = useSelector((state) => state.cartState)
+    const navigate = useNavigate()
 
     const [pageNumber, setPageNumber] = useState(1); // Height of the content
     const [isEmpty, setEmpty] = useState(false); // Height of the content
@@ -73,7 +75,7 @@ const Products = () => {
                     className="flex items-center justify-between max-w-8xl mx-auto  gap-x-2 md:gap-x-4 scroll-x-transparent overflow-x-auto md:overflow-visible ">
                     {showCategories.map((cat) => (
                         <div key={cat._id} className="home-category-list-item">
-                            <div onClick={() => navigate(`/p/${cat._id}`)}
+                            <div onClick={() => navigate(`/p/${cat.slug}`)}
                                  className="flex home-category-list-item-content flex-col items-center  border md:border-none rounded-full md:bg-transparent ">
                                 <img alt={cat.name} className="category-list-item-img" src={getAssetPath(cat.image)}/>
                             </div>

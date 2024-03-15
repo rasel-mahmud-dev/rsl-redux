@@ -27,6 +27,7 @@ const initialState = {
             //     "month": 0
             // }
         ],
+        "carts": [],
         "users": [
             // {
             //     "count": 0,
@@ -41,7 +42,8 @@ const initialState = {
         totalSpend: 0,
         totalProducts: 0,
         totalUsers: 0,
-        totalCategories: 0
+        totalCategories: 0,
+        totalOrders: 0
     },
     openSidebar: "",
     customers: [],

@@ -158,6 +158,7 @@ const SearchProduct = () => {
 
             <div className="gap-6 mt-4">
 
+                {openSidebar === "filter" && <div onClick={handleToggleLeft} className=" product-attr-sidebar-backdrop"></div> }
                 <div
                     className={`bg-white p-2 sidebar product-attr-sidebar  ${openSidebar === "filter" ? "filter-sidebar" : ""}`}>
                     <div className="">

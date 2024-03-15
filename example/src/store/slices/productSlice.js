@@ -25,15 +25,15 @@ const initialState = {
             "image": "-original-imagnrmsyuhjce9a.webp"
         },
         {
-            "name": "Watches",
-            "slug": "watches",
-            "image": "-original-imaghbkf6jzfxfz55.webp"
+            "name": "Shoes",
+            "slug": "shoes",
+            "image": "https://rukminim2.flixcart.com/image/612/612/kyrlifk0/shoe/p/t/1/8-22g-869-campus-navy-red-original-imagaxgyfqxdhzeh.jpeg?q=70"
         },
 
         {
-            "name": "Groceries",
-            "slug": "groceries",
-            "image": "https://rukminim2.flixcart.com/image/612/612/xif0q/nut-dry-fruit/m/0/b/500-popular-california-1-pouch-farmley-original-imagvy272uh8fkt2.jpeg?q=70"
+            "name": "Camera",
+            "slug": "cameras-and-accessories",
+            "image": "https://rukminim2.flixcart.com/image/312/312/jfbfde80/camera/n/r/n/canon-eos-eos-3000d-dslr-original-imaf3t5h9yuyc5zu.jpeg?q=70"
         },
 
         {

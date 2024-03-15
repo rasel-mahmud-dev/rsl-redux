@@ -1,8 +1,7 @@
 import React, {lazy, Suspense, useEffect, useMemo} from 'react';
-import {api} from "../../axios/index.js";
 import {
+    fetchCartsSlatsAction,
     fetchCategoryWiseOrdersSlatsAction, fetchDashboardSlatsAction,
-    fetchOrdersSlatsAction,
     fetchOrdersSlatsSummaryAction
 } from "../../store/actions/authAction.js";
 
@@ -11,24 +10,29 @@ import BarChart from "../../components/Stats/BarChart.jsx";
 import formatPrice from "../../utils/formatPrice.js";
 import ChartLoading from "../../components/Stats/ChartLoading.jsx";
 
-const OrderStats = lazy(() => import("../../components/Stats/OrderStats"));
 const OrderByCategories = lazy(() => import("../../components/Stats/OrderByCategories.jsx"));
-const TotalIncome = lazy(() => import("../../components/Stats/TotalIncome"));
 
 
 const year = new Date().getFullYear()
 
 const DashboardHome = () => {
 
-    const {orderCategoryWiseSlats, auth, dashboardSlats} = useSelector(state => state.authState)
+    const {orderCategoryWiseSlats, dashboardSlats} = useSelector(state => state.authState)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchDashboardSlatsAction({
             year,
-            role: "customer"
+            role: "customer",
+            taskList: [
+                "cartCount",
+            ]
         }))
-
+        dispatch(fetchCartsSlatsAction({
+            year,
+            role: "customer",
+        }))
         dispatch(fetchCategoryWiseOrdersSlatsAction({
             year,
             role: "customer",
@@ -44,12 +48,11 @@ const DashboardHome = () => {
     }, []);
 
 
-    const {sales, users} = dashboardSlats
+    const {sales,  carts} = dashboardSlats
 
     const totalSales = useMemo(() => sales?.reduce((acc, cur) => acc + cur.totalSales, 0), [sales?.length])
     const totalOrders = useMemo(() => sales?.reduce((acc, cur) => acc + cur.count, 0), [sales?.length])
-    const totalCustomer = useMemo(() => users?.reduce((acc, cur) => acc + cur.count, 0), [users?.length])
-
+    const totalCarts = useMemo(() => carts?.reduce((acc, cur) => acc + cur.count, 0), [carts?.length])
 
     return (
         <div className="mt-3 ">
@@ -58,15 +61,15 @@ const DashboardHome = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 w-full">
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
                     <Suspense fallback={<ChartLoading/>}>
-                        <BarChart bgColor="bg-blue-500/10" countProperty="totalSales" label="All Earnings" items={sales}
+                        <BarChart bgColor="bg-blue-500/10" countProperty="totalSales" label="Order amount" items={sales}
                                   totalValue={"TK." + formatPrice(totalSales)}/>
                     </Suspense>
                 </div>
 
                 <div className=" !p-0 !m-0 bg-white rounded-lg">
                     <Suspense fallback={<ChartLoading/>}>
-                        <BarChart bgColor="bg-orange-500/10" countProperty="count" items={users}
-                                  totalValue={totalCustomer} label="Customers"/>
+                        <BarChart bgColor="bg-orange-500/10" countProperty="count" items={carts}
+                                  totalValue={totalCarts} label="Carts"/>
                     </Suspense>
                 </div>
 

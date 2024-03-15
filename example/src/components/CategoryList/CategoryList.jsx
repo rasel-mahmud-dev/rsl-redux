@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import CategoryItem from "./CategoryItem.jsx";
-import {isArray, useSelector} from "rsl-redux";
+import {isArray, useDispatch, useSelector} from "rsl-redux";
+import {fetchCategories} from "../../store/actions/categoryAction.js";
 
 
 function renderSkeleton() {
@@ -17,6 +18,14 @@ function renderSkeleton() {
 const CategoryList = ({onClose}) => {
 
     const {categories} = useSelector(state=>state.productState)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if(!categories?.length){
+            dispatch(fetchCategories())
+        }
+    }, [categories?.length]);
 
 
     return (

@@ -43,7 +43,7 @@ const AddReview = ({onClose, productId, updateData}) => {
         <div>
             <Popup
                 backdropClass="bg-gray-300"
-                className="max-w-2xl w-full !fixed top-1/4 left-1/2 !-translate-x-1/2"
+                className="max-w-2xl w-full max-h-[60vh] overflow-y-auto !fixed top-1/4 left-1/2 !-translate-x-1/2"
                 onClose={() => onClose()}
                 isOpen={true}>
                 <ReviewForm updateData={updateData} onSubmit={handleSubmitReview}/>

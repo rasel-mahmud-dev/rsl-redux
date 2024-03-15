@@ -10,6 +10,7 @@ class OrderStats extends React.Component {
         super(props);
         const type = this.props.type
         this.calculateDate = this.calculateDate.bind(this)
+        this.calc = this.calc.bind(this)
         this.state = {
             totalVisitor: 0,
             currentYear: new Date().getFullYear(),
@@ -65,7 +66,7 @@ class OrderStats extends React.Component {
                         formatter: function (value) {
                             return  type === "quantity"
                                 ? value
-                                : formatPrice(value, 2);;
+                                : formatPrice(value, 2);
                         }
                     },
                 },
@@ -84,34 +85,22 @@ class OrderStats extends React.Component {
         };
     }
 
-
-    async componentDidUpdate(prevProps) {
-        const {year, items} = this.props
-        if (prevProps.items !== items) {
-            this.setState(prev => ({
-                ...prev,
-                isFetchingData: true,
-            }))
-
-            let categories = []
-            for (let item of items) {
-                let dataa = this.calculateDate(item.items, year)
-                categories.push({
-                    name: item._id,
-                    data: dataa
-                })
-            }
-
-
-            this.setState(prev => ({
-                ...prev,
-                isFetchingData: false,
-                series: categories,
-            }))
+    componentDidMount() {
+        const { items} = this.props
+        if(items.length){
+            this.calc(items)
         }
     }
 
-    calculateDate = (items, year) => {
+    async componentDidUpdate(prevProps) {
+        const { items} = this.props
+
+        if (prevProps.items?.length !== items?.length) {
+            this.calc(items)
+        }
+    }
+
+    calculateDate = (items) => {
 
         const {type} = this.props
         let group = {
@@ -156,8 +145,29 @@ class OrderStats extends React.Component {
 
     }
 
-    handleShowYear = async (year) => {
+    calc(items){
+        this.setState(prev => ({
+            ...prev,
+            isFetchingData: true,
+        }))
+
+        let categories = []
+        for (let item of items) {
+            let dataa = this.calculateDate(item.items)
+            categories.push({
+                name: item._id,
+                data: dataa
+            })
+        }
+
+
+        this.setState(prev => ({
+            ...prev,
+            isFetchingData: false,
+            series: categories,
+        }))
     }
+
 
 
     render() {
