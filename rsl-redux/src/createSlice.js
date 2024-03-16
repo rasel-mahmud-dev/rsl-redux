@@ -1,41 +1,39 @@
 import store from "./store"
 
-
 function createSlice(payload) {
 
-    const reducerName = payload.name
-    const extraReducers = payload.extraReducers
+    const {name: reducerName, reducers, extraReducers, initialState} = payload
+
+    reducers["initialState"] = initialState
 
     let actions = {}
 
-    for (let actionName in payload.reducers) {
-        let actionFn = payload.reducers[actionName]
+    for (let actionName in reducers) {
+        let actionFn = reducers[actionName]
 
-        actions[actionName] = function (payload) {
+        actions[actionName] = function (arg) {
             return {
                 actionFn,
                 reducerName,
-                payload,
+                payload: arg,
             }
         }
     }
 
-    payload.reducers["initialState"] = payload.initialState
 
     if (extraReducers) {
         extraReducers({
             addCase: function (actionCreator, reducerAction) {
 
-                if(Object.keys((store["asyncActions"])).includes(actionCreator.type)){
-                    console.warn("Duplicate action type:: "+ actionCreator.type)
+                if (Object.keys((store["asyncActions"])).includes(actionCreator.type)) {
+                    console.warn("Duplicate action type:: " + actionCreator.type)
                 }
 
-                store["asyncActions"] = {
-                    ...store["asyncActions"],
-                    [actionCreator.type]: {
-                        reducerName: reducerName,
-                        reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
-                    }
+                if (!store["asyncActions"]) store["asyncActions"] = {}
+
+                store["asyncActions"][actionCreator.type] = {
+                    reducerName: reducerName,
+                    reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
                 }
             }
         })
@@ -43,7 +41,7 @@ function createSlice(payload) {
 
     return {
         name: reducerName,
-        reducer: payload.reducers,
+        reducer: reducers,
         actions
     }
 }

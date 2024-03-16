@@ -1,8 +1,8 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 import Crypto from "../../utils/crypto.js";
 
-export const fetchCategories = createAsyncAction(
+export const fetchCategories = createAsyncThunk(
     "fetch-categories",
     async function () {
         try {
@@ -15,7 +15,7 @@ export const fetchCategories = createAsyncAction(
 
     })
 
-export const fetchCategoryBrands = createAsyncAction(
+export const fetchCategoryBrands = createAsyncThunk(
     "fetchCategoryBrands",
     async function (catSlug) {
         try {
@@ -33,7 +33,7 @@ export const fetchCategoryBrands = createAsyncAction(
     })
 
 
-export const fetchAttributeSpec = createAsyncAction(
+export const fetchAttributeSpec = createAsyncThunk(
     "fetchAttributeSpec",
     async function (catSlug) {
         try {
@@ -51,7 +51,7 @@ export const fetchAttributeSpec = createAsyncAction(
 
     })
 
-export const fetchAttributeSpecMapping = createAsyncAction(
+export const fetchAttributeSpecMapping = createAsyncThunk(
     "fetchAttributeSpecMapping",
     async function () {
         try {
@@ -71,7 +71,7 @@ export const fetchAttributeSpecMapping = createAsyncAction(
     })
 
 
-export const fetchBrands = createAsyncAction(
+export const fetchBrands = createAsyncThunk(
     "fetch-brands",
     async function () {
         try {
@@ -85,7 +85,7 @@ export const fetchBrands = createAsyncAction(
     })
 
 
-export const deleteCategory = createAsyncAction(
+export const deleteCategory = createAsyncThunk(
     "deleteCategory",
     async function (categoryId) {
         const res = await api.delete("/categories/" + categoryId)

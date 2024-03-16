@@ -79,7 +79,7 @@ Project Directory:
         |-- Provider.jsx
         |-- configureStore.js
         |-- createApi.js
-        |-- createAsyncAction.js
+        |-- createAsyncThunk.js
         |-- createSlice.js
         |-- index.js
         |-- store.js

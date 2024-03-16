@@ -1,9 +1,9 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
 
-export const addReviewAction = createAsyncAction(
+export const addReviewAction = createAsyncThunk(
     "addReview",
     async function ({
                         title,
@@ -33,7 +33,7 @@ export const addReviewAction = createAsyncAction(
 
 
 
-export const updateReviewAction = createAsyncAction(
+export const updateReviewAction = createAsyncThunk(
     "updateReviewAction",
     async function ({
                         _id,
@@ -63,7 +63,7 @@ export const updateReviewAction = createAsyncAction(
 
 
 
-export const fetchReviews = createAsyncAction(
+export const fetchReviews = createAsyncThunk(
     "fetchReviews",
     async function (productId) {
         try {
@@ -77,7 +77,7 @@ export const fetchReviews = createAsyncAction(
 
 
 
-export const fetchCustomerReviews = createAsyncAction(
+export const fetchCustomerReviews = createAsyncThunk(
     "fetchCustomerReviews",
     async function () {
         try {
@@ -90,7 +90,7 @@ export const fetchCustomerReviews = createAsyncAction(
     })
 
 
-export const deleteReview = createAsyncAction(
+export const deleteReview = createAsyncThunk(
     "deleteReview",
     async function (id) {
         try {
@@ -103,7 +103,7 @@ export const deleteReview = createAsyncAction(
 
     })
 
-export const authVerifyAction = createAsyncAction(
+export const authVerifyAction = createAsyncThunk(
     "verify_auth_account",
     async function () {
         try {

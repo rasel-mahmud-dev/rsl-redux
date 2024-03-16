@@ -1,8 +1,8 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 
 
-export const fetchAdminProducts = createAsyncAction(
+export const fetchAdminProducts = createAsyncThunk(
     "fetchAdminProducts",
     async function () {
         try {
@@ -16,7 +16,7 @@ export const fetchAdminProducts = createAsyncAction(
     })
 
 
-export const fetchAdminDashboardProducts = createAsyncAction(
+export const fetchAdminDashboardProducts = createAsyncThunk(
     "fetchAdminDashboardProducts",
     async function () {
         try {
@@ -29,7 +29,7 @@ export const fetchAdminDashboardProducts = createAsyncAction(
 
     })
 
-export const deleteAdminProduct = createAsyncAction(
+export const deleteAdminProduct = createAsyncThunk(
     "deleteAdminProduct",
     async function (productId) {
         const res = await api.delete("/products/" + productId)

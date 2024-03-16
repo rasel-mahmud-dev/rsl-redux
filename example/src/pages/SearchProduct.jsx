@@ -199,15 +199,13 @@ const SearchProduct = () => {
                                     {expandAttributes.includes(attributeKey) && renderOptions(attributeMap[attributeKey], attributeKey)}
                                 </div>
                             ))}
-
-
                         </div>
 
                     </div>
                 </div>
 
                 {searchProuduct.length && <div
-                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 product-content">
+                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-6 mt-4 pb-10 product-content">
                     {searchProuduct.map(product => (
                         <Product key={product._id} {...product} />
                     ))}

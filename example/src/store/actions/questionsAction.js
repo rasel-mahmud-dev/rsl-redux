@@ -1,9 +1,9 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
 
-export const addQuestionAnswerAction = createAsyncAction(
+export const addQuestionAnswerAction = createAsyncThunk(
     "addQuestionAnswer",
     async function ({
                         question,
@@ -28,7 +28,7 @@ export const addQuestionAnswerAction = createAsyncAction(
     })
 
 
-export const updateQuestionAnswerAction = createAsyncAction(
+export const updateQuestionAnswerAction = createAsyncThunk(
     "updateQuestionAnswerAction",
     async function ({
                         _id,
@@ -53,7 +53,7 @@ export const updateQuestionAnswerAction = createAsyncAction(
     })
 
 
-export const updateAnswerAction = createAsyncAction(
+export const updateAnswerAction = createAsyncThunk(
     "updateAnswerAction",
     async function ({
                         _id,
@@ -76,7 +76,7 @@ export const updateAnswerAction = createAsyncAction(
     })
 
 
-export const fetchQuestionAnswers = createAsyncAction(
+export const fetchQuestionAnswers = createAsyncThunk(
     "fetchQuestionAnswers",
     async function (productId) {
         try {
@@ -89,7 +89,7 @@ export const fetchQuestionAnswers = createAsyncAction(
     })
 
 
-export const fetchCustomerQuestionAnswers = createAsyncAction(
+export const fetchCustomerQuestionAnswers = createAsyncThunk(
     "fetchCustomerQuestionAnswers",
     async function () {
         try {
@@ -102,7 +102,7 @@ export const fetchCustomerQuestionAnswers = createAsyncAction(
     })
 
 
-export const deleteQuestionAnswer = createAsyncAction(
+export const deleteQuestionAnswer = createAsyncThunk(
     "deleteQuestionAnswer",
     async function (id) {
         try {
@@ -115,7 +115,7 @@ export const deleteQuestionAnswer = createAsyncAction(
 
     })
 
-export const authVerifyAction = createAsyncAction(
+export const authVerifyAction = createAsyncThunk(
     "verify_auth_account",
     async function () {
         try {

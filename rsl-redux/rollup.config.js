@@ -9,7 +9,7 @@ export default {
         "src/configureStore.js",
         "src/createSlice.js",
         "src/useSelector.js",
-        "src/createAsyncAction.js",
+        "src/createAsyncThunk.js",
         "src/useDispatch.js",
         "src/createApi.js"
     ],
