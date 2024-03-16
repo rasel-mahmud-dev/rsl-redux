@@ -1,38 +1,35 @@
 import store from "./store"
 
-
 function createSlice(payload) {
-
     const {name: reducerName, reducers, extraReducers, initialState} = payload
+    reducers["initialState"] = initialState
+    let actions = {}
 
-    const actions = {}
     for (let actionName in reducers) {
         let actionFn = reducers[actionName]
-        actions[actionName] = function (args) {
+
+        actions[actionName] = function (arg) {
             return {
                 actionFn,
                 reducerName,
-                payload: args,
+                payload: arg,
             }
         }
     }
-
-    reducers["initialState"] = initialState
 
     if (extraReducers) {
         extraReducers({
             addCase: function (actionCreator, reducerAction) {
 
-                if(Object.keys((store["asyncActions"])).includes(actionCreator.type)){
-                    console.warn("Duplicate action type:: "+ actionCreator.type)
+                if (Object.keys((store["asyncActions"])).includes(actionCreator.type)) {
+                    console.warn("Duplicate action type:: " + actionCreator.type)
                 }
 
-                store["asyncActions"] = {
-                    ...store["asyncActions"],
-                    [actionCreator.type]: {
-                        reducerName: reducerName,
-                        reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
-                    }
+                if (!store["asyncActions"]) store["asyncActions"] = {}
+
+                store["asyncActions"][actionCreator.type] = {
+                    reducerName: reducerName,
+                    reducerActionFn: (updatedState, result) => reducerAction(updatedState, result)
                 }
             }
         })
@@ -40,7 +37,7 @@ function createSlice(payload) {
 
     return {
         name: reducerName,
-        reducer: payload.reducers,
+        reducer: reducers,
         actions
     }
 }

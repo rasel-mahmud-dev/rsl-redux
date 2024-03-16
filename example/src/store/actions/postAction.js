@@ -1,6 +1,6 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 
-export const deletePostAsync = createAsyncAction(
+export const deletePostAsync = createAsyncThunk(
     "delete-post-request",
     async function (payload, thunkAPI) {
         try {
@@ -20,7 +20,7 @@ export const deletePostAsync = createAsyncAction(
     })
 
 
-export const fetchPostsAsync = createAsyncAction(
+export const fetchPostsAsync = createAsyncThunk(
     "fetch-posts-request",
     async function (_, thunkAPI) {
         return new Promise(async (resolve, reject) => {

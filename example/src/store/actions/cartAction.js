@@ -1,9 +1,9 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
 
-export const fetchCarts = createAsyncAction(
+export const fetchCarts = createAsyncThunk(
     "fetch-carts",
     async function () {
         try {
@@ -16,7 +16,7 @@ export const fetchCarts = createAsyncAction(
 
     })
 
-export const addToCartAction = createAsyncAction(
+export const addToCartAction = createAsyncThunk(
     "addToCartAction",
     async function (cart) {
         try {
@@ -29,7 +29,7 @@ export const addToCartAction = createAsyncAction(
     })
 
 
-export const deleteCartItemAction = createAsyncAction(
+export const deleteCartItemAction = createAsyncThunk(
     "deleteCartAction",
     async function (cartId) {
         try {
@@ -42,7 +42,7 @@ export const deleteCartItemAction = createAsyncAction(
 
     })
 
-export const orderCartProductsAction = createAsyncAction(
+export const orderCartProductsAction = createAsyncThunk(
     "orderCartProductsAction",
     async function (products) {
         try {

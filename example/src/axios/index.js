@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const backend = import.meta.env.DEV ? "http://localhost:9000" : "https://rsl-app-api.vercel.app"
+const backend = !import.meta.env.DEV ? "http://localhost:9000" : "https://rsl-app-api.vercel.app"
 // const backend = import.meta.env.DEV ? "http://192.168.174.57:9000" : "https://rsl-app-api.vercel.app"
 
 export const api = axios.create({

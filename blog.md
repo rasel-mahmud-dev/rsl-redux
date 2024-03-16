@@ -101,7 +101,7 @@ Project Directory:
     - src/
         |-- configureStore.js
         |-- createApi.js
-        |-- createAsyncAction.js
+        |-- createAsyncThunk.js
         |-- createSlice.js
         |-- index.js
         |-- store.js
@@ -230,7 +230,7 @@ export default postSlice
 ```
 
 ```jsx
-import createAsyncAction from "../redux-driver/createAsyncAction.js";
+import createAsyncAction from "../redux-driver/createAsyncThunk.js";
 
 export const deletePostAsync = createAsyncAction(
     "delete-post-request",

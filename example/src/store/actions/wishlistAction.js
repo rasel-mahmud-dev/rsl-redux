@@ -1,9 +1,9 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios/index.js";
 import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
 
-export const fetchWishlists = createAsyncAction(
+export const fetchWishlists = createAsyncThunk(
     "fetch-wishlist",
     async function () {
         try {
@@ -17,7 +17,7 @@ export const fetchWishlists = createAsyncAction(
     })
 
 
-export const addToWishlistAction = createAsyncAction(
+export const addToWishlistAction = createAsyncThunk(
     "addToWishlistAction",
     async function (productId) {
         try {
@@ -33,7 +33,7 @@ export const addToWishlistAction = createAsyncAction(
     })
 
 
-export const removeFromWishlistAction = createAsyncAction(
+export const removeFromWishlistAction = createAsyncThunk(
     "removeFromWishlistAction",
     async function (productId) {
         try {
@@ -51,7 +51,7 @@ export const removeFromWishlistAction = createAsyncAction(
     })
 
 
-export const deleteWishlistItemAction = createAsyncAction(
+export const deleteWishlistItemAction = createAsyncThunk(
     "deleteWishlistAction",
     async function (cartId) {
         try {
@@ -64,7 +64,7 @@ export const deleteWishlistItemAction = createAsyncAction(
 
     })
 
-export const orderWishlistProductsAction = createAsyncAction(
+export const orderWishlistProductsAction = createAsyncThunk(
     "orderWishlistProductsAction",
     async function (products) {
         try {

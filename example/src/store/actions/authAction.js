@@ -1,8 +1,8 @@
-import {createAsyncAction} from "rsl-redux";
+import {createAsyncThunk} from "rsl-redux";
 import {api} from "../../axios";
 import catchErrorMessage from "../../utils/catchErrorMessage.js";
 
-export const loginAction = createAsyncAction(
+export const loginAction = createAsyncThunk(
     "auth-login",
     async function (payload) {
         try {
@@ -11,10 +11,9 @@ export const loginAction = createAsyncAction(
         } catch (e) {
             throw catchErrorMessage(e)
         }
-
     })
 
-export const createAccountAction = createAsyncAction(
+export const createAccountAction = createAsyncThunk(
     "create_account",
     async function (payload) {
         try {
@@ -27,7 +26,7 @@ export const createAccountAction = createAsyncAction(
     })
 
 
-export const fetchAddresses = createAsyncAction(
+export const fetchAddresses = createAsyncThunk(
     "fetchAddresses",
     async function () {
         try {
@@ -40,7 +39,7 @@ export const fetchAddresses = createAsyncAction(
     })
 
 
-export const deleteAddress = createAsyncAction(
+export const deleteAddress = createAsyncThunk(
     "deleteAddress",
     async function (id) {
         try {
@@ -53,7 +52,7 @@ export const deleteAddress = createAsyncAction(
 
     })
 
-export const authVerifyAction = createAsyncAction(
+export const authVerifyAction = createAsyncThunk(
     "verify_auth_account",
     async function () {
         try {
@@ -62,10 +61,9 @@ export const authVerifyAction = createAsyncAction(
         } catch (e) {
             throw catchErrorMessage(e)
         }
-
     })
 
-export const fetchAdminCustomersProducts = createAsyncAction(
+export const fetchAdminCustomersProducts = createAsyncThunk(
     "fetchAdminCustomersProducts",
     async function () {
         try {
@@ -77,7 +75,7 @@ export const fetchAdminCustomersProducts = createAsyncAction(
 
     })
 
-export const deleteCustomer = createAsyncAction(
+export const deleteCustomer = createAsyncThunk(
     "deleteCustomer",
     async function (id) {
         try {
@@ -90,7 +88,7 @@ export const deleteCustomer = createAsyncAction(
 
     })
 
-export const fetchDashboardSlatsAction = createAsyncAction(
+export const fetchDashboardSlatsAction = createAsyncThunk(
     "fetchDashboardSlatsAction",
     async ({year, role, taskList = []}) => {
         try {
@@ -105,7 +103,7 @@ export const fetchDashboardSlatsAction = createAsyncAction(
         }
 
     })
-export const fetchOrdersSlatsAction = createAsyncAction(
+export const fetchOrdersSlatsAction = createAsyncThunk(
     "fetchOrdersSlatsAction",
     async ({year, role}) => {
         try {
@@ -119,7 +117,7 @@ export const fetchOrdersSlatsAction = createAsyncAction(
         }
 
     })
-export const fetchCartsSlatsAction = createAsyncAction(
+export const fetchCartsSlatsAction = createAsyncThunk(
     "fetchCartsSlatsAction",
     async ({year, role, taskList = []}) => {
         try {
@@ -135,7 +133,7 @@ export const fetchCartsSlatsAction = createAsyncAction(
 
     })
 
-export const fetchCategoryWiseOrdersSlatsAction = createAsyncAction(
+export const fetchCategoryWiseOrdersSlatsAction = createAsyncThunk(
     "fetchCategoryWiseOrdersSlatsAction",
     async ({year, role, type}) => {
         try {
@@ -151,7 +149,7 @@ export const fetchCategoryWiseOrdersSlatsAction = createAsyncAction(
 
     })
 
-export const fetchOrdersSlatsSummaryAction = createAsyncAction(
+export const fetchOrdersSlatsSummaryAction = createAsyncThunk(
     "fetchOrdersSlatsSummaryAction",
     async ({role, taskList}) => {
         try {

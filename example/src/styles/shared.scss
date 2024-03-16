@@ -380,8 +380,10 @@
   width: 100%;
   top: 75px;
   left: 0;
-  background: #ffffff;
+  background: #ffffff94;
   padding: 8px;
+  z-index: 1;
+  backdrop-filter: blur(10px);
 }
 
 .product-attr-sidebar {
@@ -672,7 +674,7 @@
     background: var(--primary-500);
   }
 
-  img{
+  img {
     //border-radius: 100%;
     //object-fit: contain;
   }
