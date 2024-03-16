@@ -133,6 +133,7 @@ const productSlice = createSlice({
         builder.addCase(fetchAdminProducts.fulfilled, (state, action) => {
             state.adminProducts = action.payload
         })
+
         builder.addCase(fetchAdminDashboardProducts.fulfilled, (state, action) => {
             state.adminProducts = action.payload
         })
@@ -172,7 +173,6 @@ const productSlice = createSlice({
             state.categories = state.categories.filter(p => p._id !== action.payload)
         })
 
-
         // Reviews
         builder.addCase(fetchReviews.fulfilled, (state, action) => {
             const {productId, data} = action.payload
@@ -188,9 +188,7 @@ const productSlice = createSlice({
             }
         })
 
-
         // Question and answers
-
 
         builder.addCase(fetchQuestionAnswers.fulfilled, (state, action) => {
             const {productId, data} = action.payload
@@ -198,7 +196,6 @@ const productSlice = createSlice({
                 state.questionAnswers[productId] = data
             }
         })
-
         builder.addCase(addQuestionAnswerAction.fulfilled, (state, action) => {
             const {productId, data} = action.payload
             if (productId) {

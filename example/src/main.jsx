@@ -8,5 +8,4 @@ import "./store/store.js"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
         <App/>
-
 )

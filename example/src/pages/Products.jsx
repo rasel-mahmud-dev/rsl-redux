@@ -11,18 +11,16 @@ import {useNavigate} from "react-router-dom";
 
 
 const Products = () => {
-    const {products, showCategories, homeProducts} = useSelector((state) => state.productState)
+    const { showCategories, homeProducts} = useSelector((state) => state.productState)
     const {carts} = useSelector((state) => state.cartState)
     const navigate = useNavigate()
 
-    const [pageNumber, setPageNumber] = useState(1); // Height of the content
-    const [isEmpty, setEmpty] = useState(false); // Height of the content
-
-    const pageRef = useRef([]); // Ref to the <div> element
+    const [pageNumber, setPageNumber] = useState(1);
+    const [isEmpty, setEmpty] = useState(false);
+    const pageRef = useRef([]);
 
     const [isFetching, setFetching] = useState(false)
     const dispatch = useDispatch()
-
 
     function handleLoadMore() {
         setPageNumber(prevState => {
@@ -46,16 +44,6 @@ const Products = () => {
         })
     }, [pageNumber]);
 
-
-    function handleFetchPreviousMessage(e) {
-        // if (scrollTop <= 50 && !state.isLoading) {
-        //     const {current} = divRef;
-        //     if (current) {
-        //         let scrollTop = (current.scrollHeight - current.clientHeight)
-        //         scrollPosition.current = scrollTop
-        //     }
-        // }
-    }
 
     function getAllProducts(homeProducts) {
         let a = Object.keys(homeProducts).sort((a, b) => a - b)

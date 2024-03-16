@@ -24,11 +24,11 @@ const SearchProduct = () => {
     })
     const {openSidebar} = useSelector(state => state.authState)
 
-    const {categories, filter, specsMapping, categoryBrands, specs} = useSelector(state => state.productState)
+    const {categories, filter,  categoryBrands, specs} = useSelector(state => state.productState)
 
     const [expandAttributes, setExpandAttributes] = useState(["brand_id"])
 
-    const [pagination, setPagination] = useState({
+    const [pagination] = useState({
         page: 1,
         totalPage: 10
     })

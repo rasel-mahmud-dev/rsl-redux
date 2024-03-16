@@ -3,24 +3,21 @@ import store from "./store"
 
 function createSlice(payload) {
 
-    const reducerName = payload.name
-    const extraReducers = payload.extraReducers
+    const {name: reducerName, reducers, extraReducers, initialState} = payload
 
-    let actions = {}
-
-    for (let actionName in payload.reducers) {
-        let actionFn = payload.reducers[actionName]
-
-        actions[actionName] = function (payload) {
+    const actions = {}
+    for (let actionName in reducers) {
+        let actionFn = reducers[actionName]
+        actions[actionName] = function (args) {
             return {
                 actionFn,
                 reducerName,
-                payload,
+                payload: args,
             }
         }
     }
 
-    payload.reducers["initialState"] = payload.initialState
+    reducers["initialState"] = initialState
 
     if (extraReducers) {
         extraReducers({
