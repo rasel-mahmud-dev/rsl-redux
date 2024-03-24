@@ -2,10 +2,10 @@ import store from "./store";
 
 function configureStore({reducer}) {
     for (const reducerKey in reducer) {
-        let a = reducer[reducerKey]?.["initialState"]
+        const initialState = reducer[reducerKey]?.["initialState"]
         store.state = {
             ...store.state,
-            [reducerKey]: a || undefined
+            [reducerKey]: initialState || undefined
         }
     }
     return store
