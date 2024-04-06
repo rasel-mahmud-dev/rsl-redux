@@ -16,8 +16,8 @@ function useSelector(cb) {
     const [state, setState] = useState(ini); // Initialize state with the specific part
 
 
-    const listener = (gState) => {
-        const selectedState = cb(gState);
+    const listener = (store) => {
+        const selectedState = cb(store.getState());
         setState(selectedState)
     };
 

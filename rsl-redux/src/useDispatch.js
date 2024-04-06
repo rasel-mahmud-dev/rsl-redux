@@ -4,7 +4,7 @@ function useDispatch() {
     return dispatch
 }
 
-function dispatch(actionObj) {
+export function dispatch(actionObj) {
     let actionCall;
     if (typeof actionObj === "function") {
 

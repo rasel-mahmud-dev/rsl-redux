@@ -1,14 +1,10 @@
+import {dispatch} from "./useDispatch";
+
 const store = {
     state: {},
     listens: [],
     asyncActions: {},
-    dispatch: function (value) {
-        this.state = {
-            ...this.state,
-            ...value
-        }
-        this.notify()
-    },
+    dispatch,
     reducerDispatch: function (reducerName, state) {
         this.state[reducerName] = {
             ...this.state[reducerName],
@@ -23,7 +19,7 @@ const store = {
         }
     },
     notify: function () {
-        this.listens.forEach(lis => lis(this.state))
+        this.listens.forEach(lis => lis(this))
     },
     removeListener: function (lis) {
         this.listens = this.listens.filter(list => list !== lis)
